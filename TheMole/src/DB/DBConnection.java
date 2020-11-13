@@ -31,7 +31,7 @@ public class DBConnection {
 		// sqldb�� database �̸�, serverTimezone�� �ð��� ����
 		String id = "root";
 
-		String password = "1234";
+		String password = "root";
 		Connection con = null;
 		
 		try {

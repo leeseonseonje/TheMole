@@ -14,7 +14,7 @@ public class DBConnection {
 		ResultSet rs = stmt.executeQuery("SELECT * FROM gamer");
 		while(rs.next()) {
 			String id = rs.getString("id");
-			String password = rs.getString("passwords");
+			String password = rs.getString("password");
 			System.out.println(id + " " + password);
 		}
 		rs.close();
@@ -30,7 +30,7 @@ public class DBConnection {
 		String url = "jdbc:mysql://localhost:3306/user?serverTimezone=Asia/Seoul";
 		// sqldb�� database �̸�, serverTimezone�� �ð��� ����
 		String id = "root";
-		String password = "root";
+		String password = "dlsnje9829";
 		Connection con = null;
 		
 		try {

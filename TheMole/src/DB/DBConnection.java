@@ -30,7 +30,7 @@ public class DBConnection {
 		String url = "jdbc:mysql://localhost:3306/user?serverTimezone=Asia/Seoul";
 		// sqldb�� database �̸�, serverTimezone�� �ð��� ����
 		String id = "root";
-		String password = "dlsnje9829";
+		String password = "root";
 		Connection con = null;
 		
 		try {

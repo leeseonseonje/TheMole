@@ -59,6 +59,7 @@ class MolePanel extends JPanel {
 			ch.setContentAreaFilled(false);
 			ch.setBounds(0, 0, 50, 50);
 			add(ch);
+			//ch.setVisible(false);
 
 			m1 = new MoleThread(50, 400);
 			m2 = new MoleThread(100, 400);
@@ -234,7 +235,9 @@ class MolePanel extends JPanel {
 		
 				targetX = x;
 				targetY = y;
-
+				
+				System.out.println(targetX);
+				System.out.println(targetY);
 				startX = champion.getCenterX();
 				startY = champion.getCenterY();
 				double distance = Math

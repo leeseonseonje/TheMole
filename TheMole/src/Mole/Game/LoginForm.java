@@ -168,5 +168,40 @@ public class LoginForm extends JFrame {
 				loginPanel.setVisible(true);
 			}
 		});
+		passwordField.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+					String user = username.getText();
+					String pass = passwordField.getText();
+					boolean result = false;
+					//System.out.println(user + " " + pass);
+					try {
+						Connection con = DBConnection.makeConnection(); // DB연결
+						Statement st = con.createStatement();
+						ResultSet rs = st.executeQuery("SELECT * FROM gamer");
+						while (rs.next()) { // 데이터베이스 테이블 내용 돌림 확인
+							//System.out.println(rs.getString("ID") + " " + rs.getString("PASSWORD"));
+							if (user.equals(rs.getString("ID")) && pass.equals(rs.getString("PASSWORDS"))) {
+								result = true;
+								break;
+							}
+						}
+						if (result) {
+							id = rs.getString("ID");
+							secret = rs.getString("PASSWORDS");
+							dispose();
+							new MainFrame();
+						} else {
+							JOptionPane.showMessageDialog(log, "Invalid username or password");
+						}
+						rs.close();
+						st.close();
+					} catch (Exception a) {
+						a.printStackTrace();
+					}
+				}
+			}
+			
+		});
 	}
 }

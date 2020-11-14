@@ -235,7 +235,12 @@ class MainFrame extends JFrame {
 		}
 
 		public void paintComponent(Graphics g) {// 그리는 함수
-			super.paintComponent(g);
+			//super.paintComponent(g);
+			update(g);
+			//g.drawImage(background, 0, 0, null);// background를 그려줌
+		}
+		
+		public void update(Graphics g) {
 			g.drawImage(background, 0, 0, null);// background를 그려줌
 		}
 	}

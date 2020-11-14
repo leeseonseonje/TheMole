@@ -10,165 +10,250 @@ import java.io.File;
 import java.io.IOException;
 
 class MoleUII extends JFrame {
-    private MolePanel molePanel;
+	private MolePanel molePanel;
 
-    public MoleUII() throws IOException, InterruptedException {
-        setTitle("Mole Game");
-        setSize(800, 600);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public MoleUII() throws IOException, InterruptedException { // Mole UI 창
+		setTitle("Mole Game");
+		setSize(800, 600);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        molePanel = new MolePanel();
+		molePanel = new MolePanel(); // molePanel 생성
 
-        add(molePanel);
-        setVisible(true);
-    }
+		add(molePanel);
+		setVisible(true);
+	}
 }
 
-    class MolePanel extends JPanel{
-        private BufferedImage backImage;
-        private ImageIcon human = new ImageIcon("img/human.png");
-        private ImageIcon chicken = new ImageIcon("img/chicken.gif");
-        private JButton humanButton, ch;
+class MolePanel extends JPanel {
+	private BufferedImage backImage;
+	private ImageIcon human = new ImageIcon("img/human.png");
+	private ImageIcon chicken = new ImageIcon("img/chicken.gif");
+	private JButton humanButton, ch;
+	MoleThread m1;
+	MoleThread m2;
+	MoleThread m3;
+	MoleThread m4;
+	MoleThread m5;
+	MoleThread m6;
+	MoleThread m7;
+	MoleThread m8;
+	MoleThread m9;
 
-        public MolePanel() {
-            try {
-                setLayout(null);
-                backImage = ImageIO.read(new File("img/Back4.png"));
+	public MolePanel() {
+		try {
+			setLayout(null);
+			backImage = ImageIO.read(new File("img/Back4.png"));
 
-                humanButton = new JButton(human);
-                humanButton.setBorderPainted(false);
-                humanButton.setFocusPainted(false);
-                humanButton.setContentAreaFilled(false);
-                humanButton.setBounds(300, 192, 70, 70);
-                add(humanButton);
-                
-                ch = new JButton(chicken);
-                ch.setBorderPainted(false);
-                ch.setFocusPainted(false);
-                ch.setContentAreaFilled(false);
-                ch.setBounds(0, 0, 50, 50);
-                add(ch);
+			humanButton = new JButton(human);
+			humanButton.setBorderPainted(false);
+			humanButton.setFocusPainted(false);
+			humanButton.setContentAreaFilled(false);
+			humanButton.setBounds(300, 192, 70, 70);
+			add(humanButton);
 
-                new MoleThread(50, 400);
-                new MoleThread(100, 400);
-                new MoleThread(150, 400);
-                new MoleThread(50, 450);
-                new MoleThread(100, 450);
-                new MoleThread(150, 450);
-                new MoleThread(50, 500);
-                new MoleThread(100, 500);
-                new MoleThread(150, 500);
-                
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+			ch = new JButton(chicken);
+			ch.setBorderPainted(false);
+			ch.setFocusPainted(false);
+			ch.setContentAreaFilled(false);
+			ch.setBounds(0, 0, 50, 50);
+			add(ch);
 
-        class MoleThread extends Thread {
-            private int x, y;
-            private JButton moleButton;
-            private Rectangle champion;
-            private ImageIcon mole = new ImageIcon("img/moleimg.png");
-            private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
+			m1 = new MoleThread(50, 400);
+			m2 = new MoleThread(100, 400);
+			m3 = new MoleThread(150, 400);
+			m4 = new MoleThread(50, 450);
+			m5 = new MoleThread(100, 450);
+			m6 = new MoleThread(150, 450);
+			m7 = new MoleThread(50, 500);
+			m8 = new MoleThread(100, 500);
+			m9 = new MoleThread(150, 500);
+			vegetableThread v0 = new vegetableThread(0);
+			vegetableThread v1 = new vegetableThread(1);
+			vegetableThread v2 = new vegetableThread(2);
 
-            private Timer timer;
-            private double speed = 0.15;
-            private Long startTime;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-            private double targetX, targetY;
-            private double startX, startY;
-            private double runTime;
-            private boolean move = false;;
+	public int m1getx() {
+		return m1.getx();
+	}
 
-            public MoleThread(int x, int y) {
-                this.x = x;
-                this.y = y;
+	public int m1gety() {
+		return m1.gety();
+	}
 
-                champion = new Rectangle(x, y, 10, 10);
+	public int m2getx() {
+		return m2.getx();
+	}
 
-                moleButton = new JButton(mole);
-                moleButton.setBorderPainted(false);
-                moleButton.setFocusPainted(false);
-                moleButton.setContentAreaFilled(false);
-                moleButton.setBounds(x, y, 30, 30);
-                add(moleButton);
+	public int m3getx() {
+		return m3.getx();
+	}
 
-                moleButton.addActionListener( e -> {
-                    if (e.getSource() == moleButton) {
-                        moleButton.setIcon(moleSelect);
-                        addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mousePressed(MouseEvent e) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    if(moleButton.getIcon().equals(moleSelect)) {
-                                        timer.stop();
-                                        calculateChampionMovement(e.getX(), e.getY(), champion);
+	public int m4getx() {
+		return m4.getx();
+	}
 
-                                        startTime = System.currentTimeMillis();
-                                        timer.start();
-                                    }
-                                }
-                                if (e.getButton() == MouseEvent.BUTTON1) {
-                                    if(moleButton.getIcon().equals(moleSelect))
-                                        moleButton.setIcon(mole);
-                                }
-                            }
-                        });
-                    }
-                });
-                timer = new Timer(10, e -> {
-                    TimeMove();
-                });
-               }
-              public void run() {
+	public int m5getx() {
+		return m5.getx();
+	}
 
-            }
-            public void TimeMove() {
-                long duration = System.currentTimeMillis() - startTime;
-                double progress = duration / runTime;
+	public int m6getx() {
+		return m6.getx();
+	}
 
-                if (progress >= 1.0) {
-                    progress = 1.0;
-                    timer.stop();
-                }
+	public int m7getx() {
+		return m7.getx();
+	}
 
-                double x = (int) (startX + ((targetX - startX) * progress));
-                double y = (int) (startY + ((targetY - startY) * progress));
+	public int m8getx() {
+		return m8.getx();
+	}
 
-                repaint();
-                if(y >= 270 && x >= 12 && x <= 770) {
-                    moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
-                    champion.setRect(x - 5, y - 5, 10, 10);
-                }
-            }
+	public int m9getx() {
+		return m9.getx();
+	}
 
-            public void calculateChampionMovement(double x, double y, Rectangle champion) {
+	class vegetableThread extends Thread {
+		private ImageIcon carrot = new ImageIcon("img/carrot.png");
+		private JLabel vegetable;
+		int x, y;
 
-                if (x != champion.getCenterX() || y != champion.getCenterY() ) {
+		public vegetableThread(int section) {
+			x = ((int) (Math.random() * 260)) + 263 * section;
+			y = 260;
+			vegetable = new JLabel(carrot);
+			vegetable.setBounds(x, y, 30, 30);
+			add(vegetable);
+			System.out.println(vegetable.getX());
+			if ((vegetable.getX() < m1.getx() - 10 && m1.gety() < 290)
+					|| (vegetable.getX() > m1.getx() + 10 && m1.gety() < 290)) {
+				System.out.print("두더지가 음식을 먹었습니다");
+			}
+		}
+		public int getx() {
+			return x;
+		}
+	}
 
-                    targetX = x;
-                    targetY = y;
+	class MoleThread extends Thread {
+		private int x, y;
+		private JButton moleButton;
+		private Rectangle champion;
+		private ImageIcon mole = new ImageIcon("img/moleimg.png");
+		private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
 
-                    startX = champion.getCenterX();
-                    startY = champion.getCenterY();
-                    double distance = Math.sqrt(
-                            (startX - targetX) * (startX - targetX)
-                                    + (startY - targetY) * (startY - targetY));
+		private Timer timer;
+		private double speed = 0.15;
+		private Long startTime;
 
-                    runTime = distance / (double)speed;
-                }
-            }
-        }
-        public void paintComponent (Graphics g){// 그리는 함수
-            super.paintComponent(g);
-            g.drawImage(backImage, 0, 0, null);
-        }
-    }
+		private double targetX, targetY;
+		private double startX, startY;
+		private double runTime;
+		private boolean move = false;;
+
+		public int getx() {
+			return x;
+		}
+
+		public int gety() {
+			return y;
+		}
+
+		public MoleThread(int x, int y) {
+			this.x = x;
+			this.y = y;
+
+			champion = new Rectangle(x, y, 10, 10);
+
+			moleButton = new JButton(mole);
+			moleButton.setBorderPainted(false);
+			moleButton.setFocusPainted(false);
+			moleButton.setContentAreaFilled(false);
+			moleButton.setBounds(x, y, 30, 30);
+			add(moleButton);
+
+			moleButton.addActionListener(e -> {
+				if (e.getSource() == moleButton) {
+					moleButton.setIcon(moleSelect);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (moleButton.getIcon().equals(moleSelect)) {
+									timer.stop();
+									calculateChampionMovement(e.getX(), e.getY(), champion);
+									startTime = System.currentTimeMillis();
+									timer.start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (moleButton.getIcon().equals(moleSelect))
+									moleButton.setIcon(mole);
+							}
+						}
+					});
+				}
+			});
+			timer = new Timer(10, e -> {
+				TimeMove();
+			});
+		}
+
+		public void run() {
+
+		}
+
+		public void TimeMove() {
+			long duration = System.currentTimeMillis() - startTime;
+			double progress = duration / runTime;
+
+			if (progress >= 1.0) {
+				progress = 1.0;
+				timer.stop();
+			}
+
+			double x = (int) (startX + ((targetX - startX) * progress));
+			double y = (int) (startY + ((targetY - startY) * progress));
+
+			repaint();
+			if (y >= 270 && x >= 12 && x <= 770) {
+				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
+				champion.setRect(x - 5, y - 5, 10, 10);
+			}
+
+		}
+
+		public void calculateChampionMovement(double x, double y, Rectangle champion) {
+
+			if (x != champion.getCenterX() || y != champion.getCenterY()) {
+		
+				targetX = x;
+				targetY = y;
+
+				startX = champion.getCenterX();
+				startY = champion.getCenterY();
+				double distance = Math
+						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
+
+				runTime = distance / (double) speed;
+
+			}
+		}
+	}
+
+	public void paintComponent(Graphics g) {// 그리는 함수
+		super.paintComponent(g);
+		g.drawImage(backImage, 0, 0, null);
+	}
+}
 
 public class MoleUI {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        new MoleUII();
-    }
+	public static void main(String[] args) throws IOException, InterruptedException {
+		new MoleUII();
+	}
 }

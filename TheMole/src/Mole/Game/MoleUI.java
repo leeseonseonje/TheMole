@@ -40,6 +40,9 @@ class MolePanel extends JPanel {
 	MoleThread m7;
 	MoleThread m8;
 	MoleThread m9;
+	vegetableThread v0;
+	vegetableThread v1;
+	vegetableThread v2;
 
 	public MolePanel() {
 		try {
@@ -69,53 +72,25 @@ class MolePanel extends JPanel {
 			m7 = new MoleThread(50, 500);
 			m8 = new MoleThread(100, 500);
 			m9 = new MoleThread(150, 500);
-			vegetableThread v0 = new vegetableThread(0);
-			vegetableThread v1 = new vegetableThread(1);
-			vegetableThread v2 = new vegetableThread(2);
+			v0 = new vegetableThread(0);
+			v1 = new vegetableThread(1);
+			v2 = new vegetableThread(2);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public int m1getx() {
-		return m1.getx();
+	public int v0getx() {
+		return v0.getx();
 	}
 
-	public int m1gety() {
-		return m1.gety();
+	public int v1getx() {
+		return v1.getx();
 	}
 
-	public int m2getx() {
-		return m2.getx();
-	}
-
-	public int m3getx() {
-		return m3.getx();
-	}
-
-	public int m4getx() {
-		return m4.getx();
-	}
-
-	public int m5getx() {
-		return m5.getx();
-	}
-
-	public int m6getx() {
-		return m6.getx();
-	}
-
-	public int m7getx() {
-		return m7.getx();
-	}
-
-	public int m8getx() {
-		return m8.getx();
-	}
-
-	public int m9getx() {
-		return m9.getx();
+	public int v2getx() {
+		return v2.getx();
 	}
 
 	class vegetableThread extends Thread {
@@ -130,11 +105,8 @@ class MolePanel extends JPanel {
 			vegetable.setBounds(x, y, 30, 30);
 			add(vegetable);
 			System.out.println(vegetable.getX());
-			if ((vegetable.getX() < m1.getx() - 10 && m1.gety() < 290)
-					|| (vegetable.getX() > m1.getx() + 10 && m1.gety() < 290)) {
-				System.out.print("두더지가 음식을 먹었습니다");
-			}
 		}
+
 		public int getx() {
 			return x;
 		}
@@ -189,6 +161,7 @@ class MolePanel extends JPanel {
 									calculateChampionMovement(e.getX(), e.getY(), champion);
 									startTime = System.currentTimeMillis();
 									timer.start();
+
 								}
 							}
 							if (e.getButton() == MouseEvent.BUTTON1) {
@@ -202,6 +175,7 @@ class MolePanel extends JPanel {
 			timer = new Timer(10, e -> {
 				TimeMove();
 			});
+			this.x = x;
 		}
 
 		public void run() {
@@ -231,7 +205,7 @@ class MolePanel extends JPanel {
 		public void calculateChampionMovement(double x, double y, Rectangle champion) {
 
 			if (x != champion.getCenterX() || y != champion.getCenterY()) {
-		
+
 				targetX = x;
 				targetY = y;
 
@@ -241,7 +215,13 @@ class MolePanel extends JPanel {
 						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
 
 				runTime = distance / (double) speed;
-
+				if ((x <= v0.getx() + 20 && x > v0.getx() - 20) && y < 290) {
+					System.out.println("음식을 먹었습니다");
+				} else if ((x <= v1.getx() + 20 && x > v1.getx() - 20) && y < 290) {
+					System.out.println("음식을 먹었습니다");
+				} else if ((x <= v2.getx() + 20 && x > v2.getx() - 20) && y < 290) {
+					System.out.println("음식을 먹었습니다");
+				}
 			}
 		}
 	}

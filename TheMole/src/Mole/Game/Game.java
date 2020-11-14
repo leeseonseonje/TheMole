@@ -2,6 +2,7 @@ package Mole.Game;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -56,7 +57,7 @@ public class Game extends Canvas implements Runnable {
 		while (running) { // Game Loop
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
-			lastTime = now;
+			lastTime = now; // OldTime = CurTime,
 
 			if (delta >= 1) {
 				tick();
@@ -83,12 +84,20 @@ public class Game extends Canvas implements Runnable {
 	private void render() { // bufferstrategy는 장면 뒤의 모든 버퍼링을 관리한다.
 
 		BufferStrategy bs = this.getBufferStrategy(); // this는 Canvas 객체를 가리킴
-		
-		if(bs == null) {
+
+		if (bs == null) {
 			createBufferStrategy(3); // 3개의 버퍼를 생성한다는 뜻, 바로 필요한것(사용하는중) 뒤에 두개의 이미지를 로딩하고 있을 것이다.
-			// 30개의 버퍼를 생성한다면,
+			// 30개의 버퍼를 생성한다면, 그만큼 CPU의 자원을 잡아먹게 된다. 적절하게 사용
 			return;
 		}
+		Graphics g = bs.getDrawGraphics(); // graphic을 여기에 가져오고, 버퍼를 그리기 위한 graphics context를 만든다, 외부 버퍼를 그림
+		/////////////// 그림 그리는 공간 으로 추정//////////////////////////
+
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+
+		///////////////////////////////////////////////////////////
+		g.dispose(); // 계속 루프를 하는데 dispose로 지워주지 않는다면..?
+		bs.show();
 	}
 
 	public static void main(String args[]) {

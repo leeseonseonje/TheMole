@@ -1,5 +1,5 @@
 package Mole.Game;
-
+/*
 import java.awt.Image;
 
 public class Mole extends Sprite {
@@ -31,3 +31,4 @@ public class Mole extends Sprite {
 	}
 
 }
+*/

@@ -29,7 +29,8 @@ class MoleUII extends JFrame {
     class MolePanel extends JPanel{
         private BufferedImage backImage;
         private ImageIcon human = new ImageIcon("img/human.png");
-        private JButton humanButton;
+        private ImageIcon chicken = new ImageIcon("img/chicken.gif");
+        private JButton humanButton, ch;
 
         public MolePanel() {
             try {
@@ -42,6 +43,13 @@ class MoleUII extends JFrame {
                 humanButton.setContentAreaFilled(false);
                 humanButton.setBounds(300, 192, 70, 70);
                 add(humanButton);
+                
+                ch = new JButton(chicken);
+                ch.setBorderPainted(false);
+                ch.setFocusPainted(false);
+                ch.setContentAreaFilled(false);
+                ch.setBounds(0, 0, 50, 50);
+                add(ch);
 
                 new MoleThread(50, 400);
                 new MoleThread(100, 400);
@@ -66,7 +74,7 @@ class MoleUII extends JFrame {
             private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
 
             private Timer timer;
-            private double speed = 0.3;
+            private double speed = 0.15;
             private Long startTime;
 
             private double targetX, targetY;
@@ -130,7 +138,7 @@ class MoleUII extends JFrame {
                 double y = (int) (startY + ((targetY - startY) * progress));
 
                 repaint();
-                if(y >= 296 && x >= 12 && x <= 770) {
+                if(y >= 270 && x >= 12 && x <= 770) {
                     moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
                     champion.setRect(x - 5, y - 5, 10, 10);
                 }

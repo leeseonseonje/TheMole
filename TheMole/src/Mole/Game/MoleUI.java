@@ -94,15 +94,15 @@ class MolePanel extends JPanel {
 	}
 
 	class vegetableThread extends Thread {
-		private ImageIcon carrot = new ImageIcon("img/carrot.png");
+		private ImageIcon veget = new ImageIcon("img/vegetables.png");
 		private JLabel vegetable;
 		int x, y;
 
 		public vegetableThread(int section) {
 			x = ((int) (Math.random() * 260)) + 263 * section;
 			y = 260;
-			vegetable = new JLabel(carrot);
-			vegetable.setBounds(x, y, 30, 30);
+			vegetable = new JLabel(veget);
+			vegetable.setBounds(x, y, 16, 16);
 			add(vegetable);
 			System.out.println(vegetable.getX());
 		}

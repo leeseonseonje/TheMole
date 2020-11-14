@@ -150,20 +150,9 @@ class MainFrame extends JFrame {
 		});
 		
 		player = new JButton(LoginForm.getId());
-		//player.setBorderPainted(false);
-		//player.setFocusPainted(false);
-		//player.setContentAreaFilled(false);
 		player.setBounds(675, 10, 100,50 );
 		player.addMouseListener(new MouseAdapter() {
-			/*
-			public void mouseEntered(MouseEvent e) {
-				start.setIcon(start1_img);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				start.setIcon(start_img);
-			}
-			*/
+			
 			public void mousePressed(MouseEvent e) {
 				System.out.println("계정 정보 활성화");
 				try {

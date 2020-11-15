@@ -7,27 +7,30 @@ public class Controller {
 
 	private LinkedList<Bullet> b = new LinkedList<>();
 	
-	Bullet TempBullet;
+	Bullet tempBullet;
 	
 	Game game;
 	
 	public Controller(Game game) {
 		this.game = game;
+
 	}
 	
 	public void tick() {
 		for(int i =0; i < b.size(); i++) {
-			TempBullet = b.get(i);
+			tempBullet = b.get(i);
 			
-			TempBullet.tick();
+			if(tempBullet.getX() < 0 || tempBullet.getX() > 800)
+				removeBullet(tempBullet);
+			tempBullet.tick();
 		}
 	}
 	
 	public void render(Graphics g) {
 		for(int i = 0; i<b.size(); i++) {
-			TempBullet = b.get(i);
+			tempBullet = b.get(i);
 			
-			TempBullet.render(g);
+			tempBullet.render(g);
 		}
 	}
 	
@@ -37,5 +40,4 @@ public class Controller {
 	public void removeBullet(Bullet block) {
 		b.remove(block);
 	}
-	
 }

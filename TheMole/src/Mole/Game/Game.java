@@ -25,7 +25,6 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private Thread thread;
 
-	//private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private BufferedImage background = null;
 	private BufferedImage spriteSheet = null;
 
@@ -44,7 +43,7 @@ public class Game extends Canvas implements Runnable {
 
 		addKeyListener(new KeyInput(this));
 
-		humanP = new Player(200, 200, this);
+		humanP = new Player(200, 225, this);
 		c = new Controller(this);
 
 	}
@@ -136,19 +135,15 @@ public class Game extends Canvas implements Runnable {
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_RIGHT) {
-			humanP.setVelX(5);
+			humanP.setVelX(3);
 		} else if (key == KeyEvent.VK_LEFT) {
-			humanP.setVelX(-5);
-		} else if (key == KeyEvent.VK_DOWN) {
-			humanP.setVelY(5);
-		} else if (key == KeyEvent.VK_UP) {
-			humanP.setVelY(-5);
+			humanP.setVelX(-3);
 		} else if (key == KeyEvent.VK_A) {
 			this.buldirection = false;
-			c.addBullet(new Bullet(humanP.getX(),humanP.getY(),this));
+			c.addBullet(new Bullet(humanP.getX(),humanP.getY()+35,this));
 		} else if (key == KeyEvent.VK_D) {
 			this.buldirection = true;
-			c.addBullet(new Bullet(humanP.getX(),humanP.getY(),this));
+			c.addBullet(new Bullet(humanP.getX()+50,humanP.getY()+35,this));
 		}
 	}
 
@@ -160,10 +155,6 @@ public class Game extends Canvas implements Runnable {
 			humanP.setVelX(0);
 		} else if (key == KeyEvent.VK_LEFT) {
 			humanP.setVelX(0);
-		} else if (key == KeyEvent.VK_UP) {
-			humanP.setVelY(0);
-		} else if (key == KeyEvent.VK_DOWN) {
-			humanP.setVelY(0);
 		}
 	}
 

@@ -23,8 +23,7 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private BufferedImage spriteSheet = null;
 	
-	//temp
-	private BufferedImage player;
+	private Player humanP;
 	
 	public void init() {
 		BufferedImageLoader loader = new BufferedImageLoader();
@@ -34,8 +33,8 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();
 		}
 		
-		SpriteSheet spr1 = new SpriteSheet(spriteSheet);
-		player = spr1.grabHumImage(1, 1, 50, 64);
+		humanP = new Player(200,200,this);
+		
 	}
 
 	private synchronized void start() {
@@ -95,7 +94,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-
+		humanP.tick();
 	}
 
 	private void render() { // bufferstrategy는 장면 뒤의 모든 버퍼링을 관리한다.
@@ -112,8 +111,8 @@ public class Game extends Canvas implements Runnable {
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 		
-		g.drawImage(player, 100, 100, this); // 인간 그리기
-
+		humanP.render(g); // 인간 그리기
+		
 		///////////////////////////////////////////////////////////
 		g.dispose(); // 계속 루프를 하는데 dispose로 지워주지 않는다면..?
 		bs.show();
@@ -135,5 +134,8 @@ public class Game extends Canvas implements Runnable {
 		frame.setVisible(true);
 
 		game.start();
+	}
+	public BufferedImage getSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
+		return spriteSheet;
 	}
 }

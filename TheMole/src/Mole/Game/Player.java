@@ -8,6 +8,9 @@ public class Player {
 	private double x;
 	private double y; 
 	
+	private double velX = 0;
+	private double velY = 0;
+	
 	private BufferedImage player;
 	
 	public Player(double x, double y, Game game) {
@@ -20,7 +23,8 @@ public class Player {
 	}
 	
 	public void tick() { // 메소드를 업데이트 할때 사용
-		
+		x += velX;
+		y += velY;
 	}
 	
 	public void render(Graphics g) { // 이미지 그릴때 사용
@@ -33,10 +37,22 @@ public class Player {
 	public double getY() {
 		return y;
 	}
+	public double getVelX() {
+		return velX;
+	}
+	public double getVelY() {
+		return velY;
+	}
 	public void setX(double x) {
 		this.x = x;
 	}
 	public void setY(double y) {
 		this.y = y;
+	}
+	public void setVelX(double velX) {
+		this.velX = velX;
+	}
+	public void setVelY(double velY) {
+		this.velY = velY;
 	}
 }

@@ -27,6 +27,7 @@ public class Game extends Canvas implements Runnable {
 	private Player humanP;
 
 	public void init() {
+		requestFocus();
 		BufferedImageLoader loader = new BufferedImageLoader();
 		try {
 			spriteSheet = loader.loadImage("/human.png");
@@ -125,30 +126,29 @@ public class Game extends Canvas implements Runnable {
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_RIGHT) {
-			humanP.setX(humanP.getX() + 5);
+			humanP.setVelX(5);	
 		} else if(key == KeyEvent.VK_LEFT) {
-			humanP.setX(humanP.getX() - 5);
+			humanP.setVelX(-5);
 		} else if(key == KeyEvent.VK_DOWN) {
-			humanP.setY(humanP.getY() + 5);
+			humanP.setVelY(5);
 		} else if(key == KeyEvent.VK_UP) {
-			humanP.setY(humanP.getY() - 5);
+			humanP.setVelY(-5);
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
-		/*
+		
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_RIGHT) {
-			humanP.setX(0);
+			humanP.setVelX(0);
 		} else if(key == KeyEvent.VK_LEFT) {
-			humanP.setX(0);
+			humanP.setVelX(0);
 		} else if(key == KeyEvent.VK_UP) {
-			humanP.setX(0);
+			humanP.setVelY(0);
 		} else if(key == KeyEvent.VK_DOWN) {
-			humanP.setX(0);
+			humanP.setVelY(0);
 		}
-		*/
 	}
 
 	public static void main(String args[]) {

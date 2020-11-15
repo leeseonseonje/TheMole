@@ -26,4 +26,17 @@ public class Player {
 	public void render(Graphics g) { // 이미지 그릴때 사용
 		g.drawImage(player, (int)x, (int)y, null);
 	}
+	
+	public double getX() {
+		return x;
+	}
+	public double getY() {
+		return y;
+	}
+	public void setX(double x) {
+		this.x = x;
+	}
+	public void setY(double y) {
+		this.y = y;
+	}
 }

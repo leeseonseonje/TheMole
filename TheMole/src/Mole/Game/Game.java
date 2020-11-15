@@ -3,6 +3,7 @@ package Mole.Game;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -22,19 +23,21 @@ public class Game extends Canvas implements Runnable {
 
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private BufferedImage spriteSheet = null;
-	
+
 	private Player humanP;
-	
+
 	public void init() {
 		BufferedImageLoader loader = new BufferedImageLoader();
 		try {
 			spriteSheet = loader.loadImage("/human.png");
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		addKeyListener(new KeyInput(this));
 		
-		humanP = new Player(200,200,this);
-		
+		humanP = new Player(200, 200, this);
+
 	}
 
 	private synchronized void start() {
@@ -103,19 +106,49 @@ public class Game extends Canvas implements Runnable {
 
 		if (bs == null) {
 			createBufferStrategy(3); // 3개의 버퍼를 생성한다는 뜻, 바로 필요한것(사용하는중) 뒤에 두개의 이미지를 로딩하고 있을 것이다.
-									// 30개의 버퍼를 생성한다면, 그만큼 CPU의 자원을 잡아먹게 된다. 적절한 갯수로 사용,운용
+										// 30개의 버퍼를 생성한다면, 그만큼 CPU의 자원을 잡아먹게 된다. 적절한 갯수로 사용,운용
 			return;
 		}
 		Graphics g = bs.getDrawGraphics(); // graphic을 여기에 가져오고, 버퍼를 그리기 위한 graphics context를 만든다, 외부 버퍼를 그림
 		/////////////// 그림 그리는 공간 으로 추정//////////////////////////
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-		
+
 		humanP.render(g); // 인간 그리기
-		
+
 		///////////////////////////////////////////////////////////
 		g.dispose(); // 계속 루프를 하는데 dispose로 지워주지 않는다면..?
 		bs.show();
+	}
+
+	public void keyPressed(KeyEvent e) { // Key와 key 주의
+		int key = e.getKeyCode();
+		
+		if(key == KeyEvent.VK_RIGHT) {
+			humanP.setX(humanP.getX() + 5);
+		} else if(key == KeyEvent.VK_LEFT) {
+			humanP.setX(humanP.getX() - 5);
+		} else if(key == KeyEvent.VK_DOWN) {
+			humanP.setY(humanP.getY() + 5);
+		} else if(key == KeyEvent.VK_UP) {
+			humanP.setY(humanP.getY() - 5);
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
+		/*
+		int key = e.getKeyCode();
+		
+		if(key == KeyEvent.VK_RIGHT) {
+			humanP.setX(0);
+		} else if(key == KeyEvent.VK_LEFT) {
+			humanP.setX(0);
+		} else if(key == KeyEvent.VK_UP) {
+			humanP.setX(0);
+		} else if(key == KeyEvent.VK_DOWN) {
+			humanP.setX(0);
+		}
+		*/
 	}
 
 	public static void main(String args[]) {
@@ -135,6 +168,7 @@ public class Game extends Canvas implements Runnable {
 
 		game.start();
 	}
+
 	public BufferedImage getSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
 		return spriteSheet;
 	}

@@ -62,7 +62,7 @@ class MolePanel extends JPanel {
 			ch.setContentAreaFilled(false);
 			ch.setBounds(0, 0, 50, 50);
 			add(ch);
-			//ch.setVisible(false);
+			// ch.setVisible(false);
 
 			m1 = new MoleThread(50, 400);
 			m2 = new MoleThread(100, 400);
@@ -76,13 +76,12 @@ class MolePanel extends JPanel {
 			v0 = new vegetableThread(0);
 			v1 = new vegetableThread(1);
 			v2 = new vegetableThread(2);
-			
+
 			add(v0);
 			add(v1);
 			add(v2);
 
 //			v0.setVisible(false);
-
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -101,24 +100,32 @@ class MolePanel extends JPanel {
 		return v2.getx();
 	}
 
-	class vegetableThread  extends JLabel {
+	class vegetableThread extends JLabel {
 		private ImageIcon veget = new ImageIcon("img/vegetables.png");
-		
-		int x, y;
+
+		int x, y,section;
 
 		public vegetableThread(int section) {
-			x = ((int) (Math.random() * 260)) + 263 * section;
+			this.section = section;
+			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 260;
-			//vegetable = new JLabel(veget);
+			// vegetable = new JLabel(veget);
 			this.setBounds(x, y, 16, 16);
 			this.setIcon(veget);
-			//add();
-			System.out.println("작물위치 "+x+" "+y);
+			// add();
+			System.out.println("작물위치 " + x + " " + y);
 		}
 
 		public int getx() {
 			return x;
 		}
+		public void setposition() {
+			x = ((int) (Math.random() * 260)) + 263 * this.section;
+			y = 260;
+			this.setBounds(x, y, 16, 16);
+			 
+		}
+
 	}
 
 	class MoleThread extends Thread {
@@ -174,7 +181,7 @@ class MolePanel extends JPanel {
 
 								}
 							}
-							
+
 							if (e.getButton() == MouseEvent.BUTTON1) {
 								if (moleButton.getIcon().equals(moleSelect))
 									moleButton.setIcon(mole);
@@ -205,20 +212,27 @@ class MolePanel extends JPanel {
 
 			double x = (int) (startX + ((targetX - startX) * progress));
 			double y = (int) (startY + ((targetY - startY) * progress));
-
+			
 			repaint();
 			if (y >= 270 && x >= 12 && x <= 770) {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
-				champion.setRect(x - 5, y - 5, 10, 10);				
+				champion.setRect(x - 5, y - 5, 10, 10);
 			}
-			if(v0.getX() == x && v0.getY() <= y-5) {
+			System.out.println("두더지의 위치"+x+" "+y);
+			if (v0.getX() == x && v0.getY() >= y - 15) {
 				v0.setVisible(false);
-			} else if(v1.getX() == x && v1.getY() <= y-5) {
+				v0.setposition();
+				v0.setVisible(true);
+			} else if (v1.getX() == x && v1.getY() >= y - 15) {
 				v1.setVisible(false);
-			} else if(v2.getX() == x && v2.getY() <= y-5) {
+				v1.setposition();
+				v1.setVisible(true);
+			} else if (v2.getX() == x && v2.getY() >= y - 15) {
 				v2.setVisible(false);
+				v2.setposition();
+				v2.setVisible(true);
 			}
-			
+
 		}
 
 		public void calculateChampionMovement(double x, double y, Rectangle champion) {
@@ -227,8 +241,7 @@ class MolePanel extends JPanel {
 
 				targetX = x;
 				targetY = y;
-				
-				
+
 				startX = champion.getCenterX();
 				startY = champion.getCenterY();
 				double distance = Math

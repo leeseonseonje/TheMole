@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -20,6 +21,22 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private BufferedImage spriteSheet = null;
+	
+	//temp
+	private BufferedImage player;
+	
+	public void init() {
+		BufferedImageLoader loader = new BufferedImageLoader();
+		try {
+			spriteSheet = loader.loadImage("/human.png");
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		SpriteSheet spr1 = new SpriteSheet(spriteSheet);
+		player = spr1.grabHumImage(1, 1, 50, 64);
+	}
 
 	private synchronized void start() {
 		if (running)
@@ -45,7 +62,7 @@ public class Game extends Canvas implements Runnable {
 
 	@Override
 	public void run() { // Runnable의 기본으로 구현된 메소드
-
+		init();
 		long lastTime = System.nanoTime();
 		final double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
@@ -94,6 +111,8 @@ public class Game extends Canvas implements Runnable {
 		/////////////// 그림 그리는 공간 으로 추정//////////////////////////
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		
+		g.drawImage(player, 100, 100, this); // 인간 그리기
 
 		///////////////////////////////////////////////////////////
 		g.dispose(); // 계속 루프를 하는데 dispose로 지워주지 않는다면..?

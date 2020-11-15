@@ -16,6 +16,13 @@ public class SpriteSheet {
 
 		return img;
 	}
+	
+	public BufferedImage grabBulImage(int col, int row, int width, int height) {
+
+		BufferedImage img = image.getSubimage((col * 16) - 16, (row * 16) - 16, width, height);
+
+		return img;
+	}
 
 	public BufferedImage grabHumImage(int col, int row, int width, int height) {
 

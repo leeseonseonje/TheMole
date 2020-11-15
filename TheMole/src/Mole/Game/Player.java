@@ -25,6 +25,15 @@ public class Player {
 	public void tick() { // 메소드를 업데이트 할때 사용
 		x += velX;
 		y += velY;
+		
+		if(x <= 0)
+			x = 0;
+		if(x >= 800 - 50)
+			x = 800 - 50;
+		if(y <= 0)
+			y = 0;
+		if(y >= 600 - 64)
+			y = 600 - 64;
 	}
 	
 	public void render(Graphics g) { // 이미지 그릴때 사용

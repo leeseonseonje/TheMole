@@ -179,4 +179,8 @@ public class Game extends Canvas implements Runnable {
 	public BufferedImage getSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
 		return spriteSheet;
 	}
+	
+	public Player getPlayer() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
+		return humanP;
+	}
 }

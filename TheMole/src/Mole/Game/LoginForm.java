@@ -1,7 +1,6 @@
 package Mole.Game;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -24,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import DB.DBConnection;
+import MoleServer.MoleClient;
 
 public class LoginForm extends JFrame {
 
@@ -56,7 +56,7 @@ public class LoginForm extends JFrame {
 	private LoginForm log;
 	private JTextField username; // 로그인창 아이디
 	private JPasswordField passwordField; // 로그인창 비밀번호
-	private static JButton loginButton;
+	private JButton loginButton;
 	private JButton signupButton; //회원가입창으로 이동하는 버튼
 	private JButton nameCheckbtn;
 	private JPanel loginPanel;
@@ -86,33 +86,15 @@ public class LoginForm extends JFrame {
 		loginButton.setBackground(Color.LIGHT_GRAY);
 		loginButton.setBounds(358, 302, 97, 23);
 		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String user = username.getText();
-				String pass = passwordField.getText();
-				boolean result = false;
-				try {
-					Connection con = DBConnection.makeConnection(); // DB연결
-					Statement st = con.createStatement();
-					ResultSet rs = st.executeQuery("SELECT * FROM gamer");
-					while (rs.next()) { // 데이터베이스 테이블 내용 돌림 확인
-						if (user.equals(rs.getString("ID")) && pass.equals(rs.getString("PASSWORDS"))) {
-							result = true;
-							break;
-						}
+			public void actionPerformed(ActionEvent e) {
+				if(!username.getText().equals(null) && !passwordField.getText().equals(null)) {
+					try {
+						MoleClient mc = new MoleClient();
+						mc.future = mc.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
+						System.out.println("보냄");
+					} catch (InterruptedException a) {
+						a.printStackTrace();
 					}
-					if (result) {
-						// JOptionPane.showMessageDialog(log, "you are successfully logined");
-						id = rs.getString("ID");
-						secret = rs.getString("PASSWORDS");
-						dispose();
-						new MainFrame();
-					} else {
-						JOptionPane.showMessageDialog(log, "Invalid username or password");
-					}
-					rs.close();
-					st.close();
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 		});
@@ -171,33 +153,14 @@ public class LoginForm extends JFrame {
 		passwordField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyChar() == KeyEvent.VK_ENTER) {
-					String user = username.getText();
-					String pass = passwordField.getText();
-					boolean result = false;
-					//System.out.println(user + " " + pass);
-					try {
-						Connection con = DBConnection.makeConnection(); // DB연결
-						Statement st = con.createStatement();
-						ResultSet rs = st.executeQuery("SELECT * FROM gamer");
-						while (rs.next()) { // 데이터베이스 테이블 내용 돌림 확인
-							//System.out.println(rs.getString("ID") + " " + rs.getString("PASSWORD"));
-							if (user.equals(rs.getString("ID")) && pass.equals(rs.getString("PASSWORDS"))) {
-								result = true;
-								break;
-							}
+					if(!username.getText().equals(null) && !passwordField.getText().equals(null)) {
+						try {
+							MoleClient mc = new MoleClient();
+							mc.future = mc.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
+							System.out.println("보냄");
+						} catch (InterruptedException a) {
+							a.printStackTrace();
 						}
-						if (result) {
-							id = rs.getString("ID");
-							secret = rs.getString("PASSWORDS");
-							dispose();
-							new MainFrame();
-						} else {
-							JOptionPane.showMessageDialog(log, "Invalid username or password");
-						}
-						rs.close();
-						st.close();
-					} catch (Exception a) {
-						a.printStackTrace();
 					}
 				}
 			}

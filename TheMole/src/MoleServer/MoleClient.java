@@ -10,19 +10,22 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class MoleClient {
 	private static final int PORT = 10002;
 	
-	private Channel serverChannel;
-	private ChannelFuture future;
+	public Channel serverChannel;
+	public ChannelFuture future;
 	
-	public void clientConnect() throws InterruptedException {
+	public MoleClient() throws InterruptedException {
 		EventLoopGroup group = new NioEventLoopGroup();
 		try {
 			Bootstrap bootstrap = new Bootstrap();
 			bootstrap.group(group)
 				.channel(NioSocketChannel.class)
 				.handler(new MoleClientInitializer());
-				serverChannel = bootstrap.connect().sync().channel();
-		} finally {
-			group.shutdownGracefully();
+				serverChannel = bootstrap.connect("localhost", PORT).sync().channel();
+				
+				future = serverChannel.writeAndFlush("");
+
+			} finally {
+			//group.shutdownGracefully();
 		}
 	}
 }

@@ -1,5 +1,8 @@
 package MoleServer;
 
+import java.util.Arrays;
+
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.group.ChannelGroup;
@@ -11,24 +14,39 @@ public class MoleServerHandler extends ChannelInboundHandlerAdapter{
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		
+		Channel newChannel = ctx.channel();
+        System.out.println("클라이언트 접속");
+
+        channelGroup.add(newChannel);
 	}
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		// TODO Auto-generated method stub
-		super.channelRead(ctx, msg);
+		String readMessage = (String)msg;
+		System.out.println(readMessage);
+		   String[] s = readMessage.split(",");
+		   String command = s[0];
+		   String id = s[1];
+		   String pw = s[2];
+		   System.out.println(s[0]);
+		   System.out.println(s[1]);
+		   System.out.println(s[2]);
+		   System.out.println(command);
+		   System.out.println(id);
+		   System.out.println(pw);
+	       if (command.equals("[LOGIN]")) {
+	    	   new LoginServer(id, pw, ctx);
+	       }
 	}
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		// TODO Auto-generated method stub
-		super.channelReadComplete(ctx);
+		ctx.flush();
 	}
 
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-		// TODO Auto-generated method stub
-		super.channelUnregistered(ctx);
+		Channel oldChannel = ctx.channel();
+        channelGroup.remove(oldChannel);
 	}
 }

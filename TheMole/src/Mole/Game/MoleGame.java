@@ -243,7 +243,7 @@ class MainFrame extends JFrame {
 
 public class MoleGame {
 
-	public static void main(String[] args) {
+	public MoleGame() {
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 			new MainFrame();

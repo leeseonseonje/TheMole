@@ -43,7 +43,6 @@ class MolePanel extends JPanel {
 	vegetableThread v0;
 	vegetableThread v1;
 	vegetableThread v2;
-	private boolean eat = false;
 
 	public MolePanel() {
 		try {
@@ -75,10 +74,13 @@ class MolePanel extends JPanel {
 			m8 = new MoleThread(100, 500);
 			m9 = new MoleThread(150, 500);
 			v0 = new vegetableThread(0);
-//			v1 = new vegetableThread(1);
-//			v2 = new vegetableThread(2);
+			v1 = new vegetableThread(1);
+			v2 = new vegetableThread(2);
 			
 			add(v0);
+			add(v1);
+			add(v2);
+
 //			v0.setVisible(false);
 
 
@@ -111,7 +113,7 @@ class MolePanel extends JPanel {
 			this.setBounds(x, y, 16, 16);
 			this.setIcon(veget);
 			//add();
-			//System.out.println(vegetable.getX());
+			System.out.println("작물위치 "+x+" "+y);
 		}
 
 		public int getx() {
@@ -164,7 +166,7 @@ class MolePanel extends JPanel {
 						public void mousePressed(MouseEvent e) {
 							if (e.getButton() == MouseEvent.BUTTON3) {
 								if (moleButton.getIcon().equals(moleSelect)) {
-									eat = false;
+
 									timer.stop();
 									calculateChampionMovement(e.getX(), e.getY(), champion);
 									startTime = System.currentTimeMillis();
@@ -209,10 +211,14 @@ class MolePanel extends JPanel {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);				
 			}
-			if(v0.getX() == x && v0.getY() == y-5)
+			if(v0.getX() == x && v0.getY() <= y-5) {
 				v0.setVisible(false);
+			} else if(v1.getX() == x && v1.getY() <= y-5) {
+				v1.setVisible(false);
+			} else if(v2.getX() == x && v2.getY() <= y-5) {
+				v2.setVisible(false);
+			}
 			
-
 		}
 
 		public void calculateChampionMovement(double x, double y, Rectangle champion) {
@@ -222,8 +228,7 @@ class MolePanel extends JPanel {
 				targetX = x;
 				targetY = y;
 				
-				System.out.println(targetX);
-				System.out.println(targetY);
+				
 				startX = champion.getCenterX();
 				startY = champion.getCenterY();
 				double distance = Math

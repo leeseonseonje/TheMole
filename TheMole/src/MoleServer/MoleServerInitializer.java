@@ -12,8 +12,8 @@ public class MoleServerInitializer extends ChannelInitializer<SocketChannel> {
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
 			pipeline.addLast(new StringDecoder());
-						pipeline.addLast(new StringEncoder());
-						pipeline.addLast(new MoleServerHandler());
+			pipeline.addLast(new StringEncoder());
+			pipeline.addLast(new MoleServerHandler());
 	}
 	
 }

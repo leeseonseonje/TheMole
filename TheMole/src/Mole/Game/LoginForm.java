@@ -56,8 +56,8 @@ public class LoginForm extends JFrame {
 	private LoginForm log;
 	private JTextField username; // 로그인창 아이디
 	private JPasswordField passwordField; // 로그인창 비밀번호
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private static JButton loginButton;
+	private JButton signupButton; //회원가입창으로 이동하는 버튼
 	private JButton nameCheckbtn;
 	private JPanel loginPanel;
 	private boolean idCheck = false;
@@ -82,10 +82,10 @@ public class LoginForm extends JFrame {
 		loginPanel.setBounds(0, 0, 611, 362);
 		loginPanel.setLayout(null);
 
-		btnNewButton = new JButton("Login");
-		btnNewButton.setBackground(Color.LIGHT_GRAY);
-		btnNewButton.setBounds(358, 302, 97, 23);
-		btnNewButton.addActionListener(new ActionListener() {
+		loginButton = new JButton("Login");
+		loginButton.setBackground(Color.LIGHT_GRAY);
+		loginButton.setBounds(358, 302, 97, 23);
+		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String user = username.getText();
 				String pass = passwordField.getText();
@@ -116,12 +116,12 @@ public class LoginForm extends JFrame {
 				}
 			}
 		});
-		loginPanel.add(btnNewButton);
+		loginPanel.add(loginButton);
 
-		btnNewButton_1 = new JButton("SignUp");
-		btnNewButton_1.setBackground(Color.LIGHT_GRAY);
-		btnNewButton_1.setBounds(487, 302, 97, 23);
-		loginPanel.add(btnNewButton_1);
+		signupButton = new JButton("SignUp");
+		signupButton.setBackground(Color.LIGHT_GRAY);
+		signupButton.setBounds(487, 302, 97, 23);
+		loginPanel.add(signupButton);
 
 		JLabel lblNewLabel = new JLabel("Login");
 		lblNewLabel.setForeground(Color.BLUE);
@@ -155,7 +155,7 @@ public class LoginForm extends JFrame {
 		setVisible(true);
 
 		SignUpForm sf = new SignUpForm();
-		btnNewButton_1.addActionListener(new ActionListener() {
+		signupButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add(sf);
 				loginPanel.setVisible(false);

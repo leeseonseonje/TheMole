@@ -11,17 +11,26 @@ public class Player {
 	private double velX = 0;
 	private double velY = 0;
 	
+	private SpriteSheet spr1;
 	private BufferedImage player;
 	
 	public Player(double x, double y, Game game) {
 		this.x = x;
 		this.y = y;
 		
-		SpriteSheet spr1 = new SpriteSheet(game.getSpriteSheet());
+		spr1 = new SpriteSheet(game.getSpriteSheet());
 		
 		player = spr1.grabHumImage(1, 1, 50, 64);
 	}
 	
+	public SpriteSheet getSpr1() {
+		return spr1;
+	}
+
+	public void setSpr1(SpriteSheet spr1) {
+		this.spr1 = spr1;
+	}
+
 	public void tick() { // 메소드를 업데이트 할때 사용
 		x += velX;
 		y += velY;
@@ -63,5 +72,26 @@ public class Player {
 	}
 	public void setVelY(double velY) {
 		this.velY = velY;
+	}
+	public boolean rightStand() {
+			player = spr1.grabHumImage(1, 1, 50, 64);
+			return true;
+	}
+	
+	public boolean leftStand() {
+		player = spr1.grabHumImage(1, 2, 50, 64);
+		return true;
+}
+	
+	public boolean rightMove() {
+		for(int i=2; i<=4; i++)
+			player = spr1.grabHumImage(i, 1, 50, 64);
+		return true;
+	}
+	
+	public boolean leftMove() {
+		for(int i=2; i<=4; i++)
+			player = spr1.grabHumImage(i, 2, 50, 64);
+		return true;
 	}
 }

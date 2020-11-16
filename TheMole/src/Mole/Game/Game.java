@@ -6,30 +6,35 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Game extends Canvas implements Runnable {
 
+	
 	private static final long serialVersionUID = 1L;
+	// 프레임 설정 정보
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = (int) (WIDTH / 12 * 9);
 	public static final int SCALE = 1;
 	public final String TITLE = "Mole Game";
-	
-	public static boolean buldirection = true;
 
-	private boolean running = false;
+	private static JLabel bulcount;
+	public static int BULLETCOUNT = 3;
+	
+	private boolean running = false; // 게임의 실행여부
 	private Thread thread;
 
-	private BufferedImage background = null;
-	private BufferedImage spriteSheet = null;
+	private BufferedImage background = null; // 배경출력하는 버퍼이미지
+	private BufferedImage spriteSheet = null; // 인간출력하는 버퍼이미지
 
+	// 캐릭터 생성
 	private Player humanP;
-	private Controller c;
+	
+	public static boolean buldirection = true; // 총알방향, true는 오른쪽, false는 왼쪽
+	private Controller c; // 총알 컨트롤러
 
 	public void init() {
 		requestFocus();
@@ -136,14 +141,20 @@ public class Game extends Canvas implements Runnable {
 
 		if (key == KeyEvent.VK_RIGHT) {
 			humanP.setVelX(3);
+			humanP.rightMove();
 		} else if (key == KeyEvent.VK_LEFT) {
 			humanP.setVelX(-3);
-		} else if (key == KeyEvent.VK_A) {
+			humanP.leftMove();
+		} else if (key == KeyEvent.VK_A && (humanP.leftMove() || humanP.leftStand())&& (BULLETCOUNT > 0)) { // A키를 눌렀고 총알이 1개이상일 때, 왼쪽 발사
 			this.buldirection = false;
 			c.addBullet(new Bullet(humanP.getX(),humanP.getY()+35,this));
-		} else if (key == KeyEvent.VK_D) {
+			BULLETCOUNT--;
+			bulcount.setText(String.format("남은 총알 수 : %d",BULLETCOUNT));
+		} else if (key == KeyEvent.VK_D && (humanP.rightMove() || humanP.rightStand()) && (BULLETCOUNT > 0)) { // D키를 눌렀고 총알이 1개이상일 때, 오른쪽 발사
 			this.buldirection = true;
 			c.addBullet(new Bullet(humanP.getX()+50,humanP.getY()+35,this));
+			BULLETCOUNT--;
+			bulcount.setText(String.format("남은 총알 수 : %d",BULLETCOUNT));
 		}
 	}
 
@@ -153,8 +164,10 @@ public class Game extends Canvas implements Runnable {
 
 		if (key == KeyEvent.VK_RIGHT) {
 			humanP.setVelX(0);
+			humanP.rightStand();
 		} else if (key == KeyEvent.VK_LEFT) {
 			humanP.setVelX(0);
+			humanP.leftStand();
 		}
 	}
 
@@ -166,12 +179,22 @@ public class Game extends Canvas implements Runnable {
 		game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
 		JFrame frame = new JFrame(game.TITLE);
+		
+		bulcount = new JLabel(String.format("남은 총알 수 : %d",BULLETCOUNT));
+		bulcount.setBackground(null);
+		bulcount.setBounds(1,1,120,30);
+		frame.add(bulcount);
+		
 		frame.add(game);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.setLayout(null);
+		
+
+		
 
 		game.start();
 	}

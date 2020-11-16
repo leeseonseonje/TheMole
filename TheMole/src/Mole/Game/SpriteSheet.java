@@ -10,7 +10,14 @@ public class SpriteSheet {
 		this.image = image;
 	}
 
-	public BufferedImage grabImage(int col, int row, int width, int height) {
+	public BufferedImage grabImage(int col, int row, int width, int height) { // 디폴트? 같은 느낌
+
+		BufferedImage img = image.getSubimage((col * 32) - 32, (row * 32) - 32, width, height);
+
+		return img;
+	}
+	
+	public BufferedImage grabMolImage(int col, int row, int width, int height) {
 
 		BufferedImage img = image.getSubimage((col * 32) - 32, (row * 32) - 32, width, height);
 

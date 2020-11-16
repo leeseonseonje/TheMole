@@ -9,25 +9,15 @@ public class Bullet {
 	private Game game;
 	private double x;
 	private double y;
-	// public static boolean right = true;
-
-	BufferedImage image;
-	BufferedImage image2;
-	BufferedImageLoader loader = new BufferedImageLoader();
+	
+	private Textures texture;
 
 	SpriteSheet spr = null;
 
-	public Bullet(double x, double y, Game game) {
+	public Bullet(double x, double y, Textures texture) {
 		this.x = x;
 		this.y = y;
-
-		try {
-			spr = new SpriteSheet(loader.loadImage("/bulimg.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		image = spr.grabBulImage(1, 1, 16, 16);
-		image2 = spr.grabBulImage(2, 1, 16, 16);
+		this.texture = texture;
 	}
 
 	public void tick() {
@@ -39,9 +29,9 @@ public class Bullet {
 
 	public void render(Graphics g) {
 		if (game.buldirection)
-			g.drawImage(image, (int) x, (int) y, null);
+			g.drawImage(texture.bulletR, (int) x, (int) y, null);
 		else
-			g.drawImage(image2, (int) x, (int) y, null);
+			g.drawImage(texture.bulletL, (int) x, (int) y, null);
 	}
 
 	public double getX() {

@@ -11,24 +11,12 @@ public class Player {
 	private double velX = 0;
 	private double velY = 0;
 	
-	private SpriteSheet spr1;
-	private BufferedImage player;
+	private Textures texture;
 	
-	public Player(double x, double y, Game game) {
+	public Player(double x, double y, Textures texture) {
 		this.x = x;
 		this.y = y;
-		
-		spr1 = new SpriteSheet(game.getSpriteSheet());
-		
-		player = spr1.grabHumImage(1, 1, 50, 64);
-	}
-	
-	public SpriteSheet getSpr1() {
-		return spr1;
-	}
-
-	public void setSpr1(SpriteSheet spr1) {
-		this.spr1 = spr1;
+		this.texture = texture;
 	}
 
 	public void tick() { // 메소드를 업데이트 할때 사용
@@ -39,14 +27,16 @@ public class Player {
 			x = 0;
 		if(x >= 800 - 50)
 			x = 800 - 50;
+		/*
 		if(y <= 0)
 			y = 0;
 		if(y >= 600 - 64)
 			y = 600 - 64;
+		*/
 	}
 	
 	public void render(Graphics g) { // 이미지 그릴때 사용
-		g.drawImage(player, (int)x, (int)y, null);
+		g.drawImage(texture.human, (int)x, (int)y, null);
 	}
 	
 	public double getX() {
@@ -74,24 +64,24 @@ public class Player {
 		this.velY = velY;
 	}
 	public boolean rightStand() {
-			player = spr1.grabHumImage(1, 1, 50, 64);
+		texture.human = texture.humanSpr.grabHumImage(1, 1, 50, 64);
 			return true;
 	}
 	
 	public boolean leftStand() {
-		player = spr1.grabHumImage(1, 2, 50, 64);
+		texture.human = texture.humanSpr.grabHumImage(1, 2, 50, 64);
 		return true;
 }
 	
 	public boolean rightMove() {
 		for(int i=2; i<=4; i++)
-			player = spr1.grabHumImage(i, 1, 50, 64);
+			texture.human = texture.humanSpr.grabHumImage(i, 1, 50, 64);
 		return true;
 	}
 	
 	public boolean leftMove() {
 		for(int i=2; i<=4; i++)
-			player = spr1.grabHumImage(i, 2, 50, 64);
+			texture.human = texture.humanSpr.grabHumImage(i, 2, 50, 64);
 		return true;
 	}
 }

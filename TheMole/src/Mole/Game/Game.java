@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에서 new 키워드로 Game을 생성하지 말 것.
 
 	
 	private static final long serialVersionUID = 1L;
@@ -23,24 +23,31 @@ public class Game extends Canvas implements Runnable {
 
 	private static JLabel bulcount;
 	public static int BULLETCOUNT = 3;
+	private boolean is_shooting = false; // 총알 발사버튼을 꾹눌러서 줄줄이 나오는거 방지
+	public static boolean buldirection = true; // 총알방향, true는 오른쪽, false는 왼쪽
 	
 	private boolean running = false; // 게임의 실행여부
 	private Thread thread;
 
 	private BufferedImage background = null; // 배경출력하는 버퍼이미지
-	private BufferedImage spriteSheet = null; // 인간출력하는 버퍼이미지
-
+	private BufferedImage humSpriteSheet = null; // 인간출력하는 버퍼이미지
+	private BufferedImage bulSpriteSheet = null; // 총알출력하는 버퍼이미지
+	private BufferedImage molSpriteSheet = null; // 두더지출력하는 버퍼이미지
+	
 	// 캐릭터 생성
 	private Player humanP;
+	private Controller c; // 컨트롤러
+	//private Mole moleP;
+	private Textures texture;
 	
-	public static boolean buldirection = true; // 총알방향, true는 오른쪽, false는 왼쪽
-	private Controller c; // 총알 컨트롤러
 
 	public void init() {
 		requestFocus();
 		BufferedImageLoader loader = new BufferedImageLoader();
 		try {
-			spriteSheet = loader.loadImage("/humanSpr.png");
+			humSpriteSheet = loader.loadImage("/humanSpr.png");
+			bulSpriteSheet = loader.loadImage("/bulimg.png");
+			molSpriteSheet = loader.loadImage("/moleSpr.png");
 			background = loader.loadImage("/Backgrounds.png");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -48,8 +55,11 @@ public class Game extends Canvas implements Runnable {
 
 		addKeyListener(new KeyInput(this));
 
-		humanP = new Player(200, 225, this);
-		c = new Controller(this);
+		texture = new Textures(this); // 생성전에 텍스처를 생성
+		
+		humanP = new Player(200, 225, texture);
+		//moleP = new Mole(150,350,texture);
+		c = new Controller(this,texture);
 
 	}
 
@@ -130,6 +140,8 @@ public class Game extends Canvas implements Runnable {
 
 		humanP.render(g); // 인간 그리기
 		c.render(g);
+		//moleP.render(g);
+			
 
 		///////////////////////////////////////////////////////////
 		g.dispose(); // 계속 루프를 하는데 dispose로 지워주지 않는다면..?
@@ -145,14 +157,16 @@ public class Game extends Canvas implements Runnable {
 		} else if (key == KeyEvent.VK_LEFT) {
 			humanP.setVelX(-3);
 			humanP.leftMove();
-		} else if (key == KeyEvent.VK_A && (humanP.leftMove() || humanP.leftStand())&& (BULLETCOUNT > 0)) { // A키를 눌렀고 총알이 1개이상일 때, 왼쪽 발사
+		} else if (key == KeyEvent.VK_A && (humanP.leftMove() || humanP.leftStand())&& (BULLETCOUNT > 0) && !is_shooting) { // A키를 눌렀고 총알이 1개이상일 때, 왼쪽 발사
 			this.buldirection = false;
-			c.addBullet(new Bullet(humanP.getX(),humanP.getY()+35,this));
+			is_shooting = true;
+			c.addBullet(new Bullet(humanP.getX(),humanP.getY()+35,texture));
 			BULLETCOUNT--;
 			bulcount.setText(String.format("남은 총알 수 : %d",BULLETCOUNT));
-		} else if (key == KeyEvent.VK_D && (humanP.rightMove() || humanP.rightStand()) && (BULLETCOUNT > 0)) { // D키를 눌렀고 총알이 1개이상일 때, 오른쪽 발사
+		} else if (key == KeyEvent.VK_D && (humanP.rightMove() || humanP.rightStand()) && (BULLETCOUNT > 0) && !is_shooting) { // D키를 눌렀고 총알이 1개이상일 때, 오른쪽 발사
 			this.buldirection = true;
-			c.addBullet(new Bullet(humanP.getX()+50,humanP.getY()+35,this));
+			is_shooting = true;
+			c.addBullet(new Bullet(humanP.getX()+50,humanP.getY()+35,texture));
 			BULLETCOUNT--;
 			bulcount.setText(String.format("남은 총알 수 : %d",BULLETCOUNT));
 		}
@@ -168,6 +182,10 @@ public class Game extends Canvas implements Runnable {
 		} else if (key == KeyEvent.VK_LEFT) {
 			humanP.setVelX(0);
 			humanP.leftStand();
+		} else if (key == KeyEvent.VK_A) {
+			is_shooting = false;
+		} else if (key == KeyEvent.VK_D) {
+			is_shooting = false;
 		}
 	}
 
@@ -199,11 +217,16 @@ public class Game extends Canvas implements Runnable {
 		game.start();
 	}
 
-	public BufferedImage getSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
-		return spriteSheet;
+	public BufferedImage getHumSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
+		return humSpriteSheet;
 	}
-	
-	public Player getPlayer() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
+	public BufferedImage getBulSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
+		return bulSpriteSheet;
+	}
+	public BufferedImage getMolSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
+		return molSpriteSheet;
+	}
+	public Player getPlayer() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기, Controller 클래스에서 사용
 		return humanP;
 	}
 }

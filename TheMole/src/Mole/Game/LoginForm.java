@@ -91,7 +91,9 @@ public class LoginForm extends JFrame {
 					try {
 						MoleClient mc = new MoleClient();
 						mc.future = mc.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
+						mc.future = mc.serverChannel.writeAndFlush("いしいけいしけいしけけいしいしいしけいけしいけししいしいし");
 						System.out.println("左蛙");
+						dispose();
 					} catch (InterruptedException a) {
 						a.printStackTrace();
 					}

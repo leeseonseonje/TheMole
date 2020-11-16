@@ -39,7 +39,7 @@ public class DBConnection {
 			con = DriverManager.getConnection(url,id,password);
 			System.out.println("데이터베이스 연결 성공");
 		} catch(Exception e) {
-			System.out.println("데이터베이스 연결 오류 : " + e.getMessage());
+			//System.out.println("데이터베이스 연결 오류 : " + e.getMessage());
 		}
 		return con;
 	}

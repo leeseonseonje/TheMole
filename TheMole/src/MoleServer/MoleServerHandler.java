@@ -25,17 +25,8 @@ public class MoleServerHandler extends ChannelInboundHandlerAdapter{
 		String readMessage = (String)msg;
 		System.out.println(readMessage);
 		   String[] s = readMessage.split(",");
-		   String command = s[0];
-		   String id = s[1];
-		   String pw = s[2];
-		   System.out.println(s[0]);
-		   System.out.println(s[1]);
-		   System.out.println(s[2]);
-		   System.out.println(command);
-		   System.out.println(id);
-		   System.out.println(pw);
-	       if (command.equals("[LOGIN]")) {
-	    	   new LoginServer(id, pw, ctx);
+	       if (s[0].equals("[LOGIN]")) {
+	    	   new LoginServer(s[1], s[2], ctx);
 	       }
 	}
 
@@ -48,5 +39,6 @@ public class MoleServerHandler extends ChannelInboundHandlerAdapter{
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		Channel oldChannel = ctx.channel();
         channelGroup.remove(oldChannel);
+        System.out.println("eee");
 	}
 }

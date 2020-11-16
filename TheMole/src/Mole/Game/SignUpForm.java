@@ -66,6 +66,7 @@ public class SignUpForm extends JPanel {
                         checkLabel.setText("중복아님");
                         idcheck = true;
                     }
+     
                     rs.close();
                     st.close();
                     
@@ -113,11 +114,9 @@ public class SignUpForm extends JPanel {
 						st.close();
 						con.close();
 					} catch (Exception a) {
-						System.out.println("데이터베이스 연결 오류 : " + a.getMessage());
-						a.printStackTrace();
+						JOptionPane.showMessageDialog(log, "정보가 일치하지 않습니다.\n fail to register");
 					}
-				} else
-					JOptionPane.showMessageDialog(log, "정보가 일치하지 않습니다.\n fail to register");
+				}
 			}
 		});
 		add(btnNewButton_2);

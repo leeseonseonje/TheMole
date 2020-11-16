@@ -88,23 +88,63 @@ public class LoginForm extends JFrame {
 		loginButton.setBounds(358, 302, 97, 23);
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!username.getText().equals(null) && !passwordField.getText().equals(null)) {
+				if(!username.getText().equals("") && !passwordField.getText().equals("")) {
+					id = username.getText();
 					try {
 						MoleClient moleclient = new MoleClient();
 						moleclient.future = moleclient.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
-						Thread.sleep(1000);
+						while(MoleClientHandler.serverMessage.equals("")) {
+							Thread.sleep(300);
+							if(!MoleClientHandler.serverMessage.equals(""))
+								break;
+						}
 						if(MoleClientHandler.serverMessage.equals("LOGIN")) {
 							dispose();
 							new MainFrame();
+						} else if ((MoleClientHandler.serverMessage.equals("LOGINFAIL"))) {
+							JOptionPane.showMessageDialog(log, "Invalid username or password");
+							username.setText("");
+							passwordField.setText("");
 						}
 					} catch (InterruptedException a) {
 						a.printStackTrace();
 					}
-				}
+				} else
+					JOptionPane.showMessageDialog(log, "Invalid username or password");
+				MoleClientHandler.serverMessage = "";
 			}
 		});
 		loginPanel.add(loginButton);
-
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(368, 233, 205, 20);
+		loginPanel.add(passwordField);
+		passwordField.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+					if(!username.getText().equals(null) && !passwordField.getText().equals(null)) {
+						id = username.getText();
+						try {
+							MoleClient moleclient = new MoleClient();
+							moleclient.future = moleclient.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
+							Thread.sleep(1000);
+							if(MoleClientHandler.serverMessage.equals("LOGIN")) {
+								dispose();
+								new MainFrame();
+							} else {
+								JOptionPane.showMessageDialog(log, "Invalid username or password");
+								username.setText("");
+								passwordField.setText("");
+							}
+						} catch (InterruptedException a) {
+							a.printStackTrace();
+						}
+					}
+				}
+			}
+			
+		});
+		
 		signupButton = new JButton("SignUp");
 		signupButton.setBackground(Color.LIGHT_GRAY);
 		signupButton.setBounds(487, 302, 97, 23);
@@ -129,10 +169,6 @@ public class LoginForm extends JFrame {
 		lblNewLabel_2.setBounds(368, 199, 97, 15);
 		loginPanel.add(lblNewLabel_2);
 
-		passwordField = new JPasswordField();
-		passwordField.setBounds(368, 233, 205, 20);
-		loginPanel.add(passwordField);
-
 		JLabel lblNewLabel_7 = new JLabel("");
 		lblNewLabel_7.setBounds(12, 10, 320, 320);
 		lblNewLabel_7.setIcon(new ImageIcon(LoginForm.class.getResource("/images/loginpages.png")));
@@ -154,22 +190,6 @@ public class LoginForm extends JFrame {
 				sf.setVisible(false);
 				loginPanel.setVisible(true);
 			}
-		});
-		passwordField.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyChar() == KeyEvent.VK_ENTER) {
-					if(!username.getText().equals(null) && !passwordField.getText().equals(null)) {
-						try {
-							MoleClient mc = new MoleClient();
-							mc.future = mc.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
-							System.out.println("º¸³¿");
-						} catch (InterruptedException a) {
-							a.printStackTrace();
-						}
-					}
-				}
-			}
-			
 		});
 	}
 }

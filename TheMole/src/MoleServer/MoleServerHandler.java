@@ -27,9 +27,11 @@ public class MoleServerHandler extends ChannelInboundHandlerAdapter{
 		   String[] s = readMessage.split(",");
 	       if (s[0].equals("[LOGIN]")) 
 	    	   new LoginServer(s[1], s[2], ctx);
-	 
-	       if (s[0].equals("[DUPLICATE]"))
-	    	   new SignUpServer(s[1], ctx);
+	       else if (s[0].equals("[DUPLICATE]"))
+	    	   SignUpServer.duplicateCheck(s[1], ctx);
+	       else if (s[0].equals("[SIGNUP]"))
+	    	   SignUpServer.signUpComplete(s[1], s[2], ctx);
+	       
 	}
 
 	@Override

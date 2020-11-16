@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import DB.DBConnection;
 import MoleServer.MoleClient;
+import MoleServer.MoleClientHandler;
 
 public class SignUpForm extends JPanel {
 	
@@ -23,7 +24,7 @@ public class SignUpForm extends JPanel {
 	private JTextField idField; // 가입창 아이디
 	private JPasswordField passwordField_1; // 가입창 비밀번호
 	private JPasswordField passwordField_2; // 가입창 비밀번호 재입력
-	private JButton SignUpButton;
+	private JButton signUpButton;
 	private JButton backButton;
 	private boolean idcheck = false;
 	
@@ -49,33 +50,20 @@ public class SignUpForm extends JPanel {
         add(checkLabel);
         nameCheckbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                /*try {
-                    Connection con = DBConnection.makeConnection();
-                    Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT * FROM gamer");
-                    ArrayList<String> idList = new ArrayList<String>();
-                    while(rs.next()) {
-                        idList.add(rs.getString("id"));
-                    }
-                    int index = Collections.binarySearch(idList, textField_1.getText());
-                    if(index >= 0 )
-                        checkLabel.setText("중복");
-
-                    else {
-                        checkLabel.setText("중복아님");
-                        idcheck = true;
-                    }
-     
-                    rs.close();
-                    st.close();
-                    
-                } catch (Exception a) {
-                    System.out.println("데이터 베이스 연결 오류 : " + a.getMessage());
-                    a.printStackTrace();
-                }*/
             	try {
 					MoleClient moleclient = new MoleClient();
 					moleclient.future = moleclient.serverChannel.writeAndFlush("[DUPLICATE]" + "," + idField.getText());
+					while(MoleClientHandler.serverMessage.equals("")) {
+						Thread.sleep(300);
+						if(!MoleClientHandler.serverMessage.equals(""))
+							break;
+					}
+					if(MoleClientHandler.serverMessage.equals("DUPLICATE"))
+						checkLabel.setText("중복");
+					else 
+						checkLabel.setText("중복아님");
+					
+					MoleClientHandler.serverMessage = "";
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -99,31 +87,38 @@ public class SignUpForm extends JPanel {
 		passwordField_2.setBounds(352, 236, 201, 21);
 		add(passwordField_2);
 		
-		SignUpButton = new JButton("SignUp");
-		SignUpButton.setBackground(Color.LIGHT_GRAY);
-		SignUpButton.setBounds(352, 300, 97, 23);
-		SignUpButton.addActionListener(new ActionListener() {
+		signUpButton = new JButton("SignUp");
+		signUpButton.setBackground(Color.LIGHT_GRAY);
+		signUpButton.setBounds(352, 300, 97, 23);
+		signUpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = idField.getText();
 				String password = passwordField_1.getText();
 				String passwordcheck = passwordField_2.getText();
-				if (password.equals(passwordcheck) && (name != null && password != null)) { // 패스워드가 재확인 패스워드와 일치할시에
-					try {
-						Connection con = DBConnection.makeConnection(); // DB연결
-						Statement st = con.createStatement();
-						String s = String.format("INSERT INTO gamer VALUES('%s','%s',0,0,0,1000);", name, password);
-						// System.out.println(s); // 확인용
-						st.executeUpdate(s);
-						JOptionPane.showMessageDialog(log, "you signed up successfully!!!");
-						st.close();
-						con.close();
-					} catch (Exception a) {
+				if (password.equals(passwordcheck) && (name != "" && password != "")) {
+					if(checkLabel.getText().equals("중복아님")) {
+						try {
+							MoleClient moleclient = new MoleClient();
+							moleclient.future = moleclient.serverChannel.writeAndFlush("[SIGNUP]" + "," + name + "," + password);
+							while(MoleClientHandler.serverMessage.equals("")) {
+								Thread.sleep(300);
+								if(!MoleClientHandler.serverMessage.equals(""))
+									break;
+							}
+							if(MoleClientHandler.serverMessage.equals("SIGNUP")) {
+								JOptionPane.showMessageDialog(log, "회원가입이 완료 되었습니다.");
+								//log = new LoginForm();
+							}
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+					} else
 						JOptionPane.showMessageDialog(log, "정보가 일치하지 않습니다.\n fail to register");
-					}
-				}
+				} else
+					JOptionPane.showMessageDialog(log, "정보가 일치하지 않습니다.\n fail to register");
 			}
 		});
-		add(SignUpButton);
+		add(signUpButton);
 		
 		backButton = new JButton("Back");
 		backButton.setBackground(Color.LIGHT_GRAY);
@@ -138,5 +133,8 @@ public class SignUpForm extends JPanel {
 	}
 	public JButton getBackButton() {
 		return backButton;
+	}
+	public JButton getSignUpButton() {
+		return signUpButton;
 	}
 }

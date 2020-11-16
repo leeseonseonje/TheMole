@@ -11,8 +11,12 @@ import DB.DBConnection;
 import io.netty.channel.ChannelHandlerContext;
 
 public class SignUpServer {
-	private ArrayList<String> idList = new ArrayList<String>();
-	public SignUpServer(String id, ChannelHandlerContext ctx) {
+	
+	public SignUpServer() {
+	}
+	
+	public static void duplicateCheck(String id, ChannelHandlerContext ctx) {
+		ArrayList<String> idList = new ArrayList<String>();
 		try {
 			Connection con = DBConnection.makeConnection(); // DB연결
 			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM gamer");
@@ -22,16 +26,32 @@ public class SignUpServer {
 			}
 			int index = Collections.binarySearch(idList, id);
             if(index >= 0 )
-                ctx.writeAndFlush(""); //아이디중복
-
-            else {
-                ctx.writeAndFlush(""); //아이디 중복아님(생성가능)
-            }
+                ctx.writeAndFlush("DUPLICATE"); //아이디중복
+            else 
+                ctx.writeAndFlush("NODUPLICATE"); //아이디 중복아님(생성가능)
+            
 
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void signUpComplete(String id, String pw, ChannelHandlerContext ctx) {
+		try {
+			Connection con = DBConnection.makeConnection(); // DB연결
+			String sql = String.format("INSERT INTO gamer VALUES('%s','%s',0,0,0,1000);", id, pw);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			int i = pstmt.executeUpdate();
+			
+			if(i == 1) {
+				ctx.writeAndFlush("SIGNUP");
+			}
+			pstmt.close();
+			con.close();
+			
+		} catch (Exception a) {
 		}
 	}
 }

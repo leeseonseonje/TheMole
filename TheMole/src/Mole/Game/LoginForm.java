@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 
 import DB.DBConnection;
 import MoleServer.MoleClient;
+import MoleServer.MoleClientHandler;
 
 public class LoginForm extends JFrame {
 
@@ -89,11 +90,13 @@ public class LoginForm extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(!username.getText().equals(null) && !passwordField.getText().equals(null)) {
 					try {
-						MoleClient mc = new MoleClient();
-						mc.future = mc.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
-						mc.future = mc.serverChannel.writeAndFlush("いしいけいしけいしけけいしいしいしけいけしいけししいしいし");
-						System.out.println("左蛙");
-						dispose();
+						MoleClient moleclient = new MoleClient();
+						moleclient.future = moleclient.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
+						Thread.sleep(1000);
+						if(MoleClientHandler.serverMessage.equals("LOGIN")) {
+							dispose();
+							new MainFrame();
+						}
 					} catch (InterruptedException a) {
 						a.printStackTrace();
 					}
@@ -146,7 +149,7 @@ public class LoginForm extends JFrame {
 				sf.setVisible(true);
 			}
 		});
-		sf.getBtnNewButton_3().addActionListener(new ActionListener() {
+		sf.getBackButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sf.setVisible(false);
 				loginPanel.setVisible(true);

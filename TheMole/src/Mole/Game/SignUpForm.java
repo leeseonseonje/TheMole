@@ -4,10 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,14 +15,16 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import DB.DBConnection;
+import MoleServer.MoleClient;
 
 public class SignUpForm extends JPanel {
 	
 	private LoginForm log;
-	private JTextField textField_1; // 가입창 아이디
+	private JTextField idField; // 가입창 아이디
 	private JPasswordField passwordField_1; // 가입창 비밀번호
 	private JPasswordField passwordField_2; // 가입창 비밀번호 재입력
-	private JButton  btnNewButton_3;
+	private JButton SignUpButton;
+	private JButton backButton;
 	private boolean idcheck = false;
 	
 	public SignUpForm() {
@@ -37,10 +36,10 @@ public class SignUpForm extends JPanel {
 		lblNewLabel_3.setBounds(352, 37, 95, 15);
 		add(lblNewLabel_3);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(352, 73, 201, 21);
-		add(textField_1);
-		textField_1.setColumns(10);
+		idField = new JTextField();
+		idField.setBounds(352, 73, 201, 21);
+		add(idField);
+		idField.setColumns(10);
 		
 		JButton nameCheckbtn = new JButton("Check");
         nameCheckbtn.setBounds(480, 100, 72, 23);
@@ -50,7 +49,7 @@ public class SignUpForm extends JPanel {
         add(checkLabel);
         nameCheckbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try {
+                /*try {
                     Connection con = DBConnection.makeConnection();
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM gamer");
@@ -73,34 +72,39 @@ public class SignUpForm extends JPanel {
                 } catch (Exception a) {
                     System.out.println("데이터 베이스 연결 오류 : " + a.getMessage());
                     a.printStackTrace();
-                }
-
+                }*/
+            	try {
+					MoleClient moleclient = new MoleClient();
+					moleclient.future = moleclient.serverChannel.writeAndFlush("[DUPLICATE]" + "," + idField.getText());
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
             }
         });
         add(nameCheckbtn);
 		
-		JLabel lblNewLabel_4 = new JLabel("Password");
-		lblNewLabel_4.setBounds(352, 125, 95, 15);
-		add(lblNewLabel_4);
+		JLabel passwordLabel = new JLabel("Password");
+		passwordLabel.setBounds(352, 125, 95, 15);
+		add(passwordLabel);
 		
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setBounds(352, 156, 201, 21);
 		add(passwordField_1);
 		
-		JLabel lblNewLabel_5 = new JLabel("Repeat Password");
-		lblNewLabel_5.setBounds(352, 206, 116, 15);
-		add(lblNewLabel_5);
+		JLabel repeatPasswordLabel = new JLabel("Repeat Password");
+		repeatPasswordLabel.setBounds(352, 206, 116, 15);
+		add(repeatPasswordLabel);
 		
 		passwordField_2 = new JPasswordField();
 		passwordField_2.setBounds(352, 236, 201, 21);
 		add(passwordField_2);
 		
-		JButton btnNewButton_2 = new JButton("SignUp");
-		btnNewButton_2.setBackground(Color.LIGHT_GRAY);
-		btnNewButton_2.setBounds(352, 300, 97, 23);
-		btnNewButton_2.addActionListener(new ActionListener() {
+		SignUpButton = new JButton("SignUp");
+		SignUpButton.setBackground(Color.LIGHT_GRAY);
+		SignUpButton.setBounds(352, 300, 97, 23);
+		SignUpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name = textField_1.getText();
+				String name = idField.getText();
 				String password = passwordField_1.getText();
 				String passwordcheck = passwordField_2.getText();
 				if (password.equals(passwordcheck) && (name != null && password != null)) { // 패스워드가 재확인 패스워드와 일치할시에
@@ -119,12 +123,12 @@ public class SignUpForm extends JPanel {
 				}
 			}
 		});
-		add(btnNewButton_2);
+		add(SignUpButton);
 		
-		btnNewButton_3 = new JButton("Back");
-		btnNewButton_3.setBackground(Color.LIGHT_GRAY);
-		btnNewButton_3.setBounds(486, 300, 97, 23);
-		add(btnNewButton_3);
+		backButton = new JButton("Back");
+		backButton.setBackground(Color.LIGHT_GRAY);
+		backButton.setBounds(486, 300, 97, 23);
+		add(backButton);
 		
 		JLabel lblNewLabel_6 = new JLabel("");
 		lblNewLabel_6.setBounds(12, 10, 320, 320);
@@ -132,7 +136,7 @@ public class SignUpForm extends JPanel {
 		add(lblNewLabel_6);
 		
 	}
-	public JButton getBtnNewButton_3() {
-		return btnNewButton_3;
+	public JButton getBackButton() {
+		return backButton;
 	}
 }

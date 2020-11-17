@@ -24,10 +24,13 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import DB.DBConnection;
+import MoleServer.MoleClient;
+import MoleServer.MoleClientMainHandler;
+import io.netty.channel.ChannelHandlerContext;
 
-class MainFrame extends JFrame {
 
-	private MainFrame frame;
+public class MoleGame extends JFrame{
+	private MoleGame frame;
 	private Font font;
 	private JButton start, end, query, rank, angry, player, title;
 	private BackG mainBG = new BackG();
@@ -47,7 +50,7 @@ class MainFrame extends JFrame {
 	ImageIcon titles_img = new ImageIcon("img/titles.png");
 	ImageIcon angry_img = new ImageIcon("img/angry.png");
 
-	public MainFrame() {
+	public MoleGame(ChannelHandlerContext ctx) {
 		CustomCursor();
 		setTitle("Mole Game"); // 타이틀
 		setSize(800, 600); // 프레임의 크기
@@ -77,7 +80,7 @@ class MainFrame extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				System.out.println("시작 클릭");
+				ctx.fireChannelRead("zzz");
 			}
 		});
 		mainBG.add(start);
@@ -98,7 +101,6 @@ class MainFrame extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				System.out.println("종료");
 				System.exit(0);
 			}
 		});
@@ -110,6 +112,7 @@ class MainFrame extends JFrame {
 		query.setFocusPainted(false);
 		query.setContentAreaFilled(false);
 		query.setBounds(720, 500, 50, 50);
+		QuestionFrame question = new QuestionFrame(mainBG);
 		query.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				query.setIcon(question1_img);
@@ -120,9 +123,9 @@ class MainFrame extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				System.out.println("도움말 클릭");
-				setVisible(false);
-				new QuestionFrame();
+				add(question);
+				mainBG.setVisible(false);
+				question.setVisible(true);
 			}
 		});
 		mainBG.add(query);
@@ -133,6 +136,7 @@ class MainFrame extends JFrame {
 		rank.setFocusPainted(false);
 		rank.setContentAreaFilled(false);
 		rank.setBounds(15, 500, 50, 50);
+		LeaderBoardFrame leaderBoard = new LeaderBoardFrame(mainBG);
 		rank.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				rank.setIcon(star1_img);
@@ -144,29 +148,17 @@ class MainFrame extends JFrame {
 
 			public void mousePressed(MouseEvent e) {
 				System.out.println("리더보드 클릭");
-				setVisible(false);
-				new LeaderBoardFrame();
+				add(leaderBoard);
+				mainBG.setVisible(false);
+				leaderBoard.setVisible(true);
 			}
 		});
 		
 		player = new JButton(LoginForm.getId());
-		//player.setBorderPainted(false);
-		//player.setFocusPainted(false);
-		//player.setContentAreaFilled(false);
 		player.setBounds(675, 10, 100,50 );
 		player.addMouseListener(new MouseAdapter() {
-			/*
-			public void mouseEntered(MouseEvent e) {
-				start.setIcon(start1_img);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				start.setIcon(start_img);
-			}
-			*/
 			public void mousePressed(MouseEvent e) {
-				System.out.println("계정 정보 활성화");
-				try {
+				/*try {
 					Connection con = DBConnection.makeConnection(); // DB연결
 					Statement st = con.createStatement();
 					ResultSet rs = st.executeQuery("SELECT * FROM gamer");
@@ -177,8 +169,6 @@ class MainFrame extends JFrame {
 									,rs.getString("ID"),rs.getInt("PLAYCOUNT"),rs.getInt("HUMANWIN"),rs.getInt("MOLEWIN"),((rs.getDouble("HUMANWIN")+rs.getInt("MOLEWIN"))/rs.getInt("PLAYCOUNT"))*100,rs.getInt("SCORES"));
 						} else
 							continue;
-						//JOptionPane.showInputDialog(this,value);
-						//JOptionPane.showMessageDialog(frame,value);
 						JOptionPane.showMessageDialog(frame, value, "계정 정보", JOptionPane.PLAIN_MESSAGE);
 					}
 					rs.close();
@@ -186,8 +176,9 @@ class MainFrame extends JFrame {
 					con.close();
 				} catch (Exception a) {
 					a.printStackTrace();
-				}
-
+				}*/
+				ctx.writeAndFlush("zzz");
+				JOptionPane.showMessageDialog(frame, MoleClientMainHandler.serverMessage, "계정 정보", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		mainBG.add(player);
@@ -229,7 +220,6 @@ class MainFrame extends JFrame {
 			try {
 				background = ImageIO.read(new File("img/mole.jpg"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -237,18 +227,6 @@ class MainFrame extends JFrame {
 		public void paintComponent(Graphics g) {// 그리는 함수
 			super.paintComponent(g);
 			g.drawImage(background, 0, 0, null);// background를 그려줌
-		}
-	}
-}
-
-public class MoleGame {
-
-	public MoleGame() {
-		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-			new MainFrame();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

@@ -28,7 +28,7 @@ public class SignUpForm extends JPanel {
 	private JButton backButton;
 	private boolean idcheck = false;
 	
-	public SignUpForm() {
+	public SignUpForm(JPanel logP) {
 		setBackground(Color.WHITE);
 		setBounds(0, 0, 611, 362);
 		setLayout(null);
@@ -89,7 +89,7 @@ public class SignUpForm extends JPanel {
 		
 		signUpButton = new JButton("SignUp");
 		signUpButton.setBackground(Color.LIGHT_GRAY);
-		signUpButton.setBounds(352, 300, 97, 23);
+		signUpButton.setBounds(358, 302, 97, 23);
 		signUpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = idField.getText();
@@ -98,8 +98,8 @@ public class SignUpForm extends JPanel {
 				if (password.equals(passwordcheck) && (name != "" && password != "")) {
 					if(checkLabel.getText().equals("중복아님")) {
 						try {
-							MoleClient moleclient = new MoleClient();
-							moleclient.future = moleclient.serverChannel.writeAndFlush("[SIGNUP]" + "," + name + "," + password);
+							MoleClient moleClient = new MoleClient();
+							moleClient.future = moleClient.serverChannel.writeAndFlush("[SIGNUP]" + "," + name + "," + password);
 							while(MoleClientHandler.serverMessage.equals("")) {
 								Thread.sleep(300);
 								if(!MoleClientHandler.serverMessage.equals(""))
@@ -107,8 +107,11 @@ public class SignUpForm extends JPanel {
 							}
 							if(MoleClientHandler.serverMessage.equals("SIGNUP")) {
 								JOptionPane.showMessageDialog(log, "회원가입이 완료 되었습니다.");
-								//log = new LoginForm();
+								setVisible(false);
+								logP.setVisible(true);
+								
 							}
+							MoleClientHandler.serverMessage = "";
 						} catch (InterruptedException e1) {
 							e1.printStackTrace();
 						}
@@ -122,19 +125,19 @@ public class SignUpForm extends JPanel {
 		
 		backButton = new JButton("Back");
 		backButton.setBackground(Color.LIGHT_GRAY);
-		backButton.setBounds(486, 300, 97, 23);
+		backButton.setBounds(487, 302, 97, 23);
 		add(backButton);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				logP.setVisible(true);
+			}
+		});
 		
 		JLabel lblNewLabel_6 = new JLabel("");
 		lblNewLabel_6.setBounds(12, 10, 320, 320);
 		lblNewLabel_6.setIcon(new ImageIcon(LoginForm.class.getResource("/images/signpages.png")));
 		add(lblNewLabel_6);
 		
-	}
-	public JButton getBackButton() {
-		return backButton;
-	}
-	public JButton getSignUpButton() {
-		return signUpButton;
 	}
 }

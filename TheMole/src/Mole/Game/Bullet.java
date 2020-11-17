@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Bullet {
+public class Bullet implements Entity {
 
 	private Game game;
 	private double x;
@@ -36,5 +36,9 @@ public class Bullet {
 
 	public double getX() {
 		return x;
+	}
+
+	public double getY() {
+		return y;
 	}
 }

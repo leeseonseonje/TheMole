@@ -34,7 +34,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	private BufferedImage molSpriteSheet = null; // 두더지출력하는 버퍼이미지
 
 	// 캐릭터 생성
-	private Player humanP;
+	private Human humanP;
 	private Controller c; // 컨트롤러
 	// private Mole moleP;
 	private Textures texture;
@@ -55,7 +55,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 
 		texture = new Textures(this); // 생성전에 텍스처를 생성
 
-		humanP = new Player(200, 225, texture);
+		humanP = new Human(200, 225, texture);
 		// moleP = new Mole(150,350,texture);
 		c = new Controller(this, texture);
 
@@ -158,13 +158,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 				&& !is_shooting) { // A키를 눌렀고 총알이 1개이상일 때, 왼쪽 발사, 연속발사 방지
 			this.buldirection = false;
 			is_shooting = true;
-			c.addBullet(new Bullet(humanP.getX(), humanP.getY() + 35, texture));
+			c.addBulletEnt(new Bullet(humanP.getX(), humanP.getY() + 35, texture));
 			bulcount.setText(String.format("남은 총알 수 : %d", --BULLETCOUNT));
 		} else if (key == KeyEvent.VK_D && (humanP.rightMove() || humanP.rightStand()) && (BULLETCOUNT > 0)
 				&& !is_shooting) { // D키를 눌렀고 총알이 1개이상일 때, 오른쪽 발사, 연속발사 방지
 			this.buldirection = true;
 			is_shooting = true;
-			c.addBullet(new Bullet(humanP.getX() + 50, humanP.getY() + 35, texture));
+			c.addBulletEnt(new Bullet(humanP.getX() + 50, humanP.getY() + 35, texture));
 			bulcount.setText(String.format("남은 총알 수 : %d", --BULLETCOUNT));
 		}
 	}
@@ -196,8 +196,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		JFrame frame = new JFrame(game.TITLE);
 
 		bulcount = new JLabel(String.format("남은 총알 수 : %d", BULLETCOUNT));
-		bulcount.setBackground(null);
-		bulcount.setBounds(1, 1, 120, 30);
+		//bulcount.setBounds(1, 1, 120, 30);
 		frame.add(bulcount);
 
 		frame.add(game);
@@ -206,7 +205,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		frame.setLayout(null);
+		//frame.setLayout(null);
 
 		game.start();
 	}
@@ -223,7 +222,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		return molSpriteSheet;
 	}
 
-	public Player getPlayer() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기, Controller 클래스에서 사용
+	public Human getPlayer() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기, Controller 클래스에서 사용
 		return humanP;
 	}
 }

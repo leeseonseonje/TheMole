@@ -3,7 +3,7 @@ package Mole.Game;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public class Player {
+public class Human implements Entity {
 	
 	private double x;
 	private double y; 
@@ -13,7 +13,7 @@ public class Player {
 	
 	private Textures texture;
 	
-	public Player(double x, double y, Textures texture) {
+	public Human(double x, double y, Textures texture) {
 		this.x = x;
 		this.y = y;
 		this.texture = texture;

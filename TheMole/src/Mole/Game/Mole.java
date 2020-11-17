@@ -2,7 +2,7 @@ package Mole.Game;
 
 import java.awt.Graphics;
 
-public class Mole {
+public class Mole implements Entity {
 
 	private double x, y;
 	
@@ -35,5 +35,17 @@ public class Mole {
 
 	public void render(Graphics g) {
 		g.drawImage(texture.mole, (int) x, (int) y, null); // x와 y는 double이기에 (int)로 변환 해주어야 한다.
+	}
+	public double getX() {
+		return x;
+	}
+	public void setX(double x) {
+		this.x = x;
+	}
+	public double getY() {
+		return x;
+	}
+	public void getY(double y) {
+		this.y = y;
 	}
 }

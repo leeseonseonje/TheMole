@@ -77,10 +77,7 @@ class MolePanel extends JPanel {
 			v1 = new vegetableThread(1);
 			v2 = new vegetableThread(2);
 
-			add(v0);
-			add(v1);
-			add(v2);
-
+			
 //			v0.setVisible(false);
 
 		} catch (IOException e) {
@@ -88,42 +85,54 @@ class MolePanel extends JPanel {
 		}
 	}
 
-	public int v0getx() {
-		return v0.getx();
-	}
+	
 
-	public int v1getx() {
-		return v1.getx();
-	}
-
-	public int v2getx() {
-		return v2.getx();
-	}
-
-	class vegetableThread extends JLabel {
+	class vegetableThread extends Thread implements Runnable {
 		private ImageIcon veget = new ImageIcon("img/vegetables.png");
-
+		JLabel vegetable = new JLabel(veget);
 		int x, y,section;
 
 		public vegetableThread(int section) {
 			this.section = section;
 			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 260;
-			// vegetable = new JLabel(veget);
-			this.setBounds(x, y, 16, 16);
-			this.setIcon(veget);
-			// add();
+			vegetable.setBounds(x, y, 16, 16);
+			// vegetable.setIcon(veget);
+			add(vegetable);
 			System.out.println("작물위치 " + x + " " + y);
 		}
 
-		public int getx() {
+		public int getX() {
 			return x;
 		}
+		public int getY() {
+			return y;
+		}
+		
+		
 		public void setposition() {
 			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 260;
-			this.setBounds(x, y, 16, 16);
+			vegetable.setBounds(x, y, 16, 16);
 			 
+		}
+
+		@Override
+		public void run() {
+			try {
+				vegetableThread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		public void setVisible(boolean b) {
+			if (b == true)
+				vegetable.setVisible(true);
+			else if(b == false)
+				vegetable.setVisible(false);
+			
 		}
 
 	}
@@ -134,6 +143,8 @@ class MolePanel extends JPanel {
 		private Rectangle champion;
 		private ImageIcon mole = new ImageIcon("img/moleimg.png");
 		private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
+		Thread t1 = v0;
+
 
 		private Timer timer;
 		private double speed = 0.15;
@@ -142,7 +153,6 @@ class MolePanel extends JPanel {
 		private double targetX, targetY;
 		private double startX, startY;
 		private double runTime;
-		private boolean move = false;;
 
 		public int getx() {
 			return x;
@@ -173,7 +183,6 @@ class MolePanel extends JPanel {
 						public void mousePressed(MouseEvent e) {
 							if (e.getButton() == MouseEvent.BUTTON3) {
 								if (moleButton.getIcon().equals(moleSelect)) {
-
 									timer.stop();
 									calculateChampionMovement(e.getX(), e.getY(), champion);
 									startTime = System.currentTimeMillis();
@@ -198,6 +207,7 @@ class MolePanel extends JPanel {
 		}
 
 		public void run() {
+			
 
 		}
 
@@ -221,8 +231,11 @@ class MolePanel extends JPanel {
 			System.out.println("두더지의 위치"+x+" "+y);
 			if (v0.getX() == x && v0.getY() >= y - 15) {
 				v0.setVisible(false);
+				t1.start();
 				v0.setposition();
+				//t1.run();
 				v0.setVisible(true);
+				
 			} else if (v1.getX() == x && v1.getY() >= y - 15) {
 				v1.setVisible(false);
 				v1.setposition();

@@ -3,7 +3,6 @@ package MoleServer;
 import javax.swing.JOptionPane;
 
 import Mole.Game.LoginForm;
-import Mole.Game.MoleGame;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 

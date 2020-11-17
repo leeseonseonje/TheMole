@@ -100,7 +100,6 @@ public class LoginForm extends JFrame {
 						}
 						if(MoleClientHandler.serverMessage.equals("LOGIN")) {
 							dispose();
-							//new MainFrame(moleClient);
 						} else if ((MoleClientHandler.serverMessage.equals("LOGINFAIL"))) {
 							JOptionPane.showMessageDialog(log, "Invalid username or password");
 							username.setText("");
@@ -130,7 +129,6 @@ public class LoginForm extends JFrame {
 							Thread.sleep(1000);
 							if(MoleClientHandler.serverMessage.equals("LOGIN")) {
 								dispose();
-							//	new MainFrame(moleClient);
 							} else {
 								JOptionPane.showMessageDialog(log, "Invalid username or password");
 								username.setText("");

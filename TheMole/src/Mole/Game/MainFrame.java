@@ -23,7 +23,6 @@ import MoleServer.MoleClientMainHandler;
 import io.netty.channel.ChannelHandlerContext;
 
 public class MainFrame extends JFrame{
-	private MoleGame frame;
 	private Font font;
 	private JButton start, end, query, rank, angry, player, title;
 	private BackG mainBG = new BackG();
@@ -140,10 +139,10 @@ public class MainFrame extends JFrame{
 			}
 
 			public void mousePressed(MouseEvent e) {
-				System.out.println("리더보드 클릭");
+				ctx.writeAndFlush("[RANKING]");
 				add(leaderBoard);
-				mainBG.setVisible(false);
 				leaderBoard.setVisible(true);
+				mainBG.setVisible(false);
 			}
 		});
 		
@@ -151,35 +150,8 @@ public class MainFrame extends JFrame{
 		player.setBounds(675, 10, 100,50 );
 		player.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				/*try {
-					Connection con = DBConnection.makeConnection(); // DB연결
-					Statement st = con.createStatement();
-					ResultSet rs = st.executeQuery("SELECT * FROM gamer");
-					String value = "";
-					while(rs.next()) {
-						if((LoginForm.getId()).equals(rs.getString("ID"))) {
-								value = String.format("계정명: %s \n총 플레이수: %3d \n인간승리수: %3d \n두더지승리수: %3d \n승률: %.1f \n점수: %4d" 
-									,rs.getString("ID"),rs.getInt("PLAYCOUNT"),rs.getInt("HUMANWIN"),rs.getInt("MOLEWIN"),((rs.getDouble("HUMANWIN")+rs.getInt("MOLEWIN"))/rs.getInt("PLAYCOUNT"))*100,rs.getInt("SCORES"));
-						} else
-							continue;
-						JOptionPane.showMessageDialog(frame, value, "계정 정보", JOptionPane.PLAIN_MESSAGE);
-					}
-					rs.close();
-					st.close();
-					con.close();
-				} catch (Exception a) {
-					a.printStackTrace();
-				}*/
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				ctx.writeAndFlush("[INFORMATION]" + "," + LoginForm.getId());
-				System.out.println(MoleClientMainHandler.serverMessage);
-				JOptionPane.showMessageDialog(frame, MoleClientMainHandler.serverMessage, "계정 정보", JOptionPane.PLAIN_MESSAGE);
-			}
+			}		
 		});
 		mainBG.add(player);
 		

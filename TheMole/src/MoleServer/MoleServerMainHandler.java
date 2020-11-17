@@ -24,6 +24,8 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 		System.out.println(readMessage);
 		if (s[0].equals("[INFORMATION]"))
 			DBConnect.informationDB(s[1], ctx);
+		if (readMessage.equals("[RANKING]"))
+			DBConnect.leaderBoardDB(ctx);
 	}
 
 	@Override

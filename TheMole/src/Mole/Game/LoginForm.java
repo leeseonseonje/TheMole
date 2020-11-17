@@ -190,7 +190,7 @@ public class LoginForm extends JFrame {
 							id = rs.getString("ID");
 							secret = rs.getString("PASSWORDS");
 							dispose();
-							new MainFrame();
+							new MainMenu();
 						} else {
 							JOptionPane.showMessageDialog(log, "Invalid username or password");
 						}

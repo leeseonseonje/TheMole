@@ -16,6 +16,7 @@ public class MoleClientInitializer extends ChannelInitializer {
 			pipeline.addLast(new StringDecoder());
 			pipeline.addLast(new StringEncoder());
 			pipeline.addLast(new MoleClientHandler());
+			pipeline.addLast(new MoleClientMainHandler());
 	}
 	
 }

@@ -26,33 +26,32 @@ import javax.swing.JTextArea;
 
 import DB.DBConnection;
 
-class LeaderBoardFrame extends JFrame { // 리더보드 버튼을 클릭했을 때 나오는 프레임
+class LeaderBoardFrame extends JPanel { // 리더보드 버튼을 클릭했을 때 나오는 프레임
 
-	private LeaderBG leaderBoardBG = new LeaderBG();
+	//private LeaderBG leaderBoardBG = new LeaderBG();
 	private JButton back;
 	private JLabel label1;
 	private JPanel board;
 	private JScrollPane scroll;
 	private JTextArea boardcontent;
 	private static int num = 1; // 올라감
-
+	private BufferedImage backs;
+	private BufferedImage crown;
+	
 	ImageIcon back_img = new ImageIcon("img/back.png");
 	ImageIcon back1_img = new ImageIcon("img/back1.png");
 
-	LeaderBoardFrame() {
+	LeaderBoardFrame(JPanel mainBG) {
+		try {
+			backs = ImageIO.read(new File("img/threemoles.png"));
+			crown = ImageIO.read(new File("img/crown.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		CustomCursor();
-		setTitle("리더보드"); // 타이틀
-		setSize(800, 600); // 프레임의 크기
-		setResizable(false); // 창의 크기를 변경하지 못하게
-		setLocationRelativeTo(null); // 창이 가운데 나오게
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// JFrame이 정상적으로 종료되게 함.
 
-		leaderBoardBG.setLayout(null);
-
-		// 아이콘 이미지 설정
-		Toolkit kit = Toolkit.getDefaultToolkit();
-		Image icon = kit.getImage("img/moleicon.png");
-		setIconImage(icon);
+		setLayout(null);
 
 		back = new JButton(back_img);
 		back.setBorderPainted(false);
@@ -69,12 +68,11 @@ class LeaderBoardFrame extends JFrame { // 리더보드 버튼을 클릭했을 때 나오는 프
 			}
 
 			public void mousePressed(MouseEvent e) {
-				System.out.println("리더보드 닫기");
 				setVisible(false);
-				new MainFrame();
+				mainBG.setVisible(true);
 			}
 		});
-		leaderBoardBG.add(back);
+		add(back);
 		
 		board = new JPanel();
 		board.setLayout(null);
@@ -108,10 +106,12 @@ class LeaderBoardFrame extends JFrame { // 리더보드 버튼을 클릭했을 때 나오는 프
 			System.out.println("데이터베이스 연결 오류 : " + a.getMessage());
 		}
 		
-		leaderBoardBG.add(scroll);
-		
-		add(leaderBoardBG);
-		setVisible(true);
+		add(scroll);
+	}
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(backs, 0, 0, null);
+		g.drawImage(crown, 10, 15, null);
 	}
 
 	public void CustomCursor() { // 커스텀 커서(마우스 커서)
@@ -120,26 +120,6 @@ class LeaderBoardFrame extends JFrame { // 리더보드 버튼을 클릭했을 때 나오는 프
 		Image cursorimage = tk.getImage("img/cropcursor.png");
 		Point point = new Point(20, 20);
 		Cursor cursor = tk.createCustomCursor(cursorimage, point, "crop");
-		leaderBoardBG.setCursor(cursor);
-	}
-
-	class LeaderBG extends JPanel {
-		private BufferedImage backs;
-		private BufferedImage crown;
-		
-		public LeaderBG() {
-			try {
-				backs = ImageIO.read(new File("img/threemoles.png"));
-				crown = ImageIO.read(new File("img/crown.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			g.drawImage(backs, 0, 0, null);
-			g.drawImage(crown, 10, 15, null);
-		}
+		setCursor(cursor);
 	}
 }

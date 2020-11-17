@@ -17,22 +17,32 @@ public class MoleClientHandler extends ChannelInboundHandlerAdapter{
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String)msg;
-		
-		if(readMessage.equals("LOGIN"))
+		if(readMessage.equals("LOGIN")) {
 			serverMessage = readMessage;
-		else if(readMessage.equals("LOGINFAIL"))
+			ctx.fireChannelActive();
+		}
+		else if(readMessage.equals("LOGINFAIL")) {
 			serverMessage = readMessage;
-		else if(readMessage.equals("DUPLICATE"))
+			ctx.close();
+		}
+		else if(readMessage.equals("DUPLICATE")) {
 			serverMessage = readMessage;
-		else if(readMessage.equals("NODUPLICATE"))
+			ctx.close();
+		}
+		else if(readMessage.equals("NODUPLICATE")) {
 			serverMessage = readMessage;
-		else if(readMessage.equals("SIGNUP"))
+			ctx.close();
+		}
+		else if(readMessage.equals("SIGNUP")) {
 			serverMessage = readMessage;
+			ctx.close();
+		}
+		else
+			ctx.fireChannelRead(readMessage);
 	}
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 		ctx.flush();
-		ctx.close();
 	}
 }	

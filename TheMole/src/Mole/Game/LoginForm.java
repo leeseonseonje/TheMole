@@ -91,8 +91,8 @@ public class LoginForm extends JFrame {
 				if(!username.getText().equals("") && !passwordField.getText().equals("")) {
 					id = username.getText();
 					try {
-						MoleClient moleClient = new MoleClient();
-						moleClient.future = moleClient.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
+						MoleClient moleclient = new MoleClient();
+						moleclient.future = moleclient.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
 						while(MoleClientHandler.serverMessage.equals("")) {
 							Thread.sleep(300);
 							if(!MoleClientHandler.serverMessage.equals(""))
@@ -100,7 +100,7 @@ public class LoginForm extends JFrame {
 						}
 						if(MoleClientHandler.serverMessage.equals("LOGIN")) {
 							dispose();
-							//new MainFrame(moleClient);
+							new MainFrame();
 						} else if ((MoleClientHandler.serverMessage.equals("LOGINFAIL"))) {
 							JOptionPane.showMessageDialog(log, "Invalid username or password");
 							username.setText("");
@@ -125,12 +125,12 @@ public class LoginForm extends JFrame {
 					if(!username.getText().equals(null) && !passwordField.getText().equals(null)) {
 						id = username.getText();
 						try {
-							MoleClient moleClient = new MoleClient();
-							moleClient.future = moleClient.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
+							MoleClient moleclient = new MoleClient();
+							moleclient.future = moleclient.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
 							Thread.sleep(1000);
 							if(MoleClientHandler.serverMessage.equals("LOGIN")) {
 								dispose();
-							//	new MainFrame(moleClient);
+								new MainFrame();
 							} else {
 								JOptionPane.showMessageDialog(log, "Invalid username or password");
 								username.setText("");
@@ -177,12 +177,18 @@ public class LoginForm extends JFrame {
 		add(loginPanel);
 		setVisible(true);
 
-		SignUpForm sf = new SignUpForm(loginPanel);
+		SignUpForm sf = new SignUpForm();
 		signupButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add(sf);
 				loginPanel.setVisible(false);
 				sf.setVisible(true);
+			}
+		});
+		sf.getBackButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sf.setVisible(false);
+				loginPanel.setVisible(true);
 			}
 		});
 	}

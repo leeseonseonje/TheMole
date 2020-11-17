@@ -27,29 +27,37 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-class QuestionFrame extends JPanel { // 도움말 버튼을 클릭했을 때 나오는 프레임
+class QuestionFrame extends JFrame { // 도움말 버튼을 클릭했을 때 나오는 프레임
+	private QuestionBG questionBG = new QuestionBG();
 	private JButton back;
 	private JPanel board;
 	private JLabel label1;
 	private JTabbedPane tab;
 	private JLabel lab1;
-	private BufferedImage backs;
-	
+
 	ImageIcon back_img = new ImageIcon("img/back.png");
 	ImageIcon back1_img = new ImageIcon("img/back1.png");
 
-	QuestionFrame(JPanel mainBG) {
-		try {
-			backs = ImageIO.read(new File("img/threemoles.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	QuestionFrame() {
 		CustomCursor();
+		setTitle("도움말"); // 타이틀
+		setSize(800, 600); // 프레임의 크기
+		setResizable(false); // 창의 크기를 변경하지 못하게
+		setLocationRelativeTo(null); // 창이 가운데 나오게
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// JFrame이 정상적으로 종료되게 함.
 
-		setLayout(null);
+		questionBG.setLayout(null);
+
+		// 아이콘 이미지 설정
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Image icon = kit.getImage("img/moleicon.png");
+		setIconImage(icon);
+		
 		// 폰트 설정
 		Font wr = new Font("HY견고딕", Font.PLAIN, 18); 
 
+		
+		
 		tab = new JTabbedPane(); // 생성
 		tab.setBounds(50, 50, 700, 450);
 		JTextArea p1 = new JTextArea(); // 패널 1 - 공용 규칙 및 설명
@@ -107,7 +115,7 @@ class QuestionFrame extends JPanel { // 도움말 버튼을 클릭했을 때 나오는 프레임
 		tab.addTab("두더지",p3);
 		tab.addTab("ETC",p4);
 		
-		add(tab);
+		questionBG.add(tab);
 
 		back = new JButton(back_img);
 		back.setBorderPainted(false);
@@ -126,15 +134,13 @@ class QuestionFrame extends JPanel { // 도움말 버튼을 클릭했을 때 나오는 프레임
 			public void mousePressed(MouseEvent e) {
 				System.out.println("도움말 닫기");
 				setVisible(false);
-				mainBG.setVisible(true);
+				new MainFrame();
 			}
 		});
-		add(back);
-	}
-	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(backs, 0, 0, null);
+		questionBG.add(back);
+
+		add(questionBG);
+		setVisible(true);
 	}
 
 	public void CustomCursor() { // 커스텀 커서(마우스 커서)
@@ -143,6 +149,23 @@ class QuestionFrame extends JPanel { // 도움말 버튼을 클릭했을 때 나오는 프레임
 		Image cursorimage = tk.getImage("img/cropcursor.png");
 		Point point = new Point(20, 20);
 		Cursor cursor = tk.createCustomCursor(cursorimage, point, "crop");
-		setCursor(cursor);
+		questionBG.setCursor(cursor);
+	}
+
+	class QuestionBG extends JPanel {
+		private BufferedImage backs;
+
+		public QuestionBG() {
+			try {
+				backs = ImageIO.read(new File("img/threemoles.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(backs, 0, 0, null);
+		}
 	}
 }

@@ -1,13 +1,24 @@
 package Mole.Game;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 class MoleUII extends JFrame {
 	private MolePanel molePanel;
@@ -29,8 +40,13 @@ class MoleUII extends JFrame {
 class MolePanel extends JPanel {
 	private BufferedImage backImage;
 	private ImageIcon human = new ImageIcon("img/human.png");
+	private ImageIcon intHuman = new ImageIcon("img/humanint.png");
+	private ImageIcon intMole = new ImageIcon("img/moleint.png");
 	private ImageIcon chicken = new ImageIcon("img/chicken.gif");
-	private JButton humanButton, ch;
+	private JButton humanButton, ch, moleInt, humanInt;
+	private JLabel counterLabel;
+	private Font font1 = new Font("Arial", Font.BOLD, 30);
+	Timer timer;
 	MoleThread m1;
 	MoleThread m2;
 	MoleThread m3;
@@ -43,7 +59,11 @@ class MolePanel extends JPanel {
 	vegetableThread v0;
 	vegetableThread v1;
 	vegetableThread v2;
-
+	
+	int second, minute;
+	String ddSecond, ddMinute;
+	DecimalFormat dFormat = new DecimalFormat("00");
+	
 	public MolePanel() {
 		try {
 			setLayout(null);
@@ -56,12 +76,19 @@ class MolePanel extends JPanel {
 			humanButton.setBounds(300, 192, 70, 70);
 			add(humanButton);
 
-			ch = new JButton(chicken);
-			ch.setBorderPainted(false);
-			ch.setFocusPainted(false);
-			ch.setContentAreaFilled(false);
-			ch.setBounds(0, 0, 50, 50);
-			add(ch);
+			humanInt = new JButton(intHuman);
+			humanInt.setBorderPainted(false);
+			humanInt.setFocusPainted(false);
+			humanInt.setContentAreaFilled(false);
+			humanInt.setBounds(0, 0, 50, 50);
+			add(humanInt);
+			
+			moleInt = new JButton(intMole);
+			moleInt.setBorderPainted(false);
+			moleInt.setFocusPainted(false);
+			moleInt.setContentAreaFilled(false);
+			moleInt.setBounds(745, 0, 50, 50);
+			add(moleInt);
 			// ch.setVisible(false);
 
 			m1 = new MoleThread(50, 400);
@@ -82,12 +109,55 @@ class MolePanel extends JPanel {
 			add(v2);
 
 //			v0.setVisible(false);
+			
+			counterLabel = new JLabel("");
+			counterLabel.setBounds(345, -30, 100, 100);
+			counterLabel.setHorizontalAlignment(JLabel.CENTER);
+			counterLabel.setFont(font1);
+			
+			add(counterLabel);
+			
+			counterLabel.setText("03:00");
+			second  = 0;
+			minute = 3;
+			normalTimer();
+			timer.start();
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	
+	public void normalTimer() {
+		timer = new Timer(1000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				second--;
+				
+				ddSecond = dFormat.format(second);
+				ddMinute = dFormat.format(minute);
+				
+				counterLabel.setText(ddMinute + ":"+ ddSecond);
+				
+				if(second==-1) {
+					second=59;
+					minute--;
+					
+					ddSecond = dFormat.format(second);
+					ddMinute = dFormat.format(minute);
+					counterLabel.setText(ddMinute + ":" + ddSecond);
+				}
+				if(minute==0 && second==0) {
+					timer.stop();
+				}
+			}
+		});
+	}
+	
 	public int v0getx() {
 		return v0.getx();
 	}
@@ -99,7 +169,7 @@ class MolePanel extends JPanel {
 	public int v2getx() {
 		return v2.getx();
 	}
-
+	
 	class vegetableThread extends JLabel {
 		private ImageIcon veget = new ImageIcon("img/vegetables.png");
 
@@ -255,7 +325,7 @@ class MolePanel extends JPanel {
 			}
 		}
 	}
-
+	
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);

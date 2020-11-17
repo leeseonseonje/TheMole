@@ -130,8 +130,7 @@ class MolePanel extends JPanel {
 	}
 
 	
-public void normalTimer() {
-		
+	public void normalTimer() {
 		timer = new Timer(1000, new ActionListener() {
 			
 			@Override

@@ -20,7 +20,6 @@ public class Mole {
 	}
 
 	public void tick() {
-		x += 1;
 		x += velX;
 		y += velY;
 		

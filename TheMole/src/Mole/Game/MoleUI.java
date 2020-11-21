@@ -1,13 +1,20 @@
 package Mole.Game;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 class MoleUII extends JFrame {
 	private MolePanel molePanel;
@@ -87,10 +94,13 @@ class MolePanel extends JPanel {
 
 	
 
-	class vegetableThread extends Thread implements Runnable {
+	class vegetableThread extends Thread  {
 		private ImageIcon veget = new ImageIcon("img/vegetables.png");
 		JLabel vegetable = new JLabel(veget);
 		int x, y,section;
+		Timer timer ;
+
+		
 
 		public vegetableThread(int section) {
 			this.section = section;
@@ -99,7 +109,7 @@ class MolePanel extends JPanel {
 			vegetable.setBounds(x, y, 16, 16);
 			// vegetable.setIcon(veget);
 			add(vegetable);
-			System.out.println("작물위치 " + x + " " + y);
+			//System.out.println("작물위치 " + x + " " + y);
 		}
 
 		public int getX() {
@@ -117,10 +127,15 @@ class MolePanel extends JPanel {
 			 
 		}
 
+		@SuppressWarnings("static-access")
 		@Override
 		public void run() {
 			try {
-				this.sleep(000);
+				vegetable.setVisible(false);
+				vegetableThread.sleep(5000);
+				setposition();
+				vegetable.setVisible(true);
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -141,7 +156,7 @@ class MolePanel extends JPanel {
 		private Rectangle champion;
 		private ImageIcon mole = new ImageIcon("img/moleimg.png");
 		private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
-		Thread t1 = new Thread(v0);
+		Thread t1 = new Thread();
 
 
 		private Timer timer;
@@ -226,15 +241,7 @@ class MolePanel extends JPanel {
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
 			if (v0.getX() == x && v0.getY() >= y - 15) {
-				v0.setVisible(false);
-				try {
-					t1.sleep(5000);
-					v0.setVisible(true);
-					System.out.println("1");
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				v0.run();
 			} else if (v1.getX() == x && v1.getY() >= y - 15) {
 				v1.setVisible(false);
 				v1.setposition();

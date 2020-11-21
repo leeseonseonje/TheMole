@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +25,8 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	public static int BULLETCOUNT = 3;
 	private boolean is_shooting = false; // 총알 발사버튼을 꾹눌러서 줄줄이 나오는거 방지
 	public static boolean buldirection = true; // 총알방향, true는 오른쪽, false는 왼쪽
+	
+	private int mole_count = 9; // 두더지 생성숫자
 
 	private boolean running = false; // 게임의 실행여부
 	private Thread thread;
@@ -38,6 +41,9 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	private Controller c; // 컨트롤러
 	// private Mole moleP;
 	private Textures texture;
+	
+	public LinkedList<Bullet> b;
+	public LinkedList<Mole> m;
 
 	public void init() {
 		requestFocus();
@@ -51,14 +57,15 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 			e.printStackTrace();
 		}
 
-		addKeyListener(new KeyInput(this));
-
 		texture = new Textures(this); // 생성전에 텍스처를 생성
-
 		humanP = new Human(200, 225, texture);
-		// moleP = new Mole(150,350,texture);
 		c = new Controller(this, texture);
-
+		
+		b = c.getBullet(); // 메소드를 부르기전에 Controller를 초기화 해주어야한다.
+		m = c.getMole();
+		
+		addKeyListener(new KeyInput(this));
+		c.addMole(mole_count);
 	}
 
 	private synchronized void start() {
@@ -158,13 +165,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 				&& !is_shooting) { // A키를 눌렀고 총알이 1개이상일 때, 왼쪽 발사, 연속발사 방지
 			this.buldirection = false;
 			is_shooting = true;
-			c.addBulletEnt(new Bullet(humanP.getX(), humanP.getY() + 35, texture));
+			c.addEntity(new Bullet(humanP.getX(), humanP.getY() + 35, texture, this));
 			bulcount.setText(String.format("남은 총알 수 : %d", --BULLETCOUNT));
 		} else if (key == KeyEvent.VK_D && (humanP.rightMove() || humanP.rightStand()) && (BULLETCOUNT > 0)
 				&& !is_shooting) { // D키를 눌렀고 총알이 1개이상일 때, 오른쪽 발사, 연속발사 방지
 			this.buldirection = true;
 			is_shooting = true;
-			c.addBulletEnt(new Bullet(humanP.getX() + 50, humanP.getY() + 35, texture));
+			c.addEntity(new Bullet(humanP.getX() + 50, humanP.getY() + 35, texture, this));
 			bulcount.setText(String.format("남은 총알 수 : %d", --BULLETCOUNT));
 		}
 	}
@@ -196,7 +203,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		JFrame frame = new JFrame(game.TITLE);
 
 		bulcount = new JLabel(String.format("남은 총알 수 : %d", BULLETCOUNT));
-		//bulcount.setBounds(1, 1, 120, 30);
+		bulcount.setBounds(1, 1, 120, 30);
 		frame.add(bulcount);
 
 		frame.add(game);

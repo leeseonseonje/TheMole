@@ -1,12 +1,14 @@
 package Mole.Game;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.awt.Rectangle;
 
-public class Bullet implements Entity {
+import Mole.Game.Entities.EntityA;
+
+public class Bullet implements EntityA {
 
 	private Game game;
+	private Mole mole;
 	private double x;
 	private double y;
 	
@@ -14,10 +16,11 @@ public class Bullet implements Entity {
 
 	SpriteSheet spr = null;
 
-	public Bullet(double x, double y, Textures texture) {
+	public Bullet(double x, double y, Textures texture, Game game) {
 		this.x = x;
 		this.y = y;
-		this.texture = texture;
+		this.texture = texture; 
+		this.game = game;
 	}
 
 	public void tick() {
@@ -25,6 +28,11 @@ public class Bullet implements Entity {
 			x += 5;
 		else
 			x -= 5;
+		
+		if(Physics.Collision(this,game.m))
+		{
+			System.out.println("COLLISION DETECTED");
+		}
 	}
 
 	public void render(Graphics g) {
@@ -40,5 +48,10 @@ public class Bullet implements Entity {
 
 	public double getY() {
 		return y;
+	}
+
+	@Override
+	public Rectangle getBounds() {
+		return new Rectangle((int) x, (int) y, 16, 16);
 	}
 }

@@ -1,8 +1,11 @@
 package Mole.Game;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
-public class Mole implements Entity {
+import Mole.Game.Entities.EntityB;
+
+public class Mole implements EntityB {
 
 	private double x, y;
 	
@@ -47,5 +50,10 @@ public class Mole implements Entity {
 	}
 	public void getY(double y) {
 		this.y = y;
+	}
+
+	@Override
+	public Rectangle getBounds() {
+		return new Rectangle((int) x, (int) y, 32, 32);
 	}
 }

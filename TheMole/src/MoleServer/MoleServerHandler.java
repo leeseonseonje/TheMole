@@ -16,7 +16,6 @@ public class MoleServerHandler extends ChannelInboundHandlerAdapter{
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String)msg;
-		System.out.println("서버핸들러");
 		   String[] s = readMessage.split(",");
 	       if (s[0].equals("[LOGIN]")) 
 	    	   LoginServer.login(s[1], s[2], ctx);

@@ -16,6 +16,7 @@ public class MoleClientHandler extends ChannelInboundHandlerAdapter{
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String)msg;
+		System.out.println(readMessage);
 		if(readMessage.equals("LOGIN")) {
 			serverMessage = readMessage;
 			ctx.fireChannelActive();

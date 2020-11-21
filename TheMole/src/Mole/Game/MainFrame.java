@@ -42,6 +42,8 @@ public class MainFrame extends JFrame{
 	ImageIcon titles_img = new ImageIcon("img/titles.png");
 	ImageIcon angry_img = new ImageIcon("img/angry.png");
 
+	private JButton testButton;
+	
 	public MainFrame(ChannelHandlerContext ctx) {
 		CustomCursor();
 		setTitle("Mole Game"); // 타이틀
@@ -170,7 +172,14 @@ public class MainFrame extends JFrame{
 		title.setContentAreaFilled(false);
 		title.setBounds(170, 60, 476, 146);
 		mainBG.add(title);
-
+		
+		
+		testButton = new JButton("방목록");
+		testButton.setBounds(300, 150, 102, 100);
+		mainBG.add(testButton);
+		testButton.addActionListener(e -> {
+			ctx.writeAndFlush("[LIST]");
+		});
 		add(mainBG);
 		setVisible(true);// 창이 보이게
 

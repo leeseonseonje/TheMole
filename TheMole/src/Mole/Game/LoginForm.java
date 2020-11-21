@@ -49,7 +49,7 @@ public class LoginForm extends JFrame {
 	public static String getSecret() {
 		return secret;
 	}
-
+	
 	public static void setSecret(String secret) {
 		LoginForm.secret = secret;
 	}
@@ -84,6 +84,7 @@ public class LoginForm extends JFrame {
 		loginPanel.setLayout(null);
 
 		loginButton = new JButton("Login");
+		loginButton.getText();
 		loginButton.setBackground(Color.LIGHT_GRAY);
 		loginButton.setBounds(358, 302, 97, 23);
 		loginButton.addActionListener(new ActionListener() {

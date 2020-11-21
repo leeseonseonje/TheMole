@@ -120,7 +120,7 @@ class MolePanel extends JPanel {
 		@Override
 		public void run() {
 			try {
-				vegetableThread.sleep(1000);
+				this.sleep(000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -132,9 +132,7 @@ class MolePanel extends JPanel {
 				vegetable.setVisible(true);
 			else if(b == false)
 				vegetable.setVisible(false);
-			
 		}
-
 	}
 
 	class MoleThread extends Thread {
@@ -143,7 +141,7 @@ class MolePanel extends JPanel {
 		private Rectangle champion;
 		private ImageIcon mole = new ImageIcon("img/moleimg.png");
 		private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
-		Thread t1 = v0;
+		Thread t1 = new Thread(v0);
 
 
 		private Timer timer;
@@ -187,7 +185,6 @@ class MolePanel extends JPanel {
 									calculateChampionMovement(e.getX(), e.getY(), champion);
 									startTime = System.currentTimeMillis();
 									timer.start();
-
 								}
 							}
 
@@ -228,14 +225,16 @@ class MolePanel extends JPanel {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
-			System.out.println("두더지의 위치"+x+" "+y);
 			if (v0.getX() == x && v0.getY() >= y - 15) {
 				v0.setVisible(false);
-				t1.start();
-				v0.setposition();
-				//t1.run();
-				v0.setVisible(true);
-				
+				try {
+					t1.sleep(5000);
+					v0.setVisible(true);
+					System.out.println("1");
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else if (v1.getX() == x && v1.getY() >= y - 15) {
 				v1.setVisible(false);
 				v1.setposition();

@@ -2,7 +2,9 @@ package Mole.Game;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -34,6 +36,10 @@ class MoleUI extends JFrame {
 
 		add(molePanel);
 		setVisible(true);
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Image icon = kit.getImage("img/moleicon.png");
+		setIconImage(icon);
 	}
 }
 

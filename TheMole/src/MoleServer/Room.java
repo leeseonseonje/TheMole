@@ -30,7 +30,7 @@ public class Room {
 	}
 	
 	public static void roomListSend(ChannelHandlerContext ctx) {
-		ctx.writeAndFlush("ROOMLIST" + "," + roomList.size());
+		ctx.writeAndFlush("ROOMLIST," + roomList.size());
 	}
 }
 

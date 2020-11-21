@@ -11,8 +11,8 @@ import io.netty.channel.ChannelHandlerContext;
 public class TestRoom extends JFrame{
 	JPanel panel;
 	JButton[] button;
-	JButton testButton;
-	JButton testButtonB;
+	JButton testButton, refreshButton;
+	// JButton testButtonB;
 	
 	public TestRoom(ChannelHandlerContext ctx, String rooms) {
 		setTitle("RoomTest");
@@ -37,6 +37,13 @@ public class TestRoom extends JFrame{
 		panel.add(testButton);
 		testButton.addActionListener(e -> {
 			ctx.writeAndFlush("[CREAT]");
+			this.repaint();
+		});
+		refreshButton = new JButton("새로고침");
+		panel.add(refreshButton);
+		refreshButton.addActionListener(e -> {
+			panel.repaint();
+			this.repaint();
 		});
 
 		add(panel);

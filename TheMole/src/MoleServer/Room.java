@@ -56,5 +56,15 @@ public class Room {
 		}
 		ctx.flush();
 	}
+	public static void roomDelete(ChannelHandlerContext ctx, String hostName) {
+		int index = Collections.binarySearch(roomHostUser, hostName);
+		roomList.remove(index);
+		roomHostUser.remove(hostName);
+	}
+	public static void roomOut(ChannelHandlerContext ctx, String hostName) {
+		Channel guest = ctx.channel();
+		int index = Collections.binarySearch(roomHostUser, hostName);
+		roomList.get(index).remove(guest);
+	}
 }
 

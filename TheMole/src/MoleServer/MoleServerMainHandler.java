@@ -37,8 +37,16 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 			Room.roomListRefresh(ctx);
 		else if (s[0].equals("[HOSTOUT]"))
 			Room.roomDelete(ctx, s[1]);
-		else if (s[0].equals("GUESTOUT"))
+		else if (s[0].equals("[GUESTOUT]"))
 			Room.roomOut(ctx, s[1]);
+		else if (s[0].equals("[READY]"))
+			Room.readyState(ctx, s[0], s[1]);
+		else if (s[0].equals("[CANSLE]"))
+			Room.readyState(ctx, s[0], s[1]);
+		else if (s[0].equals("[START]"))
+			Room.startGame(ctx, s[1]);
+		else if (s[0].equals("[SENDMESSAGE]"))
+			Room.roomChatting(ctx, s[1], s[2], s[3]);
 	}
 
 	@Override

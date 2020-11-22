@@ -5,9 +5,10 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import Mole.Game.HomePanel;
+import Mole.Game.HumanUI;
 import Mole.Game.LeaderBoardFrame;
-import Mole.Game.LoginForm;
 import Mole.Game.MainFrame;
+import Mole.Game.MoleUI;
 import Mole.Game.RoomTest;
 import Mole.Game.TestRoom;
 import io.netty.channel.ChannelHandlerContext;
@@ -61,13 +62,13 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			testRoom.setVisible(false);
 			testRoom.setVisible(true);
 			roomList.clear();
+			System.out.println("ok");
 		}
 		else if (s[0].equals("CREAT")) {
 			roomTest = new RoomTest(ctx, s[1], "");
 			mainFrame.add(roomTest);
 			testRoom.setVisible(false);
 			roomTest.setVisible(true);
-			System.out.println("ok");
 		}
 		else if (s[0].equals("JOIN")) {
 			roomTest = new RoomTest(ctx, s[1], s[2]);
@@ -83,7 +84,35 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			roomTest.setVisible(false);
 			roomTest.setVisible(true);
 		}
+		else if (s[0].equals("SENDMESSAGE")) {
+			RoomTest.chatArea.append(s[1] + "\n");
+		}
 		else if (readMessage.equals("FULL"))
 			JOptionPane.showMessageDialog(mainFrame, "풀방");
+		
+		else if (s[0].equals("BOOM")) {
+			for (int i = 1; i < s.length; i ++ )
+				roomList.add(s[i]);
+			roomTest.setVisible(false);
+			testRoom = new TestRoom(ctx, roomList);
+			mainFrame.add(testRoom);
+			testRoom.setVisible(false);
+			testRoom.setVisible(true);
+			roomList.clear();
+		}
+		else if (readMessage.equals("READY"))
+			RoomTest.ready.setText("준비완료");
+		else if (readMessage.equals("CANSLE"))
+			RoomTest.ready.setText("");
+		else if (readMessage.equals("MOLESTART")) {
+			mainFrame.dispose();
+			System.out.println("시작");
+			new MoleUI();
+		}
+		else if (readMessage.equals("HUMANSTART")) {
+			mainFrame.dispose();
+			System.out.println("시작22");
+			new HumanUI();
+		}
 	}
 }

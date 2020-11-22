@@ -11,8 +11,6 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 	private static final ChannelGroup onlineUsers = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-	private static int roomNumber = 1;
-	private static final int x = 0;
 	
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -27,15 +25,13 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 		String[] s = readMessage.split(",");
 		if (s[0].equals("[INFORMATION]"))
 			DBConnect.informationDB(s[1], ctx);
-		if (readMessage.equals("[RANKING]"))
+		else if (readMessage.equals("[RANKING]"))
 			DBConnect.leaderBoardDB(ctx);
-		if (readMessage.equals("[CREAT]")) {
-			Room.roomCreat(ctx, roomNumber, x);
-			roomNumber ++;
-		}
-		if (s[0].equals("[JOIN]"))
-			Room.roomJoin(ctx, Integer.parseInt(s[1]));
-		if (readMessage.equals("[LIST]"))
+		else if (s[0].equals("[CREAT]"))
+			Room.roomCreat(ctx, s[1]);
+		else if (s[0].equals("[JOIN]"))
+			Room.roomJoin(ctx, s[1], s[2]);
+		else if (readMessage.equals("[LIST]"))
 			Room.roomListSend(ctx);
 	}
 

@@ -20,19 +20,28 @@ public class Room {
 		room.add(Host);
 		roomList.add(room);
 		roomHostUser.add(roomHost);
+		ctx.writeAndFlush("CREAT," + roomHost);
 	}
 
 	public static void roomJoin(ChannelHandlerContext ctx, String roomHostName, String myName) {
 		Channel guest = ctx.channel();
 		int index = Collections.binarySearch(roomHostUser, roomHostName);
+		if (roomList.get(index).size() > 1) 
+			ctx.writeAndFlush("FULL");
+		else {
 		roomList.get(index).add(guest);
+		System.out.println(roomList.get(index).size());
 		for (Channel channel : roomList.get(index)) {
-				channel.writeAndFlush("JOIN," + roomHostName + "," + myName);
+			if(channel == guest)
+				guest.writeAndFlush("JOIN," + roomHostName + "," + myName);
+			else
+				channel.writeAndFlush("GUEST," + roomHostName + "," + myName);
+			}
 		}
 	}
 	
 	public static void roomListSend(ChannelHandlerContext ctx) {
-		System.out.println(roomHostUser);
+	//	System.out.println(roomHostUser);
 		ctx.write("ROOMLIST,");
 		for(int i = 0; i < roomHostUser.size(); i++) {
 			ctx.write(roomHostUser.get(i) + ",");
@@ -40,7 +49,7 @@ public class Room {
 		ctx.flush();
 	}
 	public static void roomListRefresh(ChannelHandlerContext ctx) {
-		System.out.println(roomHostUser);
+	//	System.out.println(roomHostUser);
 		ctx.write("REFRESH,");
 		for(int i = 0; i < roomHostUser.size(); i++) {
 			ctx.write(roomHostUser.get(i) + ",");

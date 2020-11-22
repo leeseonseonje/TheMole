@@ -7,13 +7,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import MoleServer.MoleClientMainHandler;
 import io.netty.channel.ChannelHandlerContext;
 
 public class RoomTest extends JPanel {
 	public static JButton testStart;
 	JButton testOut;
 	JButton host;
-	public static JButton guest;
+	JButton guest;
 	JTextField chatField;
 	JTextArea chatArea;
 	JScrollPane scroll;
@@ -23,10 +24,14 @@ public class RoomTest extends JPanel {
 		testOut = new JButton("³ª°¡±â");
 		host = new JButton(hostName);
 		guest = new JButton(guestName);
-		/*testOut.addActionListener(e -> {
+		testOut.addActionListener(e -> {
 			setVisible(false);
-			panel.setVisible(true);
-		});*/
+			ctx.writeAndFlush("[REFRESH]");
+			if(LoginForm.getId() == hostName)
+				ctx.writeAndFlush("[HOSTOUT]," + hostName);
+			else
+				ctx.writeAndFlush("[GUESTOUT]," + hostName);
+		});	
 		chatField = new JTextField(30);
 		chatArea = new JTextArea(10, 30);
 		chatArea.setEditable(false);

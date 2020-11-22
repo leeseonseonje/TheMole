@@ -21,7 +21,7 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String)msg;
-		System.out.println(readMessage);
+	//	System.out.println(readMessage);
 		String[] s = readMessage.split(",");
 		if (s[0].equals("[INFORMATION]"))
 			DBConnect.informationDB(s[1], ctx);

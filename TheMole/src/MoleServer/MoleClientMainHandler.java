@@ -17,6 +17,7 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 	public static MainFrame mainFrame;
 	public static HomePanel homePanel;
 	public static TestRoom testRoom;
+	public static RoomTest roomTest;
 	private LinkedList<String> roomList = new LinkedList<String>();
 	
 	@Override
@@ -56,19 +57,33 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 				roomList.add(s[i]);
 			System.out.println(roomList);
 			testRoom = new TestRoom(ctx, roomList);
-			System.out.println("2");
 			mainFrame.add(testRoom);
-			System.out.println("3");
 			testRoom.setVisible(false);
 			testRoom.setVisible(true);
-			System.out.println("4");
 			roomList.clear();
 		}
-		else if (s[0].equals("JOIN")) {
-			RoomTest roomTest = new RoomTest(ctx, s[1], s[2]);
-			roomTest.guest.setText(s[2]);
-			if (s[2].equals(LoginForm.getId()))
-				roomTest.testStart.setText("준비");	
+		else if (s[0].equals("CREAT")) {
+			roomTest = new RoomTest(ctx, s[1], "");
+			mainFrame.add(roomTest);
+			testRoom.setVisible(false);
+			roomTest.setVisible(true);
+			System.out.println("ok");
 		}
+		else if (s[0].equals("JOIN")) {
+			roomTest = new RoomTest(ctx, s[1], s[2]);
+			roomTest.testStart.setText("준비");
+			mainFrame.add(roomTest);
+			testRoom.setVisible(false);
+			roomTest.setVisible(true);
+		}
+		else if (s[0].equals("GUEST")) {
+			roomTest.setVisible(false);
+			roomTest = new RoomTest(ctx, s[1], s[2]);
+			mainFrame.add(roomTest);
+			roomTest.setVisible(false);
+			roomTest.setVisible(true);
+		}
+		else if (readMessage.equals("FULL"))
+			JOptionPane.showMessageDialog(mainFrame, "풀방");
 	}
 }

@@ -12,27 +12,6 @@ import javax.swing.JTextField;
 import MoleServer.MoleClientMainHandler;
 import io.netty.channel.ChannelHandlerContext;
 
-/*public class TestRoom extends JFrame {
-	public TestRoom(ChannelHandlerContext ctx, LinkedList<String> roomList) {
-		setTitle("RoomTest");
-		setSize(800, 600);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		RoomListPanel roomListPanel = new RoomListPanel(ctx, roomList, this);
-		RoomTest roomTest = new RoomTest(ctx, LoginForm.getId(), "");
-		add(roomListPanel);
-		roomListPanel.testButton.addActionListener(e -> {
-			ctx.writeAndFlush("[CREAT]," + LoginForm.getId());
-			add(roomTest);
-			roomListPanel.setVisible(false);
-			roomTest.setVisible(true);
-		});
-	//	roomListPanel.setVisible(true);
-		setVisible(true);
-	}
-}*/
 public class TestRoom extends JPanel{
 	JPanel panel;
 	JButton[] button;
@@ -59,11 +38,7 @@ public class TestRoom extends JPanel{
 		add(testButtonB);
 		testButtonB.addActionListener(e -> {
 			setVisible(false);
-			System.out.println("1");
 			ctx.writeAndFlush("[REFRESH]");
-			System.out.println("1");
-		//	setVisible(false);
-		//	setVisible(true);
 		});
 		outButton = new JButton("³ª°¡±â");
 		add(outButton);

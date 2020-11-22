@@ -25,7 +25,7 @@ import io.netty.channel.ChannelHandlerContext;
 public class MainFrame extends JFrame{
 	private Font font;
 	private JButton start, end, query, rank, angry, player, title;
-	public static BackG mainBG = new BackG();
+	private BackG mainBG = new BackG();
 
 	ImageIcon star_img = new ImageIcon("img/rank.png");
 	ImageIcon star1_img = new ImageIcon("img/rank1.png");
@@ -42,6 +42,8 @@ public class MainFrame extends JFrame{
 	ImageIcon titles_img = new ImageIcon("img/titles.png");
 	ImageIcon angry_img = new ImageIcon("img/angry.png");
 
+	private JButton testButton;
+	
 	public MainFrame(ChannelHandlerContext ctx) {
 		CustomCursor();
 		setTitle("Mole Game"); // 타이틀
@@ -72,8 +74,7 @@ public class MainFrame extends JFrame{
 			}
 
 			public void mousePressed(MouseEvent e) {
-				ctx.writeAndFlush("[LIST]");
-				mainBG.setVisible(false);
+				ctx.fireChannelRead("zzz");
 			}
 		});
 		mainBG.add(start);
@@ -172,6 +173,13 @@ public class MainFrame extends JFrame{
 		title.setBounds(170, 60, 476, 146);
 		mainBG.add(title);
 		
+		
+		testButton = new JButton("방목록");
+		testButton.setBounds(300, 150, 102, 100);
+		mainBG.add(testButton);
+		testButton.addActionListener(e -> {
+			ctx.writeAndFlush("[LIST]");
+		});
 		add(mainBG);
 		setVisible(true);// 창이 보이게
 

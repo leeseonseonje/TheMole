@@ -67,7 +67,6 @@ public class LeaderBoardFrame extends JPanel { // 리더보드 버튼을 클릭했을 때 나
 			}
 
 			public void mousePressed(MouseEvent e) {
-				boardcontent.setText(" No \t Name \t PlayCount \t HumanWin \t MoleWin \t Rate \t Scores \n\n");
 				setVisible(false);
 				mainBG.setVisible(true);
 			}

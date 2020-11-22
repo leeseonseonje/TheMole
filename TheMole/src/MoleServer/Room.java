@@ -1,6 +1,5 @@
 package MoleServer;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -12,32 +11,26 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class Room {
 	private static final LinkedList<ChannelGroup> roomList = new LinkedList<ChannelGroup>();
-	private static final LinkedList<String> roomHostUser = new LinkedList<String>();
 
-	public static void roomCreat(ChannelHandlerContext ctx, String roomHost) {
-		Channel Host = ctx.channel();
+	public static void roomCreat(ChannelHandlerContext ctx, int roomNumber, int x) {
+		Channel oner = ctx.channel();
 		ChannelGroup room = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-		room.add(Host);
+		room.add(oner);
 		roomList.add(room);
-		roomHostUser.add(roomHost);
+		System.out.println(roomList);
 	}
 
-	public static void roomJoin(ChannelHandlerContext ctx, String roomHostName, String myName) {
+	public static void roomJoin(ChannelHandlerContext ctx, int roomNumber) {
 		Channel guest = ctx.channel();
-		int index = Collections.binarySearch(roomHostUser, roomHostName);
-		roomList.get(index).add(guest);
-		for (Channel channel : roomList.get(index)) {
-				channel.writeAndFlush("JOIN," + roomHostName + "," + myName);
-		}
+		roomList.get(roomNumber-1).add(guest);
+		System.out.println(roomList);
+		/* for (Channel roomUser : roomList.get(0)) {
+			 roomUser.writeAndFlush("1¹ø¹æ");
+	     }*/
 	}
 	
 	public static void roomListSend(ChannelHandlerContext ctx) {
-		System.out.println(roomHostUser);
-		ctx.write("ROOMLIST,");
-		for(int i = 0; i < roomHostUser.size(); i++) {
-			ctx.write(roomHostUser.get(i) + ",");
-		}
-		ctx.flush();
+		ctx.writeAndFlush("ROOMLIST" + "," + roomList.size());
 	}
 }
 

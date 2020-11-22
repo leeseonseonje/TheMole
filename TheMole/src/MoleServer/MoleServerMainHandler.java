@@ -33,6 +33,8 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 			Room.roomJoin(ctx, s[1], s[2]);
 		else if (readMessage.equals("[LIST]"))
 			Room.roomListSend(ctx);
+		else if (readMessage.equals("[REFRESH]"))
+			Room.roomListRefresh(ctx);
 	}
 
 	@Override

@@ -9,9 +9,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import MoleServer.MoleClientMainHandler;
 import io.netty.channel.ChannelHandlerContext;
 
-public class TestRoom extends JFrame {
+/*public class TestRoom extends JFrame {
 	public TestRoom(ChannelHandlerContext ctx, LinkedList<String> roomList) {
 		setTitle("RoomTest");
 		setSize(800, 600);
@@ -31,13 +32,14 @@ public class TestRoom extends JFrame {
 	//	roomListPanel.setVisible(true);
 		setVisible(true);
 	}
-}
-class RoomListPanel extends JPanel{
+}*/
+public class TestRoom extends JPanel{
 	JPanel panel;
 	JButton[] button;
 	JButton testButton;
 	JButton testButtonB;
-	public RoomListPanel(ChannelHandlerContext ctx, LinkedList<String> roomList, JFrame frame) {
+	JButton outButton;
+	public TestRoom(ChannelHandlerContext ctx, LinkedList<String> roomList) {
 		button = new JButton[roomList.size()];
 		for(int i = 0; i < roomList.size(); i++) {
 			button[i] = new JButton(roomList.get(i) + "님의 방");
@@ -46,22 +48,28 @@ class RoomListPanel extends JPanel{
 				String n = e.getActionCommand();
 				String s[] = n.split("님");
 				ctx.writeAndFlush("[JOIN]" + "," + s[0] + "," + LoginForm.getId());
-				frame.dispose();
 			});
 		}
 		testButton = new JButton("방생성");
 		add(testButton);
-		/*testButton.addActionListener(e -> {
+		testButton.addActionListener(e -> {
 			ctx.writeAndFlush("[CREAT]," + LoginForm.getId());
-			frame.dispose();
-			RoomTest roomTest = new RoomTest(ctx, LoginForm.getId(), "");
-		});*/
+		});
 		testButtonB = new JButton("새로고침");
 		add(testButtonB);
 		testButtonB.addActionListener(e -> {
-			ctx.writeAndFlush("[LIST]");
 			setVisible(false);
-			setVisible(true);
+			System.out.println("1");
+			ctx.writeAndFlush("[REFRESH]");
+			System.out.println("1");
+		//	setVisible(false);
+		//	setVisible(true);
+		});
+		outButton = new JButton("나가기");
+		add(outButton);
+		outButton.addActionListener(e -> {
+			setVisible(false);
+			MoleClientMainHandler.homePanel.setVisible(true);
 		});
 	}
 }

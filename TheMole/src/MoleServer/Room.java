@@ -39,5 +39,13 @@ public class Room {
 		}
 		ctx.flush();
 	}
+	public static void roomListRefresh(ChannelHandlerContext ctx) {
+		System.out.println(roomHostUser);
+		ctx.write("REFRESH,");
+		for(int i = 0; i < roomHostUser.size(); i++) {
+			ctx.write(roomHostUser.get(i) + ",");
+		}
+		ctx.flush();
+	}
 }
 

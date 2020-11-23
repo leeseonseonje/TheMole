@@ -1,16 +1,23 @@
 package Mole.Game;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에서 new 키워드로 Game을 생성하지 말 것.
 
@@ -25,6 +32,16 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	public static int BULLETCOUNT = 5;
 	private boolean is_shooting = false; // 총알 발사버튼을 꾹눌러서 줄줄이 나오는거 방지
 	public static boolean buldirection = true; // 총알방향, true는 오른쪽, false는 왼쪽
+	
+	private static String countdown = "time";
+	
+	// 3분의 카운트다운-> Frame에 들어감.
+	private static JLabel count;
+	//private static Font fonts = new Font("Arial", Font.BOLD, 30);
+	private static Timer timer;
+	private static int second, minute;
+	private static String ddSecond, ddMinute;
+	private static DecimalFormat dFormat = new DecimalFormat("00");
 	
 	private int mole_count = 9; // 두더지 생성숫자
 
@@ -43,6 +60,8 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	// private Mole moleP;
 	private Snake snake;
 	private Textures texture;
+	
+	private Hud hud;
 	
 	public LinkedList<Bullet> b;
 	public LinkedList<Mole> m;
@@ -64,6 +83,8 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		humanP = new Human(200, 225, texture,this);
 		snake = new Snake(texture,this);
 		c = new Controller(this, texture);
+		hud = new Hud(this);
+		
 		
 		b = c.getBullet(); // 메소드를 부르기전에 Controller를 초기화 해주어야한다.
 		m = c.getMole();
@@ -147,11 +168,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		/////////////// 그림 그리는 공간 으로 추정//////////////////////////
 
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-
+		countRender(g, countdown);
+		
 		humanP.render(g); // 인간 그리기
 		c.render(g);
 		// moleP.render(g);
 		snake.render(g);
+		hud.render(g);
 
 		///////////////////////////////////////////////////////////
 		g.dispose(); // 계속 루프를 하는데 dispose로 지워주지 않는다면..?
@@ -200,31 +223,72 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 			is_shooting = false;
 		}
 	}
-
+	
+	
 	public static void main(String args[]) {
 		Game game = new Game();
-
 		game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
 		JFrame frame = new JFrame(game.TITLE);
-
+		frame.setLayout(new BorderLayout());
+		
 		bulcount = new JLabel(String.format("남은 총알 수 : %d", BULLETCOUNT));
-		bulcount.setBounds(1, 1, 120, 30);
-		frame.add(bulcount);
+		bulcount.setBounds(0, 0, 120, 30);
+		//frame.add(bulcount);
+		
+		count = new JLabel("");
+		count.setBounds(300, -30, 200, 100);
+		count.setHorizontalAlignment(JLabel.CENTER);
+		//count.setFont(fonts);
+		count.setText("03:00"); // 시간 설정 : 3:00
+		second = 0;
+		minute = 3;
+		normalTimer(game,count);
+		timer.start();
 
 		frame.add(game);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		
 		frame.setVisible(true);
-		//frame.setLayout(null);
-
+		
 		game.start();
 	}
+	public static void normalTimer(Game game, JLabel label) {
+		timer = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
+				second--;
+
+				ddSecond = dFormat.format(second);
+				ddMinute = dFormat.format(minute);
+
+				label.setText(ddMinute + ":" + ddSecond);
+
+				if (second == -1) {
+					second = 59;
+					minute--;
+
+					ddSecond = dFormat.format(second);
+					ddMinute = dFormat.format(minute);
+					label.setText(ddMinute + ":" + ddSecond);
+				}
+				countdown = label.getText();
+				if (minute == 0 && second == 0) {
+					timer.stop();
+					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
+				}
+			}
+		});
+	}
+	public void countRender(Graphics g,String countdown) {
+		g.drawString(countdown, 390, 20);
+	}
 	public BufferedImage getHumSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
 		return humSpriteSheet;
 	}

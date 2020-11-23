@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	public static final int SCALE = 1;
 	public final String TITLE = "Mole Game";
 
-	private static JLabel bulcount;
+	private static int bulcount;
 	public static int BULLETCOUNT = 5;
 	private boolean is_shooting = false; // 총알 발사버튼을 꾹눌러서 줄줄이 나오는거 방지
 	public static boolean buldirection = true; // 총알방향, true는 오른쪽, false는 왼쪽
@@ -169,6 +169,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 		countRender(g, countdown);
+		bulcountRender(g,String.format("%d",BULLETCOUNT));
 		
 		humanP.render(g); // 인간 그리기
 		c.render(g);
@@ -197,13 +198,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 			this.buldirection = false;
 			is_shooting = true;
 			c.addEntity(new Bullet(humanP.getX(), humanP.getY() + 35, texture, this));
-			bulcount.setText(String.format("남은 총알 수 : %d", --BULLETCOUNT));
+			--BULLETCOUNT;
 		} else if (key == KeyEvent.VK_D && (humanP.getStatus() == 0 || humanP.getStatus() == 2) && (BULLETCOUNT > 0) && !is_shooting) { 
 			// 오른쪽을 보고있는 상태에서 D키
 			this.buldirection = true;
 			is_shooting = true;
 			c.addEntity(new Bullet(humanP.getX() + 50, humanP.getY() + 35, texture, this));
-			bulcount.setText(String.format("남은 총알 수 : %d", --BULLETCOUNT));
+			--BULLETCOUNT;
 		}
 	}
 
@@ -233,10 +234,6 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 
 		JFrame frame = new JFrame(game.TITLE);
 		frame.setLayout(new BorderLayout());
-		
-		bulcount = new JLabel(String.format("남은 총알 수 : %d", BULLETCOUNT));
-		bulcount.setBounds(0, 0, 120, 30);
-		//frame.add(bulcount);
 		
 		count = new JLabel("");
 		count.setBounds(300, -30, 200, 100);
@@ -288,6 +285,9 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	}
 	public void countRender(Graphics g,String countdown) {
 		g.drawString(countdown, 390, 20);
+	}
+	public void bulcountRender(Graphics g,String value) {
+		g.drawString(value, 28, 105);
 	}
 	public BufferedImage getHumSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
 		return humSpriteSheet;

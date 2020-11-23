@@ -19,12 +19,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 class MoleUI extends JFrame {
 	private MolePanel molePanel;
-
+	
 	public MoleUI() throws IOException, InterruptedException { // Mole UI 창
 		setTitle("Mole Game");
 		setSize(800, 600);
@@ -44,14 +45,14 @@ class MoleUI extends JFrame {
 }
 
 class MolePanel extends JPanel {
-	private BufferedImage backImage;
+	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 	private ImageIcon human = new ImageIcon("img/human.png");
-	private ImageIcon intHuman = new ImageIcon("img/humanint.png");
-	private ImageIcon intMole = new ImageIcon("img/moleint.png");
-	private ImageIcon chicken = new ImageIcon("img/chicken.gif");
-	private JButton humanButton, ch, moleInt, humanInt;
+	private JButton humanButton;
 	private JLabel counterLabel;
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
+	
+	public MoleUI frame;
+	
 	Timer timer;
 	MoleThread m1;
 	MoleThread m2;
@@ -74,28 +75,20 @@ class MolePanel extends JPanel {
 		try {
 			setLayout(null);
 			backImage = ImageIO.read(new File("img/Back4.png"));
-
+			humanHud = ImageIO.read(new File("img/humanHud.png"));
+			moleHud = ImageIO.read(new File("img/moleHud.png"));
+			humanInv = ImageIO.read(new File("img/inventory.png"));
+			moleInv = ImageIO.read(new File("img/inventory.png"));
+			intHuman = ImageIO.read(new File("img/humanint.png"));
+			intMole = ImageIO.read(new File("img/moleint.png"));
+			
+			
 			humanButton = new JButton(human);
 			humanButton.setBorderPainted(false);
 			humanButton.setFocusPainted(false);
 			humanButton.setContentAreaFilled(false);
 			humanButton.setBounds(300, 192, 70, 70);
 			add(humanButton);
-
-			humanInt = new JButton(intHuman);
-			humanInt.setBorderPainted(false);
-			humanInt.setFocusPainted(false);
-			humanInt.setContentAreaFilled(false);
-			humanInt.setBounds(0, 0, 50, 50);
-			add(humanInt);
-			
-			moleInt = new JButton(intMole);
-			moleInt.setBorderPainted(false);
-			moleInt.setFocusPainted(false);
-			moleInt.setContentAreaFilled(false);
-			moleInt.setBounds(745, 0, 50, 50);
-			add(moleInt);
-			// ch.setVisible(false);
 
 			m1 = new MoleThread(50, 400);
 			m2 = new MoleThread(100, 400);
@@ -106,10 +99,11 @@ class MolePanel extends JPanel {
 			m7 = new MoleThread(50, 500);
 			m8 = new MoleThread(100, 500);
 			m9 = new MoleThread(150, 500);
+			
 			v0 = new vegetableThread(0);
 			v1 = new vegetableThread(1);
 			v2 = new vegetableThread(2);
-
+			
 			add(v0);
 			add(v1);
 			add(v2);
@@ -125,11 +119,10 @@ class MolePanel extends JPanel {
 			
 			counterLabel.setText("03:00");
 			second  = 0;
-			minute = 3;
+			minute = 1;
 			normalTimer();
 			timer.start();
 			
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -159,6 +152,9 @@ class MolePanel extends JPanel {
 				}
 				if(minute==0 && second==0) {
 					timer.stop();
+					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
+					MainFrame main = new MainFrame();
+					main.setVisible(true);
 				}
 			}
 		});
@@ -249,15 +245,12 @@ class MolePanel extends JPanel {
 						public void mousePressed(MouseEvent e) {
 							if (e.getButton() == MouseEvent.BUTTON3) {
 								if (moleButton.getIcon().equals(moleSelect)) {
-
 									timer.stop();
 									calculateChampionMovement(e.getX(), e.getY(), champion);
 									startTime = System.currentTimeMillis();
 									timer.start();
-
 								}
 							}
-
 							if (e.getButton() == MouseEvent.BUTTON1) {
 								if (moleButton.getIcon().equals(moleSelect))
 									moleButton.setIcon(mole);
@@ -265,7 +258,6 @@ class MolePanel extends JPanel {
 						}
 					});
 				}
-
 			});
 			timer = new Timer(10, e -> {
 				TimeMove();
@@ -335,5 +327,11 @@ class MolePanel extends JPanel {
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
+		g.drawImage(humanHud, 0, 70, null);
+		g.drawImage(moleHud, 715, 70, null);
+		g.drawImage(humanInv, 55, 0, null);
+		g.drawImage(moleInv, 650, 0, null);
+		g.drawImage(intHuman, 0, 0, null);
+		g.drawImage(intMole, 740, 0, null);
 	}
 }

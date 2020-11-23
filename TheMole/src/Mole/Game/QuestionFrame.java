@@ -108,7 +108,20 @@ class QuestionFrame extends JFrame { // 도움말 버튼을 클릭했을 때 나오는 프레임
         }
 		
 		JTextArea p4 = new JTextArea(); // 패널 4 - etc(여유분)
-		
+		p4.setEditable(false);
+		p4.setFont(wr);
+		try{
+            BufferedReader bufReader = new BufferedReader(new InputStreamReader(new FileInputStream("lib/etc.txt"),"UTF8"));
+            String line = "";
+            line.getBytes(StandardCharsets.UTF_8);
+            while((line = bufReader.readLine()) != null) { //readLine()은 끝에 개행문자를 읽지 않는다. 
+                p4.append(line + "\n");
+            }
+                       
+            bufReader.close();
+        }catch (Exception e) { // FileNotFoundException, IOException
+        	e.printStackTrace();
+        }
 
 		tab.addTab("공통",p1);
 		tab.addTab("인간",p2);

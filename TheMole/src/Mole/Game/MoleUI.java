@@ -98,7 +98,7 @@ class MolePanel extends JPanel {
 			//v0.setVisible(false);
 			
 			counterLabel = new JLabel("");
-			counterLabel.setBounds(345, -30, 100, 100);
+			counterLabel.setBounds(345, 0, 100, 50);
 			counterLabel.setHorizontalAlignment(JLabel.CENTER);
 			counterLabel.setFont(font1);
 			
@@ -106,7 +106,7 @@ class MolePanel extends JPanel {
 			
 			counterLabel.setText("03:00");
 			second  = 0;
-			minute = 1;
+			minute = 3;
 			normalTimer();
 			timer.start();
 

@@ -37,9 +37,9 @@ public class Bullet implements EntityA {
 
 	public void render(Graphics g) {
 		if (game.buldirection)
-			g.drawImage(texture.bulletR, (int) x, (int) y, null);
+			g.drawImage(texture.bullet[0], (int) x, (int) y, null);
 		else
-			g.drawImage(texture.bulletL, (int) x, (int) y, null);
+			g.drawImage(texture.bullet[1], (int) x, (int) y, null);
 	}
 
 	public double getX() {

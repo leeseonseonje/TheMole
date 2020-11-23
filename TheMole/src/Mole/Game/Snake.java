@@ -4,64 +4,69 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import Mole.Game.Entities.EntityA;
+import Mole.Game.Entities.EntityC;
 import Mole.Game.libs.Animation;
 
-public class Human implements EntityA {
+public class Snake implements EntityC {
 
 	private Game game;
 	private double x;
 	private double y;
 
-	private double velX = 0;
+	private double velX = 3;
 	private double velY = 0;
-	private static int status = 0;
-	
+	private static int status = -1; //생성될때 값을 지니고, 값에 따라 오는 방향이 달라진다.
+
 	private Textures texture;
-	
+
 	Animation leftMove, rightMove;
 
-	BufferedImage leftStand;
-	BufferedImage rightStand;
-	
-	public Human(double x, double y, Textures tex,Game game) {
-		this.x = x;
-		this.y = y;
+	public Snake(Textures tex, Game game) {
+		this.y = 250;
 		this.texture = tex;
 		this.game = game;
-		
-		leftMove = new Animation(5,tex.human[6],tex.human[7],tex.human[8],tex.human[9]);
-		rightMove = new Animation(5,tex.human[1],tex.human[2],tex.human[3],tex.human[4]);
+
+		status = (int) (Math.random() * 2);
+		if(status == 0)
+			this.x = 20;
+		else
+			this.x = 780;
+
+		leftMove = new Animation(3, tex.snake[2], tex.snake[3]);
+		rightMove = new Animation(3, tex.snake[0], tex.snake[1]);
 	}
 
 	public void tick() { // 메소드를 업데이트 할때 사용
-		x += velX;
 		y += velY;
 
+		/*// 인간의 이동제한 - x
 		if (x <= 0)
 			x = 0;
 		if (x >= 800 - 50)
 			x = 800 - 50;
-		/*
-		 * if(y <= 0) y = 0; if(y >= 600 - 64) y = 600 - 64;
-		 */
-		
-		rightMove.runAnimation();
-		leftMove.runAnimation();
-		
-		if(Physics.Collision(this,game.m))
-		{
-			System.out.println("COLLISION DETECTED");
+		*/
+		if (status == 0) {
+			rightMove.runAnimation();
+			x += velX;
+		} else { // 1일때
+			leftMove.runAnimation();
+			x -= velX;
 		}
+		/* //충돌 감지
+		 * if(Physics.Collision(this,game.m)) {
+		 * System.out.println("COLLISION DETECTED"); }
+		 */
 	}
 
 	public void render(Graphics g) { // 이미지 그릴때 사용
 
-		switch(status) {
-		case 0: g.drawImage(texture.human[0], (int) x, (int) y, null); break;
-		case 1: g.drawImage(texture.human[5], (int) x, (int) y, null); break;
-		case 2: rightMove.drawAnimation(g, x, y, 0); break;
-		case 3: leftMove.drawAnimation(g, x, y, 0); break;
+		switch (status) {
+		case 0:
+			rightMove.drawAnimation(g, x, y, 0);
+			break;
+		case 1:
+			leftMove.drawAnimation(g, x, y, 0);
+			break;
 		}
 	}
 
@@ -116,6 +121,7 @@ public class Human implements EntityA {
 		status = 3;
 		return true;
 	}
+
 	public int getStatus() {
 		return status;
 	}

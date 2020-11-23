@@ -57,7 +57,7 @@ public class Controller { // 리스트가 필요한것들의 통제 총알,아이템같은?
 	
 	public void addMole(int mole_count) {
 		for(int i = 0; i < mole_count; i++) {
-			addEntity(new Mole((100+r.nextInt(Game.WIDTH*Game.SCALE-100)), 350+r.nextInt(Game.HEIGHT*Game.SCALE-350), false ,texture));
+			addEntity(new Mole((100+r.nextInt(Game.WIDTH*Game.SCALE-100)), 350+r.nextInt(Game.HEIGHT*Game.SCALE-350), false ,texture,game));
 		}
 	}
 	

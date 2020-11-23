@@ -37,4 +37,11 @@ public class SpriteSheet {
 
 		return img;
 	}
+	
+	public BufferedImage grabSnaImage(int col, int row, int width, int height) {
+		
+		BufferedImage img = image.getSubimage((col * 32) - 32, (row * 32) - 32, width, height);
+		
+		return img;
+	}
 }

@@ -1,6 +1,6 @@
 package DB;
 
-public class Users {
+public class Users { // DB 테이블 설정정보가 적혀있음
 
 	private String id;
 	private String password;

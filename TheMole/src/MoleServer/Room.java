@@ -11,7 +11,7 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class Room {
-	private static final LinkedList<ChannelGroup> roomList = new LinkedList<ChannelGroup>();
+	public static final LinkedList<ChannelGroup> roomList = new LinkedList<ChannelGroup>();
 	private static final LinkedList<String> roomHostUser = new LinkedList<String>();
 
 	public static void roomCreat(ChannelHandlerContext ctx, String roomHost) {
@@ -30,7 +30,6 @@ public class Room {
 			ctx.writeAndFlush("FULL");
 		else {
 		roomList.get(index).add(guest);
-		System.out.println(roomList.get(index).size());
 		for (Channel channel : roomList.get(index)) {
 			if(channel == guest)
 				guest.writeAndFlush("JOIN," + roomHostName + "," + myName);
@@ -41,14 +40,12 @@ public class Room {
 	}
 	
 	public static void roomListSend(ChannelHandlerContext ctx) {
-	//	System.out.println(roomHostUser);
 		ctx.write("ROOMLIST,");
 		for(int i = 0; i < roomHostUser.size(); i++) 
 			ctx.write(roomHostUser.get(i) + ",");
 		ctx.flush();
 	}
 	public static void roomListRefresh(ChannelHandlerContext ctx) {
-	//	System.out.println(roomHostUser);
 		ctx.write("REFRESH,");
 		for(int i = 0; i < roomHostUser.size(); i++) 
 			ctx.write(roomHostUser.get(i) + ",");
@@ -97,6 +94,13 @@ public class Room {
 			}
 		}
 	}
+	public static void roomChatting(ChannelHandlerContext ctx, String message, String name, String hostName) {
+		Channel host = ctx.channel();
+		int index = Collections.binarySearch(roomHostUser, hostName);
+		for (Channel channel : roomList.get(index)) {
+			channel.writeAndFlush("SENDMESSAGE," + name + ": " + message);
+		}
+	}
 	public static void startGame(ChannelHandlerContext ctx, String hostName) {
 		Channel host = ctx.channel();
 		int index = Collections.binarySearch(roomHostUser, hostName);
@@ -110,13 +114,6 @@ public class Room {
 				host.writeAndFlush("HUMANSTART");
 				channel.writeAndFlush("MOLESTART");
 			}
-		}
-	}
-	public static void roomChatting(ChannelHandlerContext ctx, String message, String name, String hostName) {
-		Channel host = ctx.channel();
-		int index = Collections.binarySearch(roomHostUser, hostName);
-		for (Channel channel : roomList.get(index)) {
-			channel.writeAndFlush("SENDMESSAGE," + name + ": " + message);
 		}
 	}
 }

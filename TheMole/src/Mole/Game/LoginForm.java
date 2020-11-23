@@ -1,4 +1,4 @@
-	package Mole.Game;
+package Mole.Game;
 
 import java.awt.Color;
 import java.awt.Font;

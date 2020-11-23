@@ -21,8 +21,8 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String)msg;
-	//	System.out.println(readMessage);
 		String[] s = readMessage.split(",");
+		
 		if (s[0].equals("[INFORMATION]"))
 			DBConnect.informationDB(s[1], ctx);
 		else if (readMessage.equals("[RANKING]"))
@@ -39,14 +39,14 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 			Room.roomDelete(ctx, s[1]);
 		else if (s[0].equals("[GUESTOUT]"))
 			Room.roomOut(ctx, s[1]);
+		else if (s[0].equals("[SENDMESSAGE]"))
+			Room.roomChatting(ctx, s[1], s[2], s[3]);
 		else if (s[0].equals("[READY]"))
 			Room.readyState(ctx, s[0], s[1]);
 		else if (s[0].equals("[CANSLE]"))
 			Room.readyState(ctx, s[0], s[1]);
 		else if (s[0].equals("[START]"))
 			Room.startGame(ctx, s[1]);
-		else if (s[0].equals("[SENDMESSAGE]"))
-			Room.roomChatting(ctx, s[1], s[2], s[3]);
 	}
 
 	@Override

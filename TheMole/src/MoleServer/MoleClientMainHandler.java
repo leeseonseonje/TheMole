@@ -106,12 +106,10 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			RoomTest.ready.setText("");
 		else if (readMessage.equals("MOLESTART")) {
 			mainFrame.dispose();
-			System.out.println("시작");
 			new MoleUI();
 		}
 		else if (readMessage.equals("HUMANSTART")) {
 			mainFrame.dispose();
-			System.out.println("시작22");
 			new HumanUI();
 		}
 	}

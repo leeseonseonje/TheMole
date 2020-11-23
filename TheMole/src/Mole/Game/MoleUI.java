@@ -9,10 +9,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-class MoleUII extends JFrame {
+public class MoleUI extends JFrame {
 	private MolePanel molePanel;
 
-	public MoleUII() throws IOException, InterruptedException { // Mole UI 창
+	public MoleUI() throws IOException, InterruptedException { // Mole UI 창
 		setTitle("Mole Game");
 		setSize(800, 600);
 		setResizable(false);
@@ -241,11 +241,5 @@ class MolePanel extends JPanel {
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
-	}
-}
-
-public class MoleUI {
-	public static void main(String[] args) throws IOException, InterruptedException {
-		new MoleUII();
 	}
 }

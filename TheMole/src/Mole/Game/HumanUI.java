@@ -13,10 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-class HumanTest extends JFrame {
+import io.netty.channel.ChannelHandlerContext;
+
+public class HumanUI extends JFrame {
     private HumanPanel humanPanel;
 
-    public HumanTest() throws IOException {
+    public HumanUI() throws IOException {
         setTitle("Mole Game");
         setSize(800, 600);
         setResizable(false);
@@ -61,11 +63,5 @@ class HumanTest extends JFrame {
             super.paintComponent(g);
             g.drawImage(backImage, 0, 0, null);
         }
-    }
-}
-
-public class HumanUI {
-    public static void main(String[] args) throws IOException {
-        new HumanTest();
     }
 }

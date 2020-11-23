@@ -90,26 +90,25 @@ public class Room {
 				if(channel != guest)
 					channel.writeAndFlush("READY");
 			}
-		} else
+		} else { 
 			for (Channel channel : roomList.get(index)) {
 				if(channel != guest)
 					channel.writeAndFlush("CANSLE");
 			}
+		}
 	}
 	public static void startGame(ChannelHandlerContext ctx, String hostName) {
 		Channel host = ctx.channel();
 		int index = Collections.binarySearch(roomHostUser, hostName);
 		int r = (int)(Math.random()*2);
 		for (Channel channel : roomList.get(index)) {
-			if (r == 0) {
+			if (r == 0 && channel != host) {
 				host.writeAndFlush("MOLESTART");
-				if (channel != host)
-					channel.writeAndFlush("HUMANSTART");
+				channel.writeAndFlush("HUMANSTART");
 			} 
-			else if (r == 1) {
+			else if (r == 1 && channel != host) {
 				host.writeAndFlush("HUMANSTART");
-				if (channel != host)
-					channel.writeAndFlush("MOLESTART");
+				channel.writeAndFlush("MOLESTART");
 			}
 		}
 	}

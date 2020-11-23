@@ -37,7 +37,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	
 	// 3분의 카운트다운-> Frame에 들어감.
 	private static JLabel count;
-	//private static Font fonts = new Font("Arial", Font.BOLD, 30);
+	private static Font fonts = new Font("Arial", Font.BOLD, 30);
 	private static Timer timer;
 	private static int second, minute;
 	private static String ddSecond, ddMinute;
@@ -166,10 +166,9 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		}
 		Graphics g = bs.getDrawGraphics(); // graphic을 여기에 가져오고, 버퍼를 그리기 위한 graphics context를 만든다, 외부 버퍼를 그림
 		/////////////// 그림 그리는 공간 으로 추정//////////////////////////
-
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-		countRender(g, countdown);
 		bulcountRender(g,String.format("%d",BULLETCOUNT));
+		countRender(g, countdown);
 		
 		humanP.render(g); // 인간 그리기
 		c.render(g);
@@ -284,6 +283,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		});
 	}
 	public void countRender(Graphics g,String countdown) {
+		g.setFont(fonts);
 		g.drawString(countdown, 390, 20);
 	}
 	public void bulcountRender(Graphics g,String value) {

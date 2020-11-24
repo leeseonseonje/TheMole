@@ -18,7 +18,7 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 	public static HomePanel homePanel;
 	public static TestRoom testRoom;
 	public static RoomTest roomTest;
-	private LinkedList<String> roomList = new LinkedList<String>();
+	private LinkedList<String> room = new LinkedList<String>();
 	
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -44,23 +44,23 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 		}
 		else if (s[0].equals("ROOMLIST")) {
 			for (int i = 1; i < s.length; i ++ )
-				roomList.add(s[i]);
-			System.out.println(roomList);
-			testRoom = new TestRoom(ctx, roomList);
+				room.add(s[i]);
+			System.out.println(room);
+			testRoom = new TestRoom(ctx, room);
 			mainFrame.add(testRoom);
 			homePanel.setVisible(false);
 			testRoom.setVisible(true);
-			roomList.clear();
+			room.clear();
 		}
 		else if (s[0].equals("REFRESH")) {
 			for (int i = 1; i < s.length; i ++ )
-				roomList.add(s[i]);
-			System.out.println(roomList);
-			testRoom = new TestRoom(ctx, roomList);
+				room.add(s[i]);
+			System.out.println(room);
+			testRoom = new TestRoom(ctx, room);
 			mainFrame.add(testRoom);
 			testRoom.setVisible(false);
 			testRoom.setVisible(true);
-			roomList.clear();
+			room.clear();
 			System.out.println("ok");
 		}
 		else if (s[0].equals("CREAT")) {
@@ -91,25 +91,19 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 		
 		else if (s[0].equals("BOOM")) {
 			for (int i = 1; i < s.length; i ++ )
-				roomList.add(s[i]);
+				room.add(s[i]);
 			roomTest.setVisible(false);
-			testRoom = new TestRoom(ctx, roomList);
+			testRoom = new TestRoom(ctx, room);
 			mainFrame.add(testRoom);
 			testRoom.setVisible(false);
 			testRoom.setVisible(true);
-			roomList.clear();
+			room.clear();
 		}
 		else if (readMessage.equals("READY"))
 			RoomTest.ready.setText("준비완료");
 		else if (readMessage.equals("CANSLE"))
 			RoomTest.ready.setText("");
-		else if (readMessage.equals("MOLESTART")) {
-			mainFrame.dispose();
-		//	new MoleUI();
-		}
-		else if (readMessage.equals("HUMANSTART")) {
-			mainFrame.dispose();
-			new HumanUI();
-		}
+		else 
+			ctx.fireChannelRead(readMessage);
 	}
 }

@@ -24,6 +24,7 @@ public class MoleClientInitializer extends ChannelInitializer {
                         .getClassLoader())),new ObjectEncoder());*/
 			pipeline.addLast(new MoleClientHandler());
 			pipeline.addLast(new MoleClientMainHandler());
+			pipeline.addLast(new MoleClientGameHandler());
 	}
 	
 }

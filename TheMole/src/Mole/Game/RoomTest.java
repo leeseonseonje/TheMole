@@ -55,7 +55,7 @@ public class RoomTest extends JPanel {
 			}
 			else
 				if (ready.getText().equals("준비완료"))
-					ctx.writeAndFlush("[START]," + hostName);
+					ctx.writeAndFlush("[START]," + hostName + "," + guestName);
 				else
 					JOptionPane.showMessageDialog(MoleClientMainHandler.mainFrame, "상대방이 준비하지 않았습니다.");
 		});

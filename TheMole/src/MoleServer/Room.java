@@ -12,7 +12,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class Room {
 	public static final LinkedList<ChannelGroup> roomList = new LinkedList<ChannelGroup>();
-	private static final LinkedList<String> roomHostUser = new LinkedList<String>();
+	public static final LinkedList<String> roomHostUser = new LinkedList<String>();
 
 	public static void roomCreat(ChannelHandlerContext ctx, String roomHost) {
 		Channel Host = ctx.channel();
@@ -20,12 +20,14 @@ public class Room {
 		room.add(Host);
 		roomList.add(room);
 		roomHostUser.add(roomHost);
+		System.out.println(roomHostUser);
 		ctx.writeAndFlush("CREAT," + roomHost);
 	}
 
 	public static void roomJoin(ChannelHandlerContext ctx, String roomHostName, String myName) {
 		Channel guest = ctx.channel();
 		int index = Collections.binarySearch(roomHostUser, roomHostName);
+		System.out.println(index);
 		if (roomList.get(index).size() > 1) 
 			ctx.writeAndFlush("FULL");
 		else {
@@ -54,7 +56,9 @@ public class Room {
 	public static void roomDelete(ChannelHandlerContext ctx, String hostName) {
 		Channel me = ctx.channel();
 		int index = Collections.binarySearch(roomHostUser, hostName);
+		System.out.println(index);
 		roomHostUser.remove(hostName);
+		System.out.println(roomHostUser);
 		for (Channel channel : roomList.get(index)) {
 			if(channel == me) {
 				me.write("REFRESH,");
@@ -101,18 +105,18 @@ public class Room {
 			channel.writeAndFlush("SENDMESSAGE," + name + ": " + message);
 		}
 	}
-	public static void startGame(ChannelHandlerContext ctx, String hostName) {
+	public static void startGame(ChannelHandlerContext ctx, String hostName, String guestName) {
 		Channel host = ctx.channel();
 		int index = Collections.binarySearch(roomHostUser, hostName);
 		int r = (int)(Math.random()*2);
 		for (Channel channel : roomList.get(index)) {
 			if (r == 0 && channel != host) {
-				host.writeAndFlush("MOLESTART");
-				channel.writeAndFlush("HUMANSTART");
+				host.writeAndFlush("MOLESTART," + hostName + "," + "," + guestName + "," + hostName + "," + guestName);
+				channel.writeAndFlush("HUMANSTART,"  + hostName + "," + "," + guestName + "," + guestName + "," + hostName);
 			} 
 			else if (r == 1 && channel != host) {
-				host.writeAndFlush("HUMANSTART");
-				channel.writeAndFlush("MOLESTART");
+				host.writeAndFlush("HUMANSTART,"  + hostName + "," + "," + guestName + "," + hostName + "," + guestName);
+				channel.writeAndFlush("MOLESTART,"  + hostName + "," + "," + guestName + "," + guestName + "," + hostName);
 			}
 		}
 	}

@@ -21,25 +21,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class MoleUI extends JFrame {
-	private MolePanel molePanel;
-
-
-	public MoleUI() throws IOException, InterruptedException { // Mole UI 창
-		setTitle("Mole Game");
-		setSize(800, 600);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		molePanel = new MolePanel(); // molePanel 생성
-		
-		add(molePanel);
-		setVisible(true);
-	}
-}
-
-class MolePanel extends JPanel {
+public class MoleUI extends JPanel {
+	//public static void main(String[] args) throws IOException, InterruptedException {
+	//	new TestFrame();
+	//}
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 
 	private JLabel counterLabel;
@@ -66,7 +51,7 @@ class MolePanel extends JPanel {
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
 	
-	public MolePanel() {
+	public MoleUI() {
 		try {
 			setLayout(null);
 			backImage = ImageIO.read(new File("img/Back4.png"));
@@ -139,8 +124,6 @@ class MolePanel extends JPanel {
 				if(minute==0 && second==0) {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
-					//MainFrame main = new MainFrame();
-					//main.setVisible(true);
 				}
 			}
 		});
@@ -391,5 +374,19 @@ class MolePanel extends JPanel {
 		g.drawImage(moleInv, 650, 0, null);
 		g.drawImage(intHuman, 0, 0, null);
 		g.drawImage(intMole, 740, 0, null);
+	}
+}
+
+class TestFrame extends JFrame {
+	public TestFrame() {
+		setTitle("Mole Game");
+		setSize(800, 600);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		MoleUI mole = new MoleUI();
+		add(mole);
+		setVisible(true);
 	}
 }

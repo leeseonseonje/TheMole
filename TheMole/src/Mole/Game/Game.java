@@ -75,7 +75,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		c.addMole(mole_count);
 	}
 
-	private synchronized void start() {
+	public synchronized void start() {
 		if (running)
 			return;
 
@@ -203,7 +203,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		}
 	}
 
-	public static void main(String args[]) {
+	/*public static void main(String args[]) {
 		Game game = new Game();
 
 		game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -222,7 +222,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		frame.setVisible(true);
 		//frame.setLayout(null);
 		game.start();
-	}
+	}*/
 
 	public BufferedImage getHumSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
 		return humSpriteSheet;

@@ -46,7 +46,7 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 		else if (s[0].equals("[CANSLE]"))
 			Room.readyState(ctx, s[0], s[1]);
 		else if (s[0].equals("[START]"))
-			Room.startGame(ctx, s[1]);
+			Room.startGame(ctx, s[1], s[2]);
 	}
 
 	@Override

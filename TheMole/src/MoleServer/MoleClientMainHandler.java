@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import Mole.Game.HomePanel;
 import Mole.Game.HumanUI;
 import Mole.Game.LeaderBoardFrame;
+import Mole.Game.LoginForm;
 import Mole.Game.MainFrame;
 import Mole.Game.RoomTest;
 import Mole.Game.TestRoom;
@@ -64,7 +65,7 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			System.out.println("ok");
 		}
 		else if (s[0].equals("CREAT")) {
-			roomTest = new RoomTest(ctx, s[1], "");
+			roomTest = new RoomTest(ctx, LoginForm.getId(), "");
 			mainFrame.add(roomTest);
 			testRoom.setVisible(false);
 			roomTest.setVisible(true);
@@ -98,6 +99,13 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			testRoom.setVisible(false);
 			testRoom.setVisible(true);
 			room.clear();
+		}
+		else if (s[0].equals("GUESTOUT")) {
+			roomTest.setVisible(false);
+			roomTest = new RoomTest(ctx, s[1], "");
+			mainFrame.add(roomTest);
+			roomTest.setVisible(false);
+			roomTest.setVisible(true);
 		}
 		else if (readMessage.equals("READY"))
 			RoomTest.ready.setText("준비완료");

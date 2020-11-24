@@ -17,6 +17,7 @@ public class MoleServerHandler extends ChannelInboundHandlerAdapter{
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String)msg;
 		   String[] s = readMessage.split(",");
+		   System.out.println(readMessage);
 	       if (s[0].equals("[LOGIN]")) 
 	    	   LoginServer.login(s[1], s[2], ctx);
 	       else if (s[0].equals("[DUPLICATE]"))

@@ -1,9 +1,10 @@
 package MoleServer;
 
-import java.util.LinkedList;
+import java.util.Map.Entry;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
@@ -52,6 +53,12 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		Channel logoutUser = ctx.channel();
+		ChannelId c = logoutUser.id();
+		for (Entry<String, ChannelGroup> entry : Room.roomManager.entrySet()) {
+			entry.getValue().remove(logoutUser);
+			if (entry.getValue().size() == 0)
+        		Room.roomManager.remove(entry.getKey());
+        	}
         onlineUsers.remove(logoutUser);
 	}
 }

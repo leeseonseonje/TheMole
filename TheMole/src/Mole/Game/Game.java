@@ -211,12 +211,9 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
 		JFrame frame = new JFrame(game.TITLE);
-		JButton b = new JButton("zz");
-		b.setBounds(100,100, 100, 100);
 		bulcount = new JLabel(String.format("남은 총알 수 : %d", BULLETCOUNT));
 		//bulcount.setBounds(1, 1, 120, 30);
 		frame.add(bulcount);
-		frame.add(b);
 		frame.add(game);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

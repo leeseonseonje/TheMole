@@ -38,13 +38,7 @@ public class Snake implements EntityC {
 
 	public void tick() { // 메소드를 업데이트 할때 사용
 		y += velY;
-
-		/*// 인간의 이동제한 - x
-		if (x <= 0)
-			x = 0;
-		if (x >= 800 - 50)
-			x = 800 - 50;
-		*/
+		
 		if (status == 0) {
 			rightMove.runAnimation();
 			x += velX;

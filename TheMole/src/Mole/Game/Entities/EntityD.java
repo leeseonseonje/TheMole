@@ -3,7 +3,7 @@ package Mole.Game.Entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public interface EntityA { // 인간과 총알리스트
+public interface EntityD { // 작물들
 	
 	public void tick();
 	public void render(Graphics g);

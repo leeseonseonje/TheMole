@@ -10,6 +10,8 @@ import Mole.Game.libs.Animation;
 public class Human implements EntityA {
 
 	private Game game;
+	private Mole mole;
+	
 	private double x;
 	private double y;
 
@@ -17,6 +19,7 @@ public class Human implements EntityA {
 	private double velY = 0;
 	private static int status = 0;
 	
+	public static int life = 2;
 	private Textures texture;
 	
 	Animation leftMove, rightMove;
@@ -51,6 +54,7 @@ public class Human implements EntityA {
 		
 		if(Physics.Collision(this,game.m))
 		{
+			mole.mole_count--;
 			System.out.println("COLLISION DETECTED");
 		}
 	}
@@ -118,6 +122,10 @@ public class Human implements EntityA {
 	}
 	public int getStatus() {
 		return status;
+	}
+	
+	public static int getLife() {
+		return life;
 	}
 
 	@Override

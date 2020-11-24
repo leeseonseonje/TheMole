@@ -15,7 +15,7 @@ public class Physics { // 충돌감지, 사각형의 범위안에 있으면 true로 반환 없으면 
 			}
 		return false;
 	}
-
+	
 	public static boolean Collision(EntityA entA, EntityB entB) { // 인간 대 두더지
 		if (entA.getBounds().intersects(entB.getBounds())) {
 			return true;

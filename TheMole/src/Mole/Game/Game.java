@@ -28,22 +28,19 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	public static final int SCALE = 1;
 	public final String TITLE = "Mole Game";
 
-	private static int bulcount;
 	public static int BULLETCOUNT = 5;
 	private boolean is_shooting = false; // 총알 발사버튼을 꾹눌러서 줄줄이 나오는거 방지
 	public static boolean buldirection = true; // 총알방향, true는 오른쪽, false는 왼쪽
 	
-	private static String countdown = "time";
+	private static String countdown = "";
 	
 	// 3분의 카운트다운-> Frame에 들어감.
 	private static JLabel count;
-	//private static Font fonts = new Font("Arial", Font.BOLD, 30);
+	private static Font fonts = new Font("Arial", Font.BOLD, 30);
 	private static Timer timer;
 	private static int second, minute;
 	private static String ddSecond, ddMinute;
 	private static DecimalFormat dFormat = new DecimalFormat("00");
-	
-	private int mole_count = 9; // 두더지 생성숫자
 
 	private boolean running = false; // 게임의 실행여부
 	private Thread thread;
@@ -53,18 +50,23 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	private BufferedImage bulSpriteSheet = null; // 총알출력하는 버퍼이미지
 	private BufferedImage molSpriteSheet = null; // 두더지출력하는 버퍼이미지
 	private BufferedImage snaSpriteSheet = null; // 두더지출력하는 버퍼이미지
+	private BufferedImage vegSpriteSheet = null; // 두더지출력하는 버퍼이미지
 
 	// 캐릭터 생성
-	private Human humanP;
-	private Controller c; // 컨트롤러
-	// private Mole moleP;
-	private Snake snake;
-	private Textures texture;
+	private Human human;	
+	private Mole mole;
 	
+	// 기타요소 
+	private Controller c; // 컨트롤러
+	private Snake snake;
+	private Vegetable vegetable;
+	
+	private Textures texture;
 	private Hud hud;
 	
 	public LinkedList<Bullet> b;
 	public LinkedList<Mole> m;
+	public LinkedList<Vegetable> v;
 
 	public void init() {
 		requestFocus();
@@ -74,26 +76,30 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 			bulSpriteSheet = loader.loadImage("/bulimg.png");
 			molSpriteSheet = loader.loadImage("/moleSpr.png");
 			snaSpriteSheet = loader.loadImage("/snakeSpr.png");
+			vegSpriteSheet = loader.loadImage("/vegetables.png");
 			background = loader.loadImage("/Backgrounds.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		texture = new Textures(this); // 생성전에 텍스처를 생성
-		humanP = new Human(200, 225, texture,this);
+		human = new Human(200, 225, texture,this);
 		snake = new Snake(texture,this);
+		
 		c = new Controller(this, texture);
 		hud = new Hud(this);
 		
 		
 		b = c.getBullet(); // 메소드를 부르기전에 Controller를 초기화 해주어야한다.
 		m = c.getMole();
+		v = c.getVegetable();
 		
 		addKeyListener(new KeyInput(this));
-		c.addMole(mole_count);
+		c.addMole(mole.mole_count);
+		c.addVegetable(3);
 	}
 
-	private synchronized void start() {
+	public synchronized void start() {
 		if (running)
 			return;
 
@@ -150,7 +156,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	}
 
 	private void tick() {
-		humanP.tick();
+		human.tick();
 		c.tick();
 		snake.tick();
 	}
@@ -168,11 +174,14 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		/////////////// 그림 그리는 공간 으로 추정//////////////////////////
 
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-		countRender(g, countdown);
-		bulcountRender(g,String.format("%d",BULLETCOUNT));
+		countDownRender(g, countdown);
+		lifCountRender(g,String.format("%d",human.getLife()));
+		bulCountRender(g,String.format("%d",BULLETCOUNT));
+		molCountRender(g,String.format("%d",mole.mole_count));
 		
-		humanP.render(g); // 인간 그리기
-		c.render(g);
+		c.render(g); // c.render에 mole, bullet, vegetable이 들어있음
+		human.render(g); // 인간 그리기
+		
 		// moleP.render(g);
 		snake.render(g);
 		hud.render(g);
@@ -187,23 +196,23 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 
 		if (key == KeyEvent.VK_RIGHT) {
 			 // 오른쪽 방향키
-			humanP.setVelX(3);
-			humanP.rightMove();
+			human.setVelX(3);
+			human.rightMove();
 		} else if (key == KeyEvent.VK_LEFT) {
 			// 왼쪽 방향키
-			humanP.setVelX(-3);
-			humanP.leftMove();
-		} else if (key == KeyEvent.VK_A && (humanP.getStatus() == 1 || humanP.getStatus() == 3) && (BULLETCOUNT > 0) && !is_shooting) {
+			human.setVelX(-3);
+			human.leftMove();
+		} else if (key == KeyEvent.VK_A && (human.getStatus() == 1 || human.getStatus() == 3) && (BULLETCOUNT > 0) && !is_shooting) {
 			// 왼쪽을 보고있는 상태에서 A키
 			this.buldirection = false;
 			is_shooting = true;
-			c.addEntity(new Bullet(humanP.getX(), humanP.getY() + 35, texture, this));
+			c.addEntity(new Bullet(human.getX(), human.getY() + 35, texture, this));
 			--BULLETCOUNT;
-		} else if (key == KeyEvent.VK_D && (humanP.getStatus() == 0 || humanP.getStatus() == 2) && (BULLETCOUNT > 0) && !is_shooting) { 
+		} else if (key == KeyEvent.VK_D && (human.getStatus() == 0 || human.getStatus() == 2) && (BULLETCOUNT > 0) && !is_shooting) { 
 			// 오른쪽을 보고있는 상태에서 D키
 			this.buldirection = true;
 			is_shooting = true;
-			c.addEntity(new Bullet(humanP.getX() + 50, humanP.getY() + 35, texture, this));
+			c.addEntity(new Bullet(human.getX() + 50, human.getY() + 35, texture, this));
 			--BULLETCOUNT;
 		}
 	}
@@ -213,11 +222,11 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_RIGHT) {
-			humanP.setVelX(0);
-			humanP.rightStand();
+			human.setVelX(0);
+			human.rightStand();
 		} else if (key == KeyEvent.VK_LEFT) {
-			humanP.setVelX(0);
-			humanP.leftStand();
+			human.setVelX(0);
+			human.leftStand();
 		} else if (key == KeyEvent.VK_A) {
 			is_shooting = false;
 		} else if (key == KeyEvent.VK_D) {
@@ -236,9 +245,6 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		frame.setLayout(new BorderLayout());
 		
 		count = new JLabel("");
-		count.setBounds(300, -30, 200, 100);
-		count.setHorizontalAlignment(JLabel.CENTER);
-		//count.setFont(fonts);
 		count.setText("03:00"); // 시간 설정 : 3:00
 		second = 0;
 		minute = 3;
@@ -283,12 +289,22 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 			}
 		});
 	}
-	public void countRender(Graphics g,String countdown) {
-		g.drawString(countdown, 390, 20);
+	public void countDownRender(Graphics g,String countdown) {
+		g.setFont(fonts);
+		g.drawString(countdown, 380, 25);
+		g.setFont(getFont()); // 기본값 설정
 	}
-	public void bulcountRender(Graphics g,String value) {
+	public void lifCountRender(Graphics g,String value) {
+		g.drawString(value, 28, 85);
+	}
+	public void bulCountRender(Graphics g,String value) {
 		g.drawString(value, 28, 105);
 	}
+	public void molCountRender(Graphics g,String value) {
+		g.drawString(value, 768, 85);
+	}
+	
+	
 	public BufferedImage getHumSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
 		return humSpriteSheet;
 	}
@@ -303,8 +319,11 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	public BufferedImage getSnaSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
 		return snaSpriteSheet;
 	}
+	public BufferedImage getVegSpriteSheet() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기
+		return vegSpriteSheet;
+	}
 
 	public Human getPlayer() { // Game 클래스의 내부 메소드 - spriteSheet를 가져오기, Controller 클래스에서 사용
-		return humanP;
+		return human;
 	}
 }

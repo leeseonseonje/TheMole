@@ -14,8 +14,6 @@ public class Bullet implements EntityA {
 	
 	private Textures texture;
 
-	SpriteSheet spr = null;
-
 	public Bullet(double x, double y, Textures texture, Game game) {
 		this.x = x;
 		this.y = y;
@@ -31,6 +29,7 @@ public class Bullet implements EntityA {
 		
 		if(Physics.Collision(this,game.m))
 		{
+			mole.mole_count--;
 			System.out.println("COLLISION DETECTED");
 		}
 	}

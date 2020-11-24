@@ -13,19 +13,24 @@ public class Mole implements EntityB {
 	private double velX = 0;
 	private double velY = 1;
 	private boolean selected; // 해당 두더지가 선택되었을때 true로 전환, 기본 생성은 false로
+	
+	public static int mole_count = 9; // 두더지 생성숫자
 
 	private Textures texture;
 	private Game game;
 	private Animation anim;
+	private Controller controller;
+	private Graphics g;
 
-	public Mole(double x, double y, boolean selected, Textures tex,Game game) {
+	public Mole(double x, double y, boolean selected, Textures texture, Controller c, Game game) {
 		this.x = x;
 		this.y = y;
 		this.selected = selected;
 		this.texture = texture;
 		this.game = game;
+		this.controller = c;
 		
-		anim = new Animation(10,tex.mole[0],tex.mole[1],tex.mole[2]);
+		anim = new Animation(10,texture.mole[0],texture.mole[1],texture.mole[2]);
 	}
 
 	public void tick() {
@@ -62,8 +67,16 @@ public class Mole implements EntityB {
 		this.y = y;
 	}
 
+	public int getMole_count() {
+		return mole_count;
+	}
+	
 	@Override
 	public Rectangle getBounds() {
 		return new Rectangle((int) x, (int) y, 32, 32);
+	}
+	
+	public void dispose(Graphics g) {
+		g.dispose();
 	}
 }

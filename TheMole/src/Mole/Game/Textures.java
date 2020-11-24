@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Textures { // 다른 클래스,자바파일에서 new 키워드로 이 Textures를 생성하지 말 것.
 	
-	public SpriteSheet humanSpr, bulletSpr, moleSpr, snakeSpr;
+	public SpriteSheet humanSpr, bulletSpr, moleSpr, snakeSpr, vegetableSpr;
 	
 	//public BufferedImage human, bulletR, bulletL, mole;
 	
@@ -12,12 +12,15 @@ public class Textures { // 다른 클래스,자바파일에서 new 키워드로 이 Textures를 �
 	public BufferedImage[] bullet = new BufferedImage[2];
 	public BufferedImage[] mole = new BufferedImage[16];
 	public BufferedImage[] snake = new BufferedImage[4];
+	public BufferedImage[] vegetable = new BufferedImage[10];
 	
 	public Textures(Game game) {
 		humanSpr = new SpriteSheet(game.getHumSpriteSheet());
 		bulletSpr = new SpriteSheet(game.getBulSpriteSheet());
 		moleSpr = new SpriteSheet(game.getMolSpriteSheet());
 		snakeSpr = new SpriteSheet(game.getSnaSpriteSheet());
+		vegetableSpr = new SpriteSheet(game.getVegSpriteSheet());
+		
 		
 		getTextures();
 	}
@@ -58,5 +61,16 @@ public class Textures { // 다른 클래스,자바파일에서 new 키워드로 이 Textures를 �
 		snake[1] = snakeSpr.grabSnaImage(2,1,32,32);
 		snake[2] = snakeSpr.grabSnaImage(1,2,32,32);
 		snake[3] = snakeSpr.grabSnaImage(2,2,32,32);
+		
+		vegetable[0] = vegetableSpr.grabVegImage(1,1,32,32);
+		vegetable[1] = vegetableSpr.grabVegImage(2,1,32,32);
+		vegetable[2] = vegetableSpr.grabVegImage(3,1,32,32);
+		vegetable[3] = vegetableSpr.grabVegImage(4,1,32,32);
+		vegetable[4] = vegetableSpr.grabVegImage(5,1,32,32);
+		vegetable[5] = vegetableSpr.grabVegImage(6,1,32,32);
+		vegetable[6] = vegetableSpr.grabVegImage(7,1,32,32);
+		vegetable[7] = vegetableSpr.grabVegImage(8,1,32,16);
+		vegetable[8] = vegetableSpr.grabVegImage(9,1,32,32);
+		vegetable[9] = vegetableSpr.grabVegImage(10,1,32,32);
 	}
 }

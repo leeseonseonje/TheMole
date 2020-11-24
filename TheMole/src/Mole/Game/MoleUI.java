@@ -61,7 +61,12 @@ class MolePanel extends JPanel {
 	vegetableThread v0;
 	vegetableThread v1;
 	vegetableThread v2;
-
+	
+	itemBoxThread i0;
+	itemBoxThread i1;
+	//itemBoxThread i2;
+	//itemBoxThread i3;
+	
 	int second, minute;
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
@@ -91,6 +96,11 @@ class MolePanel extends JPanel {
 			v1 = new vegetableThread(1);
 			v2 = new vegetableThread(2);
 
+			i0 = new itemBoxThread(0);
+			i1 = new itemBoxThread(1);
+			//i2 = new itemBoxThread(2);
+			//i3 = new itemBoxThread(3);
+			
 			//add(v0);
 			//add(v1);
 			//add(v2);
@@ -98,7 +108,7 @@ class MolePanel extends JPanel {
 			//v0.setVisible(false);
 			
 			counterLabel = new JLabel("");
-			counterLabel.setBounds(345, -30, 100, 100);
+			counterLabel.setBounds(345, 0, 100, 50);
 			counterLabel.setHorizontalAlignment(JLabel.CENTER);
 			counterLabel.setFont(font1);
 			
@@ -106,7 +116,7 @@ class MolePanel extends JPanel {
 			
 			counterLabel.setText("03:00");
 			second  = 0;
-			minute = 1;
+			minute = 3;
 			normalTimer();
 			timer.start();
 
@@ -146,6 +156,76 @@ class MolePanel extends JPanel {
 		});
 	}
 
+	class itemBoxThread {
+		private ImageIcon itemB = new ImageIcon("img/itemBox.png");
+		JLabel itemBox = new JLabel(itemB);
+		private int x, y,section;
+		private Timer itemtimer;
+		private int itemsecond;
+		private int itemcount = 0;
+		private boolean timerstop = false;
+		
+		
+
+		public itemBoxThread(int section) {
+			this.section = section;
+			x = ((int) (Math.random() * 260)) + 263 * this.section;
+			y = 255;
+			itemBox.setBounds(x, y, 40, 40);
+			// itemBox.setIcon(itemB);
+			add(itemBox);
+			//System.out.println("아이템위치 " + x + " " + y);
+		}
+
+		public int getX() {
+			return x;
+		}
+		public int getY() {
+			return y;
+		}
+		public void setsecond(int second) {
+			itemsecond = second;
+		}
+		public int getsecond() {
+			return itemsecond;
+		}
+		public int getcouont() {
+			return itemcount;
+		}
+		public int setcount(int count) {
+			return itemcount = count;
+		}
+		
+		public void setposition() {
+			x = ((int) (Math.random() * 260)) + 263 * this.section;
+			y = 255;
+			itemBox.setBounds(x, y, 40, 40);			 
+		}
+		public void itemtimer() {
+			timerstop = true;
+			itemtimer = new Timer(1000,new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					itemsecond++;
+					if(itemsecond == 30) {
+						setposition();
+						itemBox.setVisible(true);
+						itemtimer.stop();
+						timerstop = false;
+						itemcount++;
+					}
+				}
+			});
+		}
+		
+		public void setVisible(boolean b) {
+			if (b == true)
+				itemBox.setVisible(true);
+			else if(b == false)
+				itemBox.setVisible(false);
+		}
+	}
+	
 	class vegetableThread {
 		private ImageIcon veget = new ImageIcon("img/vegetables.png");
 		JLabel vegetable = new JLabel(veget);
@@ -322,6 +402,25 @@ class MolePanel extends JPanel {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
+			if (i0.getX() == x && i0.getY() >= y - 15 &&i0.timerstop == false) {
+				i0.setVisible(false);
+				i0.setsecond(0);
+				i0.itemtimer();
+				i0.itemtimer.start();
+				eatsecond = 0;
+				eatTimer();
+				eattimer.start();
+				
+			} else if (i1.getX() == x && i1.getY() >= y - 15 &&i1.timerstop == false) {
+				i1.setVisible(false);
+				i1.setsecond(0);
+				i1.itemtimer();
+				i1.itemtimer.start();
+				eatsecond = 0;
+				eatTimer();
+				eattimer.start();
+			}
+			
 			if (v0.getX() == x && v0.getY() >= y - 15 &&v0.timerstop == false && eating == false) {
 				v0.setVisible(false);
 				v0.setsecond(0);

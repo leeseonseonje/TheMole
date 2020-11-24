@@ -8,7 +8,6 @@ import Mole.Game.HomePanel;
 import Mole.Game.HumanUI;
 import Mole.Game.LeaderBoardFrame;
 import Mole.Game.MainFrame;
-import Mole.Game.MoleUI;
 import Mole.Game.RoomTest;
 import Mole.Game.TestRoom;
 import io.netty.channel.ChannelHandlerContext;
@@ -106,7 +105,7 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			RoomTest.ready.setText("");
 		else if (readMessage.equals("MOLESTART")) {
 			mainFrame.dispose();
-			new MoleUI();
+		//	new MoleUI();
 		}
 		else if (readMessage.equals("HUMANSTART")) {
 			mainFrame.dispose();

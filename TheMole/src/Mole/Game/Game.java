@@ -215,12 +215,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		//bulcount.setBounds(1, 1, 120, 30);
 		frame.add(bulcount);
 		frame.add(game);
-		frame.pack();
+		//frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		//frame.setLayout(null);
+		frame.setSize(800,600);
 		game.start();
 	}*/
 

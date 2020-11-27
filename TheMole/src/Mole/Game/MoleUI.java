@@ -43,7 +43,9 @@ class MolePanel extends JPanel {
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 
 	private JLabel counterLabel;
+	private JLabel vegcountLabel;
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
+	private Font font2 = new Font("Arial", Font.BOLD, 15);
 	
 	public MoleUI frame;
 	
@@ -119,6 +121,13 @@ class MolePanel extends JPanel {
 			minute = 3;
 			normalTimer();
 			timer.start();
+			
+			vegcountLabel = new JLabel("15");
+			vegcountLabel.setBounds(758,90,20,20);
+			vegcountLabel.setHorizontalAlignment(JLabel.CENTER);
+			vegcountLabel.setFont(font2);
+			
+			add(vegcountLabel);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -137,6 +146,8 @@ class MolePanel extends JPanel {
 				ddMinute = dFormat.format(minute);
 				
 				counterLabel.setText(ddMinute + ":"+ ddSecond);
+				vegcountLabel.setText(15 - (v0.getvegcount() + v1.getvegcount() + v2.getvegcount()) + "");
+				
 				
 				if(second==-1) {
 					second=59;
@@ -149,6 +160,12 @@ class MolePanel extends JPanel {
 				if(minute==0 && second==0) {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
+					MainFrame main = new MainFrame();
+					main.setVisible(true);
+				}
+				if(vegcountLabel.getText().equals("0")) {
+					timer.stop();
+					JOptionPane.showMessageDialog(null, "두더지는 자유다 두더지 만만세", "Result", JOptionPane.PLAIN_MESSAGE);
 					MainFrame main = new MainFrame();
 					main.setVisible(true);
 				}
@@ -259,11 +276,11 @@ class MolePanel extends JPanel {
 		public int getsecond() {
 			return vegsecond;
 		}
-		public int getcouont() {
+		public int getvegcount() {
 			return vegcount;
 		}
-		public int setcount(int count) {
-			return vegcount = count;
+		public int plusvegcount() {
+			return vegcount++;
 		}
 		
 		public void setposition() {
@@ -282,7 +299,6 @@ class MolePanel extends JPanel {
 						vegetable.setVisible(true);
 						vegtimer.stop();
 						timerstop = false;
-						vegcount++;
 					}
 				}
 			});
@@ -402,7 +418,7 @@ class MolePanel extends JPanel {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
-			if (i0.getX() == x && i0.getY() >= y - 15 &&i0.timerstop == false) {
+			if (i0.getX() == x && i0.getY() >= y - 20 &&i0.timerstop == false) {
 				i0.setVisible(false);
 				i0.setsecond(0);
 				i0.itemtimer();
@@ -411,7 +427,7 @@ class MolePanel extends JPanel {
 				eatTimer();
 				eattimer.start();
 				
-			} else if (i1.getX() == x && i1.getY() >= y - 15 &&i1.timerstop == false) {
+			} else if (i1.getX() == x && i1.getY() >= y - 20 &&i1.timerstop == false) {
 				i1.setVisible(false);
 				i1.setsecond(0);
 				i1.itemtimer();
@@ -429,6 +445,7 @@ class MolePanel extends JPanel {
 				eatsecond = 0;
 				eatTimer();
 				eattimer.start();
+				v0.plusvegcount();
 			} else if (v1.getX() == x && v1.getY() >= y - 15 &&v1.timerstop == false && eating == false) {
 				v1.setVisible(false);
 				v1.setsecond(0);
@@ -437,6 +454,7 @@ class MolePanel extends JPanel {
 				eatsecond = 0;
 				eatTimer();
 				eattimer.start();
+				v1.plusvegcount();
 			} else if (v2.getX() == x && v2.getY() >= y - 15 &&v2.timerstop == false && eating == false) {
 				v2.setVisible(false);
 				v2.setsecond(0);
@@ -445,6 +463,7 @@ class MolePanel extends JPanel {
 				eatsecond = 0;
 				eatTimer();
 				eattimer.start();
+				v2.plusvegcount();
 			}
 		}
 
@@ -457,17 +476,18 @@ class MolePanel extends JPanel {
 
 				startX = champion.getCenterX();
 				startY = champion.getCenterY();
-				if(targetX - startX > 0) {
-					if(targetY - startY > 0) {
-							System.out.println("4사분면");
-					}else 
-						System.out.println("1사분면");
-				} else if (targetX-startX < 0) {
-					if(targetY - startY > 0) {
-						System.out.println("3사분면");
-				}else 
-					System.out.println("2사분면");
-				}
+				
+//				if(targetX - startX > 0) {
+//					if(targetY - startY > 0) {
+//							System.out.println("4사분면");
+//					}else 
+//						System.out.println("1사분면");
+//				} else if (targetX-startX < 0) {
+//					if(targetY - startY > 0) {
+//						System.out.println("3사분면");
+//				}else 
+//					System.out.println("2사분면");
+//				}
 				
 				double distance = Math
 						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));

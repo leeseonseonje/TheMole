@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import Mole.Game.Entities.EntityA;
+import Mole.Game.Entities.EntityB;
 
 public class Bullet implements EntityA {
 
@@ -23,11 +24,11 @@ public class Bullet implements EntityA {
 
 	public void tick() {
 		if (game.buldirection)
-			x += 5;
+			x += 10;
 		else
-			x -= 5;
+			x -= 10;
 		
-		if(Physics.Collision(this,game.m))
+		if(Physics.Collision(this, game.m))
 		{
 			mole.mole_count--;
 			System.out.println("COLLISION DETECTED");

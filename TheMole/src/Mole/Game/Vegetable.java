@@ -26,7 +26,7 @@ public class Vegetable implements EntityD {
 		this.controller = controller;
 		this.game = game;
 		
-		random = (int)(Math.random() * 11);
+		random = (int)(Math.random() * 10);
 		
 	}
 

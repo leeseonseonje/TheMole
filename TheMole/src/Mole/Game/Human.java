@@ -2,6 +2,7 @@ package Mole.Game;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 
 import Mole.Game.Entities.EntityA;
@@ -11,30 +12,31 @@ public class Human implements EntityA {
 
 	private Game game;
 	private Mole mole;
-	
+
 	private double x;
 	private double y;
 
 	private double velX = 0;
 	private double velY = 0;
 	private static int status = 0;
-	
+
 	public static int life = 2;
 	private Textures texture;
-	
+
 	Animation leftMove, rightMove;
 
 	BufferedImage leftStand;
 	BufferedImage rightStand;
-	
-	public Human(double x, double y, Textures tex,Game game) {
+
+	public Human(double x, double y, Textures tex, Game game) {
 		this.x = x;
 		this.y = y;
 		this.texture = tex;
 		this.game = game;
+
+		leftMove = new Animation(5, tex.human[6], tex.human[7], tex.human[8], tex.human[9]);
+		rightMove = new Animation(5, tex.human[1], tex.human[2], tex.human[3], tex.human[4]);
 		
-		leftMove = new Animation(5,tex.human[6],tex.human[7],tex.human[8],tex.human[9]);
-		rightMove = new Animation(5,tex.human[1],tex.human[2],tex.human[3],tex.human[4]);
 	}
 
 	public void tick() { // 메소드를 업데이트 할때 사용
@@ -52,20 +54,29 @@ public class Human implements EntityA {
 		rightMove.runAnimation();
 		leftMove.runAnimation();
 		
-		if(Physics.Collision(this,game.m))
+		if(Physics.Collision(this, game.m))
 		{
 			mole.mole_count--;
 			System.out.println("COLLISION DETECTED");
 		}
+
 	}
 
 	public void render(Graphics g) { // 이미지 그릴때 사용
 
-		switch(status) {
-		case 0: g.drawImage(texture.human[0], (int) x, (int) y, null); break;
-		case 1: g.drawImage(texture.human[5], (int) x, (int) y, null); break;
-		case 2: rightMove.drawAnimation(g, x, y, 0); break;
-		case 3: leftMove.drawAnimation(g, x, y, 0); break;
+		switch (status) {
+		case 0:
+			g.drawImage(texture.human[0], (int) x, (int) y, null);
+			break;
+		case 1:
+			g.drawImage(texture.human[5], (int) x, (int) y, null);
+			break;
+		case 2:
+			rightMove.drawAnimation(g, x, y, 0);
+			break;
+		case 3:
+			leftMove.drawAnimation(g, x, y, 0);
+			break;
 		}
 	}
 
@@ -120,10 +131,11 @@ public class Human implements EntityA {
 		status = 3;
 		return true;
 	}
+
 	public int getStatus() {
 		return status;
 	}
-	
+
 	public static int getLife() {
 		return life;
 	}

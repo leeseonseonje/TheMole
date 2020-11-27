@@ -69,7 +69,7 @@ public class Textures { // 다른 클래스,자바파일에서 new 키워드로 이 Textures를 �
 		vegetable[4] = vegetableSpr.grabVegImage(5,1,32,32);
 		vegetable[5] = vegetableSpr.grabVegImage(6,1,32,32);
 		vegetable[6] = vegetableSpr.grabVegImage(7,1,32,32);
-		vegetable[7] = vegetableSpr.grabVegImage(8,1,32,16);
+		vegetable[7] = vegetableSpr.grabVegImage(8,1,32,32);
 		vegetable[8] = vegetableSpr.grabVegImage(9,1,32,32);
 		vegetable[9] = vegetableSpr.grabVegImage(10,1,32,32);
 	}

@@ -34,6 +34,8 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	
 	private static String countdown = "";
 	
+	private static int vegCount = 0;
+	
 	// 3분의 카운트다운-> Frame에 들어감.
 	private static JLabel count;
 	private static Font fonts = new Font("Arial", Font.BOLD, 30);
@@ -68,6 +70,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	public LinkedList<Mole> m;
 	public LinkedList<Vegetable> v;
 
+	private enum STATE {
+		MENU,
+		GAME
+	};
+	
+	private STATE State = STATE.MENU;
+	
 	public void init() {
 		requestFocus();
 		BufferedImageLoader loader = new BufferedImageLoader();
@@ -95,11 +104,12 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		v = c.getVegetable();
 		
 		addKeyListener(new KeyInput(this));
+		addMouseListener(new MouseInput(this));
 		c.addMole(mole.mole_count);
 		c.addVegetable(3);
 	}
 
-	public synchronized void start() {
+	public synchronized void start() { // 시작하는 함수 - start, 게임이 돌아가고있는지 확인하고 안돌아가고있으면, 스레드를 생성과 동시에 스레드.start로 run함수를 실행한다.
 		if (running)
 			return;
 
@@ -123,11 +133,12 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 
 	@Override
 	public void run() { // Runnable의 기본으로 구현된 메소드
-		init();
+		
+		init(); // 초기설정 하는 메소드; 객체 생성요소가 다 들어있음
 		long lastTime = System.nanoTime();
 		final double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
-		double delta = 0;
+		double delta = 0; // 델타타임, 게임에서의 시간 계산
 		int updates = 0;
 		int frames = 0;
 		long timer = System.currentTimeMillis();
@@ -155,13 +166,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		stop();
 	}
 
-	private void tick() {
+	private void tick() { // 진드기? 시간측정단위로 구체적으로 게임에서 반복되는 동작의 단일 인스턴스 또는 동작이 소비하는 기간을 나타냅니다.
 		human.tick();
 		c.tick();
 		snake.tick();
 	}
 
-	private void render() { // bufferstrategy는 장면 뒤의 모든 버퍼링을 관리한다.
+	private void render() { // render - 실제 게임의 화면을 그려주는 함수, bufferstrategy는 장면 뒤의 모든 버퍼링을 관리한다.
 
 		BufferStrategy bs = this.getBufferStrategy(); // this는 Canvas 객체를 가리킴
 
@@ -172,11 +183,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		}
 		Graphics g = bs.getDrawGraphics(); // graphic을 여기에 가져오고, 버퍼를 그리기 위한 graphics context를 만든다, 외부 버퍼를 그림
 		/////////////// 그림 그리는 공간 으로 추정//////////////////////////
-
+		
+		
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 		countDownRender(g, countdown);
 		lifCountRender(g,String.format("%d",human.getLife()));
 		bulCountRender(g,String.format("%d",BULLETCOUNT));
+		vegCountRender(g,String.format("%d",vegCount));
 		molCountRender(g,String.format("%d",mole.mole_count));
 		
 		c.render(g); // c.render에 mole, bullet, vegetable이 들어있음
@@ -299,6 +312,9 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	}
 	public void bulCountRender(Graphics g,String value) {
 		g.drawString(value, 28, 105);
+	}
+	public void vegCountRender(Graphics g,String value) {
+		g.drawString(value, 768, 105);
 	}
 	public void molCountRender(Graphics g,String value) {
 		g.drawString(value, 768, 85);

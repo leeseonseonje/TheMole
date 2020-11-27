@@ -2,11 +2,13 @@ package Mole.Game;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import Mole.Game.Entities.EntityB;
 import Mole.Game.libs.Animation;
 
-public class Mole implements EntityB {
+public class Mole implements EntityB, MouseListener {
 
 	private double x, y;
 	
@@ -46,7 +48,7 @@ public class Mole implements EntityB {
 			y = 250 - 1;
 		if(y >= 580 - 32)
 			y = 580 - 32;
-		
+			
 		anim.runAnimation();
 	}
 
@@ -78,5 +80,30 @@ public class Mole implements EntityB {
 	
 	public void dispose(Graphics g) {
 		g.dispose();
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource() == this)
+			System.out.println("눌려졌습니다.");
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

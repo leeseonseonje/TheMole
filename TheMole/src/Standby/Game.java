@@ -1,4 +1,4 @@
-package Mole.Game;
+package Standby;
 
 import java.awt.Canvas;
 import java.awt.Dimension;

@@ -1,8 +1,8 @@
 package MoleServer;
 
-import Mole.Game.Game;
 import Mole.Game.GameStart;
 import Mole.Game.MoleUI;
+import Standby.Game;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 

@@ -1,4 +1,4 @@
-package Mole.Game;
+package Standby;
 
 import java.util.LinkedList;
 

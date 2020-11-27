@@ -112,6 +112,10 @@ public class SignUpForm extends JPanel {
 								
 							}
 							MoleClientHandler.serverMessage = "";
+							idField.setText("");
+							passwordField_1.setText("");
+							passwordField_2.setText("");
+							checkLabel.setText("");
 						} catch (InterruptedException e1) {
 							e1.printStackTrace();
 						}

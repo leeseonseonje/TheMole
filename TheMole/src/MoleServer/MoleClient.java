@@ -8,7 +8,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class MoleClient {
-	private static final int PORT = 10002;
+	private static final int PORT = 9829;
 	
 	public Channel serverChannel;
 	public ChannelFuture future;
@@ -20,7 +20,7 @@ public class MoleClient {
 			bootstrap.group(group)
 				.channel(NioSocketChannel.class)
 				.handler(new MoleClientInitializer());
-				serverChannel = bootstrap.connect("localhost", PORT).sync().channel();
+				serverChannel = bootstrap.connect("", PORT).sync().channel();
 				
 				future = serverChannel.writeAndFlush("");
 

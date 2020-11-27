@@ -7,7 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class MainServer {
-	private static final int PORT = 10002;
+	private static final int PORT = 9829;
 	
 	public static void main(String[] args) throws Exception {
 		new MainServer().serverStart();

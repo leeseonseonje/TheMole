@@ -66,6 +66,8 @@ class MolePanel extends JPanel {
 	
 	itemBoxThread i0;
 	itemBoxThread i1;
+	
+	Human hum;
 	//itemBoxThread i2;
 	//itemBoxThread i3;
 	
@@ -74,8 +76,9 @@ class MolePanel extends JPanel {
 	DecimalFormat dFormat = new DecimalFormat("00");
 	
 	public MolePanel() {
-		try {
 			setLayout(null);
+			
+			try {
 			backImage = ImageIO.read(new File("img/Back4.png"));
 			humanHud = ImageIO.read(new File("img/humanHud.png"));
 			moleHud = ImageIO.read(new File("img/moleHud.png"));
@@ -83,7 +86,9 @@ class MolePanel extends JPanel {
 			moleInv = ImageIO.read(new File("img/inventory.png"));
 			intHuman = ImageIO.read(new File("img/humanint.png"));
 			intMole = ImageIO.read(new File("img/moleint.png"));
-
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 			m1 = new MoleThread(50, 400);
 			m2 = new MoleThread(100, 400);
 			m3 = new MoleThread(150, 400);
@@ -100,6 +105,10 @@ class MolePanel extends JPanel {
 
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
+			
+			hum = new Human(200,225);
+			
+			
 			//i2 = new itemBoxThread(2);
 			//i3 = new itemBoxThread(3);
 			
@@ -128,10 +137,8 @@ class MolePanel extends JPanel {
 			vegcountLabel.setFont(font2);
 			
 			add(vegcountLabel);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			
+			add(hum);
 	}
 
 	public void normalTimer() {
@@ -147,7 +154,6 @@ class MolePanel extends JPanel {
 				
 				counterLabel.setText(ddMinute + ":"+ ddSecond);
 				vegcountLabel.setText(15 - (v0.getvegcount() + v1.getvegcount() + v2.getvegcount()) + "");
-				
 				
 				if(second==-1) {
 					second=59;

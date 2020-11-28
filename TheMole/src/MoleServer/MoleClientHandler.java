@@ -11,6 +11,7 @@ public class MoleClientHandler extends ChannelInboundHandlerAdapter{
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("클라이언트 접속 완료");
+		ctx.writeAndFlush("[CONNECT]," + LoginForm.getId() + ",");
 	}
 
 	@Override
@@ -23,6 +24,10 @@ public class MoleClientHandler extends ChannelInboundHandlerAdapter{
 		}
 		else if(readMessage.equals("LOGINFAIL")) {
 			serverMessage = readMessage;
+			ctx.close();
+		}
+		else if(readMessage.equals("AlreadyConnected")) {
+			serverMessage = readMessage;	
 			ctx.close();
 		}
 		else if(readMessage.equals("DUPLICATE")) {

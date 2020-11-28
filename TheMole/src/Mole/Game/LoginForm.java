@@ -101,8 +101,12 @@ public class LoginForm extends JFrame {
 						}
 						if(MoleClientHandler.serverMessage.equals("LOGIN")) {
 							dispose();
-						} else if ((MoleClientHandler.serverMessage.equals("LOGINFAIL"))) {
+						} else if (MoleClientHandler.serverMessage.equals("LOGINFAIL")) {
 							JOptionPane.showMessageDialog(log, "Invalid username or password");
+							username.setText("");
+							passwordField.setText("");
+						} else {
+							JOptionPane.showMessageDialog(log, "AlreadyConnected");
 							username.setText("");
 							passwordField.setText("");
 						}
@@ -127,7 +131,11 @@ public class LoginForm extends JFrame {
 						try {
 							MoleClient moleClient = new MoleClient();
 							moleClient.future = moleClient.serverChannel.writeAndFlush("[LOGIN]" + "," + username.getText() + "," + passwordField.getText());
-							Thread.sleep(1000);
+							while(MoleClientHandler.serverMessage.equals("")) {
+								Thread.sleep(300);
+								if(!MoleClientHandler.serverMessage.equals(""))
+									break;
+							}
 							if(MoleClientHandler.serverMessage.equals("LOGIN")) {
 								dispose();
 							} else {

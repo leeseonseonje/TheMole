@@ -1,5 +1,6 @@
 package MoleServer;
 
+import java.util.HashMap;
 import java.util.Map.Entry;
 
 import io.netty.channel.Channel;
@@ -12,6 +13,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 	private static final ChannelGroup onlineUsers = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+	public static final HashMap<Channel, String> onlineId = new HashMap<Channel, String>();
 	
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -23,7 +25,6 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String)msg;
 		String[] s = readMessage.split(",");
-		
 		if (s[0].equals("[INFORMATION]"))
 			DBConnect.informationDB(s[1], ctx);
 		else if (readMessage.equals("[RANKING]"))
@@ -48,6 +49,8 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 			Room.readyState(ctx, s[0], s[1]);
 		else if (s[0].equals("[START]"))
 			Room.startGame(ctx, s[1], s[2]);
+		else
+			ctx.fireChannelRead(readMessage);
 	}
 
 	@Override
@@ -55,10 +58,10 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 		Channel logoutUser = ctx.channel();
 		ChannelId c = logoutUser.id();
 		for (Entry<String, ChannelGroup> entry : Room.roomManager.entrySet()) {
-			entry.getValue().remove(logoutUser);
 			if (entry.getValue().size() == 0)
         		Room.roomManager.remove(entry.getKey());
         	}
+		onlineId.remove(logoutUser);
         onlineUsers.remove(logoutUser);
 	}
 }

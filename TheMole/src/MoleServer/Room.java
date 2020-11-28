@@ -47,12 +47,14 @@ public class Room {
 			ctx.write(entry.getKey() + ",");
 		ctx.flush();
 	}
+	
 	public static void roomListRefresh(ChannelHandlerContext ctx) {		
 		ctx.write("REFRESH,");
 		for (Entry<String, ChannelGroup> entry : roomManager.entrySet())
 			ctx.write(entry.getKey() + ",");
 		ctx.flush();
 	}
+	
 	public static void roomDelete(ChannelHandlerContext ctx, String hostName) {
 		Channel me = ctx.channel();
 		
@@ -71,6 +73,7 @@ public class Room {
 			}
 		}
 	}
+	
 	public static void roomOut(ChannelHandlerContext ctx, String hostName) {
 		Channel guest = ctx.channel();
 
@@ -85,6 +88,7 @@ public class Room {
 				channel.writeAndFlush("GUESTOUT," + hostName);
 		}
 	}
+	
 	public static void readyState(ChannelHandlerContext ctx, String m, String hostName) {
 		Channel guest = ctx.channel();
 		
@@ -100,12 +104,12 @@ public class Room {
 			}
 		}
 	}
+	
 	public static void roomChatting(ChannelHandlerContext ctx, String message, String name, String hostName) {
 		Channel host = ctx.channel();
-	
-		for (Channel channel : roomManager.get(hostName))
-			channel.writeAndFlush("SENDMESSAGE," + name + ": " + message);
+		roomManager.get(hostName).writeAndFlush("SENDMESSAGE," + name + ": " + message);
 	}
+	
 	public static void startGame(ChannelHandlerContext ctx, String hostName, String guestName) {
 		Channel host = ctx.channel();
 		int r = (int)(Math.random()*2);

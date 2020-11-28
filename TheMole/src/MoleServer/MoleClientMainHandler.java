@@ -1,5 +1,6 @@
 package MoleServer;
 
+import java.util.Collections;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -103,6 +104,15 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 		else if (s[0].equals("GUESTOUT")) {
 			roomTest.setVisible(false);
 			roomTest = new RoomTest(ctx, s[1], "");
+			mainFrame.add(roomTest);
+			roomTest.setVisible(false);
+			roomTest.setVisible(true);
+		}
+		else if (s[0].equals("EXITROOM")) {
+			roomTest.setVisible(false);
+			roomTest = new RoomTest(ctx, LoginForm.getId(), "");
+			int index = Collections.binarySearch(room, s[1]);
+			room.set(index, LoginForm.getId());
 			mainFrame.add(roomTest);
 			roomTest.setVisible(false);
 			roomTest.setVisible(true);

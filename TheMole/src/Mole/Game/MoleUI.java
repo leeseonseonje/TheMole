@@ -22,9 +22,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class MoleUI extends JPanel {
-	//public static void main(String[] args) throws IOException, InterruptedException {
-	//	new TestFrame();
-	//}
+	public static void main(String[] args) throws IOException, InterruptedException {
+		new TestFrame();
+	}
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 
 	private JLabel counterLabel;
@@ -46,7 +46,9 @@ public class MoleUI extends JPanel {
 	vegetableThread v0;
 	vegetableThread v1;
 	vegetableThread v2;
-
+	
+	public JButton h;
+	ImageIcon hh = new ImageIcon("img/human.png");
 	int second, minute;
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
@@ -87,6 +89,13 @@ public class MoleUI extends JPanel {
 			counterLabel.setHorizontalAlignment(JLabel.CENTER);
 			counterLabel.setFont(font1);
 			
+			h = new JButton();
+			h.setIcon(hh);
+			h.setBorderPainted(false);
+			h.setFocusPainted(false);
+			h.setContentAreaFilled(false);
+			h.setBounds(200, 210, 80, 80);
+			add(h);
 			add(counterLabel);
 			
 			counterLabel.setText("03:00");
@@ -98,6 +107,10 @@ public class MoleUI extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void moleMove(String m) {
+		if (m.equals("RIGHT"))
+			this.h.setBounds(this.h.getX()+3, 200, 80, 80);
 	}
 
 	public void normalTimer() {

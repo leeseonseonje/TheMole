@@ -23,5 +23,6 @@ public class MoleServerInitializer extends ChannelInitializer<SocketChannel> {
                         .getClassLoader())),new ObjectEncoder());*/
 			pipeline.addLast(new MoleServerHandler());
 			pipeline.addLast(new MoleServerMainHandler());
+			pipeline.addLast(new MoleServerGameHandler());
 	}
 }

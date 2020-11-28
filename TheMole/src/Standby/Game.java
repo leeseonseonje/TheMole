@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import io.netty.channel.ChannelHandlerContext;
+
 public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에서 new 키워드로 Game을 생성하지 말 것.
 
 	private static final long serialVersionUID = 1L;
@@ -49,7 +51,12 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 	
 	public LinkedList<Bullet> b;
 	public LinkedList<Mole> m;
-
+	ChannelHandlerContext ctx;
+	String hostName;
+	public Game(ChannelHandlerContext ctx, String hostName) {
+		this.ctx = ctx;
+		this.hostName = hostName;
+	}
 	public void init() {
 		requestFocus();
 		BufferedImageLoader loader = new BufferedImageLoader();
@@ -64,7 +71,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		}
 
 		texture = new Textures(this); // 생성전에 텍스처를 생성
-		humanP = new Human(200, 225, texture,this);
+		humanP = new Human(200, 205, texture,this);
 		snake = new Snake(texture,this);
 		c = new Controller(this, texture);
 		
@@ -122,7 +129,7 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 				
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println(updates + " Ticks, Fps - " + frames);
+				//System.out.println(updates + " Ticks, Fps - " + frames);
 				updates = 0;
 				frames = 0;
 			}
@@ -164,6 +171,8 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_RIGHT) {
+			ctx.writeAndFlush("[RIGHT]," + hostName);
+			System.out.println("a");
 			 // 오른쪽 방향키
 			humanP.setVelX(3);
 			humanP.rightMove();
@@ -215,13 +224,13 @@ public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에
 		//bulcount.setBounds(1, 1, 120, 30);
 		frame.add(bulcount);
 		frame.add(game);
-		//frame.pack();
+		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		//frame.setLayout(null);
-		frame.setSize(800,600);
+		//frame.setSize(800,600);
 		game.start();
 	}*/
 

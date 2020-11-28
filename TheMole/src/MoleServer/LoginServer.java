@@ -6,11 +6,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
 import DB.DBConnection;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.group.ChannelGroup;
 
 public class LoginServer {
 	public LoginServer() {
@@ -25,13 +28,15 @@ public class LoginServer {
 				while (rs.next()) { // 데이터베이스 테이블 내용 돌림 확인
 					password = rs.getString("passwords");
 				}
-				
-				if(pw.equals(password)) {
-					ctx.writeAndFlush("LOGIN");
-					ctx.fireChannelActive();
-			}
-				else
-					ctx.writeAndFlush("LOGINFAIL");
+				for (Entry<Channel, String> entry : MoleServerMainHandler.onlineId.entrySet())
+					if(!entry.getValue().equals(id))
+						if(pw.equals(password)) {
+							ctx.writeAndFlush("LOGIN");
+							ctx.fireChannelActive();
+						} else
+							ctx.writeAndFlush("LOGINFAIL");
+					else
+						ctx.writeAndFlush("AlreadyConnected");
 				rs.close();
 				pstmt.close();
 			} catch (Exception e) {

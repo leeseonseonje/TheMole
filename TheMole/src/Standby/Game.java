@@ -1,4 +1,4 @@
-package Mole.Game;
+package Standby;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+
+import Mole.Game.Hud;
 
 public class Game extends Canvas implements Runnable { // 다른 클래스,자바파일에서 new 키워드로 Game을 생성하지 말 것.
 

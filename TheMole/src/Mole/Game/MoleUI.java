@@ -42,11 +42,11 @@ public class MoleUI extends JFrame {
 
 class MolePanel extends JPanel {
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
-
 	public JLabel counterLabel;
 	private JLabel vegcountLabel;
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
+
 	
 
 	public MoleUI frame;
@@ -66,10 +66,18 @@ class MolePanel extends JPanel {
 	vegetableThread v1;
 	vegetableThread v2;
 	
+	private ImageIcon itemteeth = new ImageIcon("img/strongteeth.png");
+	private ImageIcon itemtrap = new ImageIcon("img/trapM.png");
+	private ImageIcon itemsnakepipe = new ImageIcon("img/Snakepipe.png");
+	private JLabel itembox1;
+	private JLabel itembox2;
+	
 	itemBoxThread i0;
 	itemBoxThread i1;
+	Human hum;
 	//itemBoxThread i2;
 	//itemBoxThread i3;
+	
 	
 	int second, minute;
 	String ddSecond, ddMinute;
@@ -99,10 +107,18 @@ class MolePanel extends JPanel {
 			v0 = new vegetableThread(0);
 			v1 = new vegetableThread(1);
 			v2 = new vegetableThread(2);
+			add(v0);
+			add(v1);
+			add(v2);
+			
 
 
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
+			add(i0);
+			add(i1);
+			
+			add(new Human(this,200,225));
 			//i2 = new itemBoxThread(2);
 			//i3 = new itemBoxThread(3);
 			
@@ -132,6 +148,16 @@ class MolePanel extends JPanel {
 			vegcountLabel.setFont(font2);
 
 			add(vegcountLabel);
+			
+
+
+			itembox1 = new JLabel();
+			itembox2 = new JLabel();
+			itembox1.setBounds(655,6,36,36);
+			itembox2.setBounds(696,6,36,36);
+			itembox1.setVisible(false);
+			add(itembox1);
+			add(itembox2);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -153,7 +179,7 @@ class MolePanel extends JPanel {
 				vegcountLabel.setText(15 - (v0.getvegcount() + v1.getvegcount() + v2.getvegcount()) + "");
 
 				if (second == -1) {
-					second = 180;
+					second = 59;
 					minute--;
 
 					ddSecond = dFormat.format(second);
@@ -176,147 +202,6 @@ class MolePanel extends JPanel {
 		});
 	}
 
-	class itemBoxThread {
-		private ImageIcon itemB = new ImageIcon("img/itemBox.png");
-		JLabel itemBox = new JLabel(itemB);
-		private int x, y,section;
-		private Timer itemtimer;
-		private int itemsecond;
-		private int itemcount = 0;
-		private boolean timerstop = false;
-				
-		public itemBoxThread(int section) {
-			this.section = section;
-			x = ((int) (Math.random() * 260)) + 263 * this.section;
-			y = 255;
-			itemBox.setBounds(x, y, 40, 40);
-			// itemBox.setIcon(itemB);
-			add(itemBox);
-			//System.out.println("¾ÆÀÌÅÛÀ§Ä¡ " + x + " " + y);
-		}
-
-		public int getX() {
-			return x;
-		}
-		public int getY() {
-			return y;
-		}
-		public void setsecond(int second) {
-			itemsecond = second;
-		}
-		public int getsecond() {
-			return itemsecond;
-		}
-		public int getcouont() {
-			return itemcount;
-		}
-		public int setcount(int count) {
-			return itemcount = count;
-		}
-		
-		public void setposition() {
-			x = ((int) (Math.random() * 260)) + 263 * this.section;
-			y = 255;
-			itemBox.setBounds(x, y, 40, 40);			 
-		}
-		public void itemtimer() {
-			timerstop = true;
-			itemtimer = new Timer(1000,new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					itemsecond++;
-					if(itemsecond == 30) {
-						setposition();
-						itemBox.setVisible(true);
-						itemtimer.stop();
-						timerstop = false;
-						itemcount++;
-					}
-				}
-			});
-		}
-		
-		public void setVisible(boolean b) {
-			if (b == true)
-				itemBox.setVisible(true);
-			else if(b == false)
-				itemBox.setVisible(false);
-		}
-	}
-	
-	class vegetableThread {
-		private ImageIcon veget = new ImageIcon("img/vegetables.png");
-		JLabel vegetable = new JLabel(veget);
-		private int x, y, section;
-		private Timer vegtimer;
-		private int vegsecond;
-		private int vegcount = 0;
-		private boolean timerstop = false;
-
-		public vegetableThread(int section) {
-			this.section = section;
-			x = ((int) (Math.random() * 260)) + 263 * this.section;
-			y = 260;
-			vegetable.setBounds(x, y, 16, 16);
-			// vegetable.setIcon(veget);
-			add(vegetable);
-			// System.out.println("ÀÛ¹°À§Ä¡ " + x + " " + y);
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setsecond(int second) {
-			vegsecond = second;
-		}
-
-		public int getsecond() {
-			return vegsecond;
-		}
-
-		public int getvegcount() {
-			return vegcount;
-		}
-
-		public int plusvegcount() {
-			return vegcount++;
-		}
-
-		public void setposition() {
-			x = ((int) (Math.random() * 260)) + 263 * this.section;
-			y = 260;
-			vegetable.setBounds(x, y, 16, 16);
-		}
-
-		public void vegtimer() {
-			timerstop = true;
-			vegtimer = new Timer(1000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					vegsecond++;
-					if (vegsecond == 10) {
-						setposition();
-						vegetable.setVisible(true);
-						vegtimer.stop();
-						timerstop = false;
-					}
-				}
-			});
-		}
-
-		public void setVisible(boolean b) {
-			if (b == true)
-				vegetable.setVisible(true);
-			else if (b == false)
-				vegetable.setVisible(false);
-		}
-	}
-
 	class MoleThread extends Thread {
 		private int x, y;
 		private JButton moleButton;
@@ -324,6 +209,7 @@ class MolePanel extends JPanel {
 		private ImageIcon mole = new ImageIcon("img/moleimg.png");
 		private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
 
+		
 		private Timer timer;
 		private double speed = 0.15;
 		private Long startTime;
@@ -335,6 +221,8 @@ class MolePanel extends JPanel {
 		private double targetX, targetY;
 		private double startX, startY;
 		private double runTime;
+		
+		private boolean enhenceteeth = false;
 
 		public int getx() {
 			return x;
@@ -389,6 +277,53 @@ class MolePanel extends JPanel {
 			});
 		}
 
+		public void molegetitem() {
+			int itemnum = ((int)(Math.random()*10));
+			switch (itemnum) {
+			case 0:
+			case 9:
+				System.out.println(itemnum);
+				System.out.println("¹ìÇÇ¸® È¹µæ");
+				System.out.println(itembox1.isVisible());
+				if(itembox1.isVisible() == false) {
+					itembox1.setVisible(true);
+					itembox1.setIcon(itemsnakepipe);
+				}
+				else {
+					itembox2.setIcon(itemsnakepipe);
+					System.out.println("2");
+				}
+				break;
+			case 1:
+			case 8:
+				System.out.println(itemnum);
+				System.out.println("»ç¶÷ Á¤Áö");
+				System.out.println(itembox1.isVisible());
+				if(itembox1.isVisible() == false) {
+					itembox1.setVisible(true);
+					itembox1.setIcon(itemtrap);
+				}
+				else {
+					itembox2.setIcon(itemtrap);
+					System.out.println("2");
+				}
+				break;
+			default: 
+				enhenceteeth = true;
+				System.out.println("°­Ã¶ÀÌ»¡ È¹µæ");
+				System.out.println(itembox1.isVisible());
+				if(itembox1.isVisible() == false) {
+					itembox1.setVisible(true);
+					itembox1.setIcon(itemteeth);
+				}
+				else {
+					itembox2.setIcon(itemteeth);
+					System.out.println("2");
+				}
+				break;
+			}
+		}
+		
 		public void eatTimer() {
 			eating = true;
 			eattimer = new Timer(1000, new ActionListener() {
@@ -425,24 +360,19 @@ class MolePanel extends JPanel {
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
 
-			if (i0.getX() == x && i0.getY() >= y - 20 &&i0.timerstop == false&&eating == false) {
+			if (i0.getX() == x && i0.getY() >= y - 20 && i0.timerstop == false&&eating == false) {
 				i0.setVisible(false);
 				i0.setsecond(0);
 				i0.itemtimer();
 				i0.itemtimer.start();
-				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
-				
+				molegetitem();
 			} else if (i1.getX() == x && i1.getY() >= y - 20 &&i1.timerstop == false && eating == false) {
 				i1.setVisible(false);
 				i1.setsecond(0);
 				i1.itemtimer();
 				i1.itemtimer.start();
-				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
-			}
+				molegetitem();
+				}
 			
 			if (v0.getX() == x && v0.getY() >= y - 15 &&v0.timerstop == false && eating == false) {
 				v0.setVisible(false);
@@ -450,8 +380,20 @@ class MolePanel extends JPanel {
 				v0.vegtimer();
 				v0.vegtimer.start();
 				eatsecond = 0;
+				if(enhenceteeth == false) {	
 				eatTimer();
 				eattimer.start();
+				} else {
+					enhenceteeth = false ;
+					if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+						itembox1.setIcon(null);
+						enhenceteeth = true;
+					}
+					else if(itembox1.getIcon() == itemteeth)
+						itembox1.setIcon(null);
+					else 
+						itembox2.setIcon(null);
+				}
 				v0.plusvegcount();
 			} else if (v1.getX() == x && v1.getY() >= y - 15 && v1.timerstop == false && eating == false) {
 				v1.setVisible(false);
@@ -459,8 +401,20 @@ class MolePanel extends JPanel {
 				v1.vegtimer();
 				v1.vegtimer.start();
 				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
+				if(enhenceteeth == false) {	
+					eatTimer();
+					eattimer.start();
+					} else {
+						enhenceteeth = false ;
+						if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+							itembox1.setIcon(null);
+							enhenceteeth = true;
+						}
+						else if(itembox1.getIcon() == itemteeth)
+							itembox1.setIcon(null);
+						else 
+							itembox2.setIcon(null);
+						}
 				v1.plusvegcount();
 				
 			} else if (v2.getX() == x && v2.getY() >= y - 15 && v2.timerstop == false && eating == false) {
@@ -469,8 +423,20 @@ class MolePanel extends JPanel {
 				v2.vegtimer();
 				v2.vegtimer.start();
 				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
+				if(enhenceteeth == false) {	
+					eatTimer();
+					eattimer.start();
+					} else {
+						enhenceteeth = false ;
+						if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+							itembox1.setIcon(null);
+							enhenceteeth = true;
+						}
+						else if(itembox1.getIcon() == itemteeth)
+							itembox1.setIcon(null);
+						else 
+							itembox2.setIcon(null);
+					}
 				v2.plusvegcount();
 			}
 		}
@@ -481,9 +447,11 @@ class MolePanel extends JPanel {
 
 				targetX = x;
 				targetY = y;
-
+				
+				System.out.println(targetX+"     "+targetY);
 				startX = champion.getCenterX();
 				startY = champion.getCenterY();
+				
 				/*
 				 * if(targetX - startX > 0) { if(targetY - startY > 0) {
 				 * System.out.println("4»çºÐ¸é"); }else System.out.println("1»çºÐ¸é"); } else if

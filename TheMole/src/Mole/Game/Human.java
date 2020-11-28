@@ -1,128 +1,164 @@
 package Mole.Game;
 
-import java.awt.Graphics;
+
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import Mole.Game.Entities.EntityA;
-import Mole.Game.libs.Animation;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.Timer;
 
-public class Human implements EntityA {
+public class Human extends JLabel{
 
-	private Game game;
-	private double x;
-	private double y;
+	private int x;
+	private int y;
+	private boolean timerstop = false;
+	private static int status = 0; // 1은 오른쪽, 2는 왼쪽,
+	public int humsecond = 0;
 
-	private double velX = 0;
-	private double velY = 0;
-	private static int status = 0;
-	
-	private Textures texture;
-	
-	Animation leftMove, rightMove;
+	private boolean shooting = false;
 
-	BufferedImage leftStand;
-	BufferedImage rightStand;
-	
-	public Human(double x, double y, Textures tex,Game game) {
+	private Timer mover;
+	private boolean moving = false;
+
+	private ImageIcon human[] = {  new ImageIcon("img/humanResource/human1.png"),
+			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
+			new ImageIcon("img/humanResource/human4.png"), new ImageIcon("img/humanResource/human5.png"),
+			new ImageIcon("img/humanResource/human6.png"), new ImageIcon("img/humanResource/human7.png"),
+			new ImageIcon("img/humanResource/human8.png"), new ImageIcon("img/humanResource/human9.png"),
+			new ImageIcon("img/humanResource/human10.png") };
+
+	public Human(MolePanel pan,int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.texture = tex;
-		this.game = game;
-		
-		leftMove = new Animation(5,tex.human[6],tex.human[7],tex.human[8],tex.human[9]);
-		rightMove = new Animation(5,tex.human[1],tex.human[2],tex.human[3],tex.human[4]);
+		setBounds((int) x, (int) y, 50, 64);
+		setIcon(human[0]);
+		pan.setFocusable(true);
+		pan.addKeyListener(new KeyListener() {
+
+			//private int x = this.x;
+
+			public void keyPressed(KeyEvent e) {
+				
+				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
+					moving = true;
+					status = 2;
+					setX(-5);
+					if(timerstop==false) {
+						humsecond = 0;
+						timerstop=true;
+						timerstart();
+					}
+					setBounds(getX(),y,50,64);		
+				}
+				if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
+					moving = true;
+					status = 1;
+					setX(5);
+					if(timerstop==false) {
+						humsecond = 0;
+						timerstop=true;
+						timerstart();
+					}
+					setBounds(getX(),y,50,64);
+				}
+				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false) {
+					shooting = true;
+					System.out.println("왼쪽 총알");
+				}
+				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false) {
+					shooting = true;
+					System.out.println("오른쪽 총알");
+				}
+			}
+			public void timerstart() {
+				mover();
+				mover.start();
+			}
+
+			public void keyReleased(KeyEvent e) {
+				
+				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
+					moving = false;
+					setIcon(human[0]);
+				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
+					moving = false;
+					setIcon(human[0]);
+				} else if (e.getKeyCode() == KeyEvent.VK_A) {
+					shooting = false;
+				} else if (e.getKeyCode() == KeyEvent.VK_D) {
+					shooting = false;
+				}
+			}
+
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+		});
 	}
 
-	public void tick() { // 메소드를 업데이트 할때 사용
-		x += velX;
-		y += velY;
-
-		if (x <= 0)
-			x = 0;
-		if (x >= 800 - 50)
-			x = 800 - 50;
-		/*
-		 * if(y <= 0) y = 0; if(y >= 600 - 64) y = 600 - 64;
-		 */
-		
-		rightMove.runAnimation();
-		leftMove.runAnimation();
-		
-		if(Physics.Collision(this,game.m))
-		{
-			System.out.println("COLLISION DETECTED");
-		}
+	public void mover() {
+		mover = new Timer(100,new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				humsecond++;
+				humsecond = humsecond%4;
+				System.out.println(humsecond);
+				System.out.println(moving+"  "+ status);
+				if(moving == true && status == 1 ) { // 오른쪽방향으로 움직일때 -누름
+					System.out.println("오른쪽이동중");
+					if(humsecond == 1)
+						setIcon(human[1]);
+					else if (humsecond == 2)
+						setIcon(human[2]);
+					else if (humsecond == 3)
+						setIcon(human[3]);
+					else if (humsecond == 4)
+						setIcon(human[4]);
+				}
+				if(moving == true && status == 2) { // 왼쪽방향으로 움직일때 -누름
+					if(humsecond == 1)
+						setIcon(human[6]);
+					else if (humsecond == 2)
+						setIcon(human[7]);
+					else if (humsecond == 3)
+						setIcon(human[8]);
+					else if (humsecond == 4)
+						setIcon(human[9]);
+				}
+				if(moving == false) {
+					mover.stop();
+					timerstop = false;
+				}
+			}
+		});
+	}
+	
+	public int getX() {
+		return (int)x;
 	}
 
-	public void render(Graphics g) { // 이미지 그릴때 사용
-
-		switch(status) {
-		case 0: g.drawImage(texture.human[0], (int) x, (int) y, null); break;
-		case 1: g.drawImage(texture.human[5], (int) x, (int) y, null); break;
-		case 2: rightMove.drawAnimation(g, x, y, 0); break;
-		case 3: leftMove.drawAnimation(g, x, y, 0); break;
-		}
+	public int getY() {
+		return (int)y;
 	}
 
-	public double getX() {
-		return x;
+	public void setX(int x) {
+		this.x = this.x + x;
 	}
 
-	public double getY() {
-		return y;
-	}
-
-	public double getVelX() {
-		return velX;
-	}
-
-	public double getVelY() {
-		return velY;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public void setY(double y) {
+	public void setY(int y) {
 		this.y = y;
 	}
-
-	public void setVelX(double velX) {
-		this.velX = velX;
-	}
-
-	public void setVelY(double velY) {
-		this.velY = velY;
-	}
-
-	public boolean rightStand() { // 오른쪽으로 보고 서있을때 = 0
-		status = 0;
-		return true;
-	}
-
-	public boolean leftStand() { // 왼쪽으로 보고 서있을때 = 1
-		status = 1;
-		return true;
-	}
-
-	public boolean rightMove() { // 오른쪽으로 이동할때 = 2
-		status = 2;
-		return true;
-	}
-
-	public boolean leftMove() { // 왼쪽으로 이동할때 = 3
-		status = 3;
-		return true;
-	}
+	
 	public int getStatus() {
 		return status;
 	}
 
-	@Override
 	public Rectangle getBounds() {
 		return new Rectangle((int) x, (int) y, 50, 64);
 	}
-
 }

@@ -20,7 +20,7 @@ public class MoleClient {
 			bootstrap.group(group)
 				.channel(NioSocketChannel.class)
 				.handler(new MoleClientInitializer());
-				serverChannel = bootstrap.connect("", PORT).sync().channel();
+				serverChannel = bootstrap.connect("localhost", PORT).sync().channel();
 				
 				future = serverChannel.writeAndFlush("");
 

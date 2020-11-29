@@ -43,7 +43,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			MoleClientMainHandler.mainFrame.add(game);
 			game.start();
 		}
-		else if (readMessage.equals("RIGHT"))
-			moleUI.moleMove(readMessage);
+		//else if (readMessage.equals("RIGHT"))
+			//moleUI.moleMove(readMessage);
 	}
 }

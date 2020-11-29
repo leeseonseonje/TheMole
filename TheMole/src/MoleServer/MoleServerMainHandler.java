@@ -14,16 +14,16 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 	private static final ChannelGroup onlineUsers = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 	public static final HashMap<Channel, String> onlineId = new HashMap<Channel, String>();
-	
+
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		Channel loginUser = ctx.channel();
 		onlineUsers.add(loginUser);
 	}
-	
+
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		String readMessage = (String)msg;
+		String readMessage = (String) msg;
 		String[] s = readMessage.split(",");
 		if (s[0].equals("[INFORMATION]"))
 			DBConnect.informationDB(s[1], ctx);
@@ -59,9 +59,9 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 		ChannelId c = logoutUser.id();
 		for (Entry<String, ChannelGroup> entry : Room.roomManager.entrySet()) {
 			if (entry.getValue().size() == 0)
-        		Room.roomManager.remove(entry.getKey());
-        	}
+				Room.roomManager.remove(entry.getKey());
+		}
 		onlineId.remove(logoutUser);
-        onlineUsers.remove(logoutUser);
+		onlineUsers.remove(logoutUser);
 	}
 }

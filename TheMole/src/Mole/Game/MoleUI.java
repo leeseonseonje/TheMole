@@ -107,8 +107,7 @@ class MolePanel extends JPanel {
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
 			
-			this.add(new Human(this,200,225));
-			
+			this.add(new Human(this,200,225));	
 			
 			//i2 = new itemBoxThread(2);
 			//i3 = new itemBoxThread(3);

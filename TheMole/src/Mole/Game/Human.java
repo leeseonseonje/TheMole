@@ -17,13 +17,14 @@ public class Human extends JLabel{
 	private double y;
 	private boolean timerstop = false;
 	private static int status = 0; // 1Àº ¿À¸¥ÂÊ, 2´Â ¿ÞÂÊ,
-	public int humsecond = 0;
+	
 
 	private boolean shooting = false;
 
 	private Timer mover;
 	private boolean moving = false;
-
+	public int humsecond = 0;
+	
 	private ImageIcon human[] = {  new ImageIcon("img/humanResource/human1.png"),
 			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
 			new ImageIcon("img/humanResource/human4.png"), new ImageIcon("img/humanResource/human5.png"),
@@ -65,11 +66,13 @@ public class Human extends JLabel{
 				}
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false) {
 					shooting = true;
-					System.out.println("¿ÞÂÊ ÃÑ¾Ë");
+					status = 2;
+					pan.add(new Bullet(getX(),getY(),status,pan));
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false) {
 					shooting = true;
-					System.out.println("¿À¸¥ÂÊ ÃÑ¾Ë");
+					status = 1;
+					pan.add(new Bullet(getX(),getY(),status,pan));
 				}
 			}
 			public void timerstart() {

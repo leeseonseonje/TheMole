@@ -84,7 +84,7 @@ public class MoleUI extends JPanel {
 	DecimalFormat dFormat = new DecimalFormat("00");
 	public static MoleInHumanPerformance moleInHumanPerformance;
 	
-	public MoleUI(ChannelHandlerContext ctx, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) {
+	public MoleUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) {
 		try {
 			setLayout(null);
 			backImage = ImageIO.read(new File("img/Back4.png"));
@@ -95,15 +95,15 @@ public class MoleUI extends JPanel {
 			intHuman = ImageIO.read(new File("img/humanint.png"));
 			intMole = ImageIO.read(new File("img/moleint.png"));
 
-			m1 = new MoleThread(ctx, 50, 400);
-			m2 = new MoleThread(ctx, 100, 400);
-			m3 = new MoleThread(ctx, 150, 400);
-			m4 = new MoleThread(ctx, 50, 450);
-			m5 = new MoleThread(ctx, 100, 450);
-			m6 = new MoleThread(ctx, 150, 450);
-			m7 = new MoleThread(ctx, 50, 500);
-			m8 = new MoleThread(ctx, 100, 500);
-			m9 = new MoleThread(ctx, 150, 500);
+			m1 = new MoleThread(ctx, name, 50, 400);
+			m2 = new MoleThread(ctx, name, 100, 400);
+			m3 = new MoleThread(ctx, name, 150, 400);
+			m4 = new MoleThread(ctx, name, 50, 450);
+			m5 = new MoleThread(ctx, name, 100, 450);
+			m6 = new MoleThread(ctx, name, 150, 450);
+			m7 = new MoleThread(ctx, name, 50, 500);
+			m8 = new MoleThread(ctx, name, 100, 500);
+			m9 = new MoleThread(ctx, name, 150, 500);
 
 			v0 = new vegetableThread(v1Location, crop1);
 			v1 = new vegetableThread(v2Location, crop2);
@@ -160,6 +160,15 @@ public class MoleUI extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public vegetableThread getV0() {
+		return v0;
+	}
+	public vegetableThread getV1() {
+		return v1;
+	}
+	public vegetableThread getV2() {
+		return v2;
 	}
 
 	public void normalTimer() {
@@ -221,6 +230,7 @@ public class MoleUI extends JPanel {
 
 		private boolean enhenceteeth = false;
 		private ChannelHandlerContext ctx;
+		private String name;
 
 		public int getx() {
 			return x;
@@ -230,10 +240,11 @@ public class MoleUI extends JPanel {
 			return y;
 		}
 
-		public MoleThread(ChannelHandlerContext ctx, int x, int y) {
+		public MoleThread(ChannelHandlerContext ctx, String name, int x, int y) {
 			this.ctx = ctx;
 			this.x = x;
 			this.y = y;
+			this.name = name;
 
 			champion = new Rectangle(x, y, 10, 10);
 
@@ -329,6 +340,8 @@ public class MoleUI extends JPanel {
 					if (eatsecond == 3) {
 						eattimer.stop();
 						eating = false;
+						ctx.writeAndFlush("[v0EAT]," + name);
+						v0.setVisible(false);
 					}
 				}
 			});
@@ -371,11 +384,11 @@ public class MoleUI extends JPanel {
 			}
 
 			if (v0.getX() == x && v0.getY() >= y - 15 && v0.timerstop == false && eating == false) {
-				v0.setVisible(false);
+			//	v0.setVisible(false);
 				/*v0.setsecond(0);
 				v0.vegtimer();
 				v0.vegtimer.start();*/
-				ctx.writeAndFlush("[v0EAT]");
+			//	ctx.writeAndFlush("[v0EAT]," + name);
 				eatsecond = 0;
 				if (enhenceteeth == false) {
 					eatTimer();
@@ -392,10 +405,10 @@ public class MoleUI extends JPanel {
 				}
 				v0.plusvegcount();
 			} else if (v1.getX() == x && v1.getY() >= y - 15 && v1.timerstop == false && eating == false) {
-				v1.setVisible(false);
+			/*	v1.setVisible(false);
 				v1.setsecond(0);
 				v1.vegtimer();
-				v1.vegtimer.start();
+				v1.vegtimer.start();*/
 				eatsecond = 0;
 				if (enhenceteeth == false) {
 					eatTimer();
@@ -413,10 +426,10 @@ public class MoleUI extends JPanel {
 				v1.plusvegcount();
 
 			} else if (v2.getX() == x && v2.getY() >= y - 15 && v2.timerstop == false && eating == false) {
-				v2.setVisible(false);
+				/*v2.setVisible(false);
 				v2.setsecond(0);
 				v2.vegtimer();
-				v2.vegtimer.start();
+				v2.vegtimer.start();*/
 				eatsecond = 0;
 				if (enhenceteeth == false) {
 					eatTimer();
@@ -493,3 +506,4 @@ public class MoleUI extends JPanel {
 		setVisible(true);
 	}
 }*/
+

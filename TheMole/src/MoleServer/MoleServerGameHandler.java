@@ -30,5 +30,12 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 					channel.writeAndFlush("STOP");
 			}
 		}
+		else if (s[0].equals("[v0EAT]")) {
+			for (Channel channel : Room.roomManager.get(s[1])) {
+				if (channel != myChannel)
+					channel.writeAndFlush("v0EAT");			
+			}
+			new VegetableTimer(ctx, "v0", s[1], 0);
+		}
 	}
 }

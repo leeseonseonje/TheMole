@@ -26,9 +26,9 @@ public class HumanUI extends JPanel {
 	private BufferedImage intHuman;
 	private JButton humanCharacter;
 	
-	vegetableThread v0;
-	vegetableThread v1;
-	vegetableThread v2;
+	public vegetableThread v0;
+	public vegetableThread v1;
+	public vegetableThread v2;
 
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		setLayout(null);
@@ -45,6 +45,16 @@ public class HumanUI extends JPanel {
 		add(v1);
 		add(v2);
 	}
+	public vegetableThread getV0() {
+		return v0;
+	}
+	public vegetableThread getV1() {
+		return v1;
+	}
+	public vegetableThread getV2() {
+		return v2;
+	}
+
 
 	
 

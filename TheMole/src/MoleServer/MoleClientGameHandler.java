@@ -21,7 +21,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			gameStart = new GameStart(s[3], s[4]);
 			gameStart.molePlayer.setText(s[3]);
 			gameStart.humanPlayer.setText(s[4]);
-			moleUI = new MoleUI(ctx, Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]), Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
+			moleUI = new MoleUI(ctx, s[1], Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]), Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
 			System.out.println(s[5]);
 			System.out.println(s[6]);
 			System.out.println(s[7]);
@@ -53,5 +53,11 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
 		else if (readMessage.equals("STOP"))
 			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
+		else if (readMessage.equals("v0EAT"))
+			humanUI.v0.setVisible(false);
+		else if (s[0].equals("v0")) {
+			moleUI.getV0().setBounds(Integer.parseInt(s[1]), 260, 32, 32);
+			humanUI.getV0().setBounds(Integer.parseInt(s[1]), 260, 32, 32);
+		}
 	}
 }

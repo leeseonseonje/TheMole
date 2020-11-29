@@ -38,6 +38,18 @@ public class MoleUI extends JFrame {
 		setVisible(true);
 		}
 	
+	public static void main(String[] args) {
+		try {
+			new MoleUI();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
 
 class MolePanel extends JPanel {

@@ -25,12 +25,16 @@ import javax.swing.UIManager;
 
 import DB.DBConnection;
 
+import Dump.AudioPlayer;
+
 class MainMenu extends JFrame {
 
 	private MainFrame frame;
 	private Font font;
 	private JButton start, end, query, rank, angry, player, title;
 	private BackG mainBG = new BackG();
+	
+	//private AudioPlayer bgMusic;
 
 	ImageIcon star_img = new ImageIcon("img/rank.png");
 	ImageIcon star1_img = new ImageIcon("img/rank1.png");
@@ -56,6 +60,9 @@ class MainMenu extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// JFrame이 정상적으로 종료되게 함.
 		mainBG.setLayout(null);
 
+		//bgMusic = new AudioPlayer("res/test.mp3");
+		//bgMusic.play();
+		
 		// 아이콘 이미지 설정
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Image icon = kit.getImage("img/moleicon.png");
@@ -197,8 +204,7 @@ class MainMenu extends JFrame {
 		title.setContentAreaFilled(false);
 		title.setBounds(170, 60, 476, 146);
 		mainBG.add(title);
-
-		add(mainBG);
+		
 		setVisible(true);// 창이 보이게
 
 	}

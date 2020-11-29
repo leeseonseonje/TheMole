@@ -25,6 +25,8 @@ import javax.swing.UIManager;
 
 import DB.DBConnection;
 
+import Dump.SoundPlayer;
+
 class MainFrame extends JFrame {
 
 	private MainFrame frame;
@@ -32,6 +34,8 @@ class MainFrame extends JFrame {
 	private JButton start, end, query, rank, angry, player, title;
 	private BackG mainBG = new BackG();
 
+	private SoundPlayer sound;
+	
 	ImageIcon star_img = new ImageIcon("img/rank.png");
 	ImageIcon star1_img = new ImageIcon("img/rank1.png");
 
@@ -199,7 +203,9 @@ class MainFrame extends JFrame {
 		title.setContentAreaFilled(false);
 		title.setBounds(170, 60, 476, 146);
 		mainBG.add(title);
-
+		
+		//SoundPlayer.sound.play();
+		
 		add(mainBG);
 		setVisible(true);// 창이 보이게
 

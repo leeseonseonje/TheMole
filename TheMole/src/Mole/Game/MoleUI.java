@@ -244,21 +244,29 @@ class MolePanel extends JPanel {
 	}
 	
 	class vegetableThread {
-		private ImageIcon veget = new ImageIcon("img/vegetables.png");
-		JLabel vegetable = new JLabel(veget);
+		private ImageIcon veget[] = { new ImageIcon("img/vegetableResource/vegetable0.png"),
+				new ImageIcon("img/vegetableResource/vegetable1.png"),
+				new ImageIcon("img/vegetableResource/vegetable2.png"),
+				new ImageIcon("img/vegetableResource/vegetable3.png"),
+				new ImageIcon("img/vegetableResource/vegetable4.png"),
+				new ImageIcon("img/vegetableResource/vegetable5.png"),
+				new ImageIcon("img/vegetableResource/vegetable6.png"),
+				new ImageIcon("img/vegetableResource/vegetable7.png"),
+				new ImageIcon("img/vegetableResource/vegetable8.png"),
+				new ImageIcon("img/vegetableResource/vegetable9.png") };
+		
+		JLabel vegetable = new JLabel(veget[(int)(Math.random()*10)]);
 		private int x, y,section;
 		private Timer vegtimer;
 		private int vegsecond;
 		private int vegcount = 0;
 		private boolean timerstop = false;
-		
-		
-
+	
 		public vegetableThread(int section) {
 			this.section = section;
 			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 260;
-			vegetable.setBounds(x, y, 16, 16);
+			vegetable.setBounds(x, y, 32, 32);
 			// vegetable.setIcon(veget);
 			add(vegetable);
 			//System.out.println("작물위치 " + x + " " + y);
@@ -286,7 +294,7 @@ class MolePanel extends JPanel {
 		public void setposition() {
 			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 260;
-			vegetable.setBounds(x, y, 16, 16);			 
+			vegetable.setBounds(x, y, 32, 32);			 
 		}
 		public void vegtimer() {
 			timerstop = true;
@@ -493,10 +501,7 @@ class MolePanel extends JPanel {
 						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
 
 				runTime = distance / (double) speed;
-//				if ((x <= v0.getx() + 10 && x > v0.getx() - 10) || (x <= v1.getx() + 10 && x > v1.getx() - 10)
-//						|| (x <= v2.getx() + 10 && x > v2.getx() - 10) && y < 290) {
-//					eat = true;
-//				}
+
 			}
 		}
 	}

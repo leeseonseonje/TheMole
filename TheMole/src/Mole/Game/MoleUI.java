@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import io.netty.channel.ChannelHandlerContext;
+
 /*public class MoleUI extends JFrame {
 	private MolePanel molePanel;
 	
@@ -40,9 +42,9 @@ import javax.swing.Timer;
 }*/
 
 public class MoleUI extends JPanel {
-	/*public static void main(String[] args) throws IOException, InterruptedException {
-		new f();
-	}*/
+	//public static void main(String[] args) throws IOException, InterruptedException {
+	//	new f();
+//	}
 
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 	public JLabel counterLabel;
@@ -80,8 +82,9 @@ public class MoleUI extends JPanel {
 	int second, minute;
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
-
-	public MoleUI() {
+	public static MoleInHumanPerformance moleInHumanPerformance;
+	
+	public MoleUI(ChannelHandlerContext ctx, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) {
 		try {
 			setLayout(null);
 			backImage = ImageIO.read(new File("img/Back4.png"));
@@ -92,19 +95,19 @@ public class MoleUI extends JPanel {
 			intHuman = ImageIO.read(new File("img/humanint.png"));
 			intMole = ImageIO.read(new File("img/moleint.png"));
 
-			m1 = new MoleThread(50, 400);
-			m2 = new MoleThread(100, 400);
-			m3 = new MoleThread(150, 400);
-			m4 = new MoleThread(50, 450);
-			m5 = new MoleThread(100, 450);
-			m6 = new MoleThread(150, 450);
-			m7 = new MoleThread(50, 500);
-			m8 = new MoleThread(100, 500);
-			m9 = new MoleThread(150, 500);
+			m1 = new MoleThread(ctx, 50, 400);
+			m2 = new MoleThread(ctx, 100, 400);
+			m3 = new MoleThread(ctx, 150, 400);
+			m4 = new MoleThread(ctx, 50, 450);
+			m5 = new MoleThread(ctx, 100, 450);
+			m6 = new MoleThread(ctx, 150, 450);
+			m7 = new MoleThread(ctx, 50, 500);
+			m8 = new MoleThread(ctx, 100, 500);
+			m9 = new MoleThread(ctx, 150, 500);
 
-			v0 = new vegetableThread(0);
-			v1 = new vegetableThread(1);
-			v2 = new vegetableThread(2);
+			v0 = new vegetableThread(v1Location, crop1);
+			v1 = new vegetableThread(v2Location, crop2);
+			v2 = new vegetableThread(v3Location, crop3);
 			add(v0);
 			add(v1);
 			add(v2);
@@ -113,7 +116,9 @@ public class MoleUI extends JPanel {
 			i1 = new itemBoxThread(1);
 			add(i0);
 			add(i1);
-
+			
+			moleInHumanPerformance = new MoleInHumanPerformance(200, 225);
+			add(moleInHumanPerformance);
 			//add(new MoleInHumanPerformance(200, 225));
 			// i2 = new itemBoxThread(2);
 			// i3 = new itemBoxThread(3);
@@ -215,6 +220,7 @@ public class MoleUI extends JPanel {
 		private double runTime;
 
 		private boolean enhenceteeth = false;
+		private ChannelHandlerContext ctx;
 
 		public int getx() {
 			return x;
@@ -224,7 +230,8 @@ public class MoleUI extends JPanel {
 			return y;
 		}
 
-		public MoleThread(int x, int y) {
+		public MoleThread(ChannelHandlerContext ctx, int x, int y) {
+			this.ctx = ctx;
 			this.x = x;
 			this.y = y;
 
@@ -365,9 +372,10 @@ public class MoleUI extends JPanel {
 
 			if (v0.getX() == x && v0.getY() >= y - 15 && v0.timerstop == false && eating == false) {
 				v0.setVisible(false);
-				v0.setsecond(0);
+				/*v0.setsecond(0);
 				v0.vegtimer();
-				v0.vegtimer.start();
+				v0.vegtimer.start();*/
+				ctx.writeAndFlush("[v0EAT]");
 				eatsecond = 0;
 				if (enhenceteeth == false) {
 					eatTimer();
@@ -460,16 +468,16 @@ public class MoleUI extends JPanel {
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
-		g.drawImage(humanHud, 0, 70, null);
+		//g.drawImage(humanHud, 0, 70, null);
 		g.drawImage(moleHud, 715, 70, null);
-		g.drawImage(humanInv, 55, 0, null);
+		//g.drawImage(humanInv, 55, 0, null);
 		g.drawImage(moleInv, 650, 0, null);
-		g.drawImage(intHuman, 0, 0, null);
+		//g.drawImage(intHuman, 0, 0, null);
 		g.drawImage(intMole, 740, 0, null);
 	}
 }
 
-class f extends JFrame {
+/*class f extends JFrame {
 	private MoleUI molePanel;
 
 	public f() throws IOException, InterruptedException { // Mole UI 창
@@ -484,4 +492,4 @@ class f extends JFrame {
 		add(molePanel);
 		setVisible(true);
 	}
-}
+}*/

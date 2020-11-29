@@ -12,14 +12,7 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
-	private static final ChannelGroup onlineUsers = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 	public static final HashMap<Channel, String> onlineId = new HashMap<Channel, String>();
-
-	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		Channel loginUser = ctx.channel();
-		onlineUsers.add(loginUser);
-	}
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -47,8 +40,9 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 			Room.readyState(ctx, s[0], s[1]);
 		else if (s[0].equals("[CANSLE]"))
 			Room.readyState(ctx, s[0], s[1]);
-		else if (s[0].equals("[START]"))
+		else if (s[0].equals("[START]")) {
 			Room.startGame(ctx, s[1], s[2]);
+		}
 		else
 			ctx.fireChannelRead(readMessage);
 	}
@@ -56,12 +50,12 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		Channel logoutUser = ctx.channel();
-		ChannelId c = logoutUser.id();
 		for (Entry<String, ChannelGroup> entry : Room.roomManager.entrySet()) {
+			entry.getValue().remove(logoutUser);
 			if (entry.getValue().size() == 0)
 				Room.roomManager.remove(entry.getKey());
 		}
+		Room.roomChannel.remove(ctx.channel());//테스트중에만 잠시	
 		onlineId.remove(logoutUser);
-		onlineUsers.remove(logoutUser);
 	}
 }

@@ -8,7 +8,12 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 
 public class vegetableThread extends JLabel{
-	private ImageIcon veget = new ImageIcon("img/vegetables.png");
+	private ImageIcon vegetables[] = { new ImageIcon("img/vegetableResource/vegetable0.png"),
+			new ImageIcon("img/vegetableResource/vegetable1.png"), new ImageIcon("img/vegetableResource/vegetable2.png"),
+			new ImageIcon("img/vegetableResource/vegetable3.png"), new ImageIcon("img/vegetableResource/vegetable4.png"),
+			new ImageIcon("img/vegetableResource/vegetable5.png"), new ImageIcon("img/vegetableResource/vegetable6.png"),
+			new ImageIcon("img/vegetableResource/vegetable7.png"), new ImageIcon("img/vegetableResource/vegetable8.png"),
+			new ImageIcon("img/vegetableResource/vegetable9.png") };
 	private int x, y, section;
 	public Timer vegtimer;
 	public int vegsecond;
@@ -16,12 +21,13 @@ public class vegetableThread extends JLabel{
 	public boolean timerstop = false;
 	
 
-	public vegetableThread(int section)  {
-		this.section = section;
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
-		y = 260;
-		setBounds(x, y, 16, 16);
-		setIcon(veget);
+	public vegetableThread(int section, int crop)  {
+		//this.section = section;
+		x = section;
+		y = 255;
+		setBounds(x, y, 32, 32);
+		setIcon(vegetables[crop]);
+		//System.out.println(section + "!!!!");
 		// vegetable.setIcon(veget);
 		
 		// System.out.println("작물위치 " + x + " " + y);

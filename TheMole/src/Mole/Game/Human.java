@@ -108,35 +108,43 @@ public class Human extends JLabel{
 	}
 
 	public void mover() {
-		mover = new Timer(100,new ActionListener() {
+		mover = new Timer(100, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				humsecond++;
-				humsecond = humsecond%4;
-				System.out.println(humsecond);
-				System.out.println(moving+"  "+ status);
-				if(moving == true && status == 1 ) { // 오른쪽방향으로 움직일때 -누름
-					System.out.println("오른쪽이동중");
-					if(humsecond == 1)
+				humsecond = humsecond % 5;
+		//		System.out.println(humsecond);
+		//		System.out.println(moving + "  " + status);
+				if (moving == true && status == 1) { // 오른쪽방향으로 움직일때 -누름
+				//	System.out.println("오른쪽이동중");
+					if (humsecond == 1) 
 						setIcon(human[1]);
-					else if (humsecond == 2)
+
+					else if (humsecond == 2) 
 						setIcon(human[2]);
-					else if (humsecond == 3)
+					
+					else if (humsecond == 3) 
 						setIcon(human[3]);
-					else if (humsecond == 4)
+					
+					else if (humsecond == 4) 
 						setIcon(human[4]);
+					
 				}
-				if(moving == true && status == 2) { // 왼쪽방향으로 움직일때 -누름
-					if(humsecond == 1)
+				if (moving == true && status == 2) { // 왼쪽방향으로 움직일때 -누름
+					if (humsecond == 1) 
 						setIcon(human[6]);
-					else if (humsecond == 2)
+					
+					else if (humsecond == 2) 
 						setIcon(human[7]);
-					else if (humsecond == 3)
+					
+					else if (humsecond == 3) 
 						setIcon(human[8]);
-					else if (humsecond == 4)
+					
+					else if (humsecond == 4) 
 						setIcon(human[9]);
+					
 				}
-				if(moving == false) {
+				if (moving == false) {
 					mover.stop();
 					timerstop = false;
 				}

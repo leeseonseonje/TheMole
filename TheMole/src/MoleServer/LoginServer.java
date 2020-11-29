@@ -33,7 +33,6 @@ public class LoginServer {
 			if (pw.equals(password)) {
 				MoleServerMainHandler.onlineId.put(ctx.channel(), id);
 				ctx.writeAndFlush("LOGIN");
-				ctx.fireChannelActive();
 			} else
 				ctx.writeAndFlush("LOGINFAIL");
 

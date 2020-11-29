@@ -11,7 +11,6 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 	public static MoleUI moleUI;
 	public static HumanUI humanUI;
 	private GameStart gameStart;
-	private MoleInHumanPerformance moleInHumanPerformance;
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -19,26 +18,27 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 		String[] s = readMessage.split(",");
 
 		if (s[0].equals("MOLESTART")) {
-			gameStart = new GameStart(s[4], s[5]);
-			gameStart.molePlayer.setText(s[4]);
-			gameStart.humanPlayer.setText(s[5]);
-			moleUI = new MoleUI();
+			gameStart = new GameStart(s[3], s[4]);
+			gameStart.molePlayer.setText(s[3]);
+			gameStart.humanPlayer.setText(s[4]);
+			moleUI = new MoleUI(ctx, Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]), Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
+			System.out.println(s[5]);
+			System.out.println(s[6]);
+			System.out.println(s[7]);
 			MoleClientMainHandler.roomTest.setVisible(false);
 			MoleClientMainHandler.mainFrame.add(gameStart);
 			gameStart.setVisible(true);
 			Thread.sleep(2000);
 			gameStart.setVisible(false);
-			moleInHumanPerformance = new MoleInHumanPerformance(200, 225);
-			moleUI.add(moleInHumanPerformance);
 			MoleClientMainHandler.mainFrame.add(moleUI);
 			moleUI.setVisible(true);
 		}
 
 		else if (s[0].equals("HUMANSTART")) {
-			GameStart gameStart = new GameStart(s[4], s[5]);
-			gameStart.humanPlayer.setText(s[4]);
-			gameStart.molePlayer.setText(s[5]);
-			humanUI = new HumanUI(ctx, s[1]);
+			GameStart gameStart = new GameStart(s[3], s[4]);
+			gameStart.humanPlayer.setText(s[3]);
+			gameStart.molePlayer.setText(s[4]);
+			humanUI = new HumanUI(ctx, s[1], Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]), Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
 			MoleClientMainHandler.roomTest.setVisible(false);
 			MoleClientMainHandler.mainFrame.add(gameStart);
 			gameStart.setVisible(true);
@@ -48,10 +48,10 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			humanUI.setVisible(true);
 		} 
 		else if (readMessage.equals("RIGHT"))
-			moleInHumanPerformance.moleInHumanMove(readMessage);
+			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
 		else if (readMessage.equals("LEFT"))
-			moleInHumanPerformance.moleInHumanMove(readMessage);
+			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
 		else if (readMessage.equals("STOP"))
-			moleInHumanPerformance.moleInHumanMove(readMessage);
+			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
 	}
 }

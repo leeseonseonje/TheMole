@@ -59,9 +59,10 @@ public class MoleInHumanPerformance extends JLabel {
 			setBounds(getX(), y, 50, 64);
 		}
 		
-		else if (m.equals("STOP"))
+		else if (m.equals("STOP")) {
 			moving = false;
 			setIcon(human[0]);
+		}
 	}
 
 	public void timerstart() {
@@ -74,29 +75,37 @@ public class MoleInHumanPerformance extends JLabel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				humsecond++;
-				humsecond = humsecond % 4;
-				System.out.println(humsecond);
-				System.out.println(moving + "  " + status);
+				humsecond = humsecond % 5;
+		//		System.out.println(humsecond);
+		//		System.out.println(moving + "  " + status);
 				if (moving == true && status == 1) { // 오른쪽방향으로 움직일때 -누름
-					System.out.println("오른쪽이동중");
-					if (humsecond == 1)
+				//	System.out.println("오른쪽이동중");
+					if (humsecond == 1) 
 						setIcon(human[1]);
-					else if (humsecond == 2)
+
+					else if (humsecond == 2) 
 						setIcon(human[2]);
-					else if (humsecond == 3)
+					
+					else if (humsecond == 3) 
 						setIcon(human[3]);
-					else if (humsecond == 4)
+					
+					else if (humsecond == 4) 
 						setIcon(human[4]);
+					
 				}
 				if (moving == true && status == 2) { // 왼쪽방향으로 움직일때 -누름
-					if (humsecond == 1)
+					if (humsecond == 1) 
 						setIcon(human[6]);
-					else if (humsecond == 2)
+					
+					else if (humsecond == 2) 
 						setIcon(human[7]);
-					else if (humsecond == 3)
+					
+					else if (humsecond == 3) 
 						setIcon(human[8]);
-					else if (humsecond == 4)
+					
+					else if (humsecond == 4) 
 						setIcon(human[9]);
+					
 				}
 				if (moving == false) {
 					mover.stop();

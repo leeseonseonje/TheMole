@@ -21,13 +21,29 @@ public class HumanUI extends JPanel {
 	}*/
 
 	private BufferedImage backImage;
-	private ImageIcon human = new ImageIcon("img/human.png");
+	private BufferedImage humanHud;
+	private BufferedImage humanInv;
+	private BufferedImage intHuman;
 	private JButton humanCharacter;
+	
+	vegetableThread v0;
+	vegetableThread v1;
+	vegetableThread v2;
 
-	public HumanUI(ChannelHandlerContext ctx, String name) throws IOException {
+	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		setLayout(null);
 		backImage = ImageIO.read(new File("img/Back4.png"));
+		humanHud = ImageIO.read(new File("img/humanHud.png"));
+		humanInv = ImageIO.read(new File("img/inventory.png"));
+		intHuman = ImageIO.read(new File("img/humanint.png"));
 		add(new Human(this, 200, 225, ctx, name));
+		
+		v0 = new vegetableThread(v1Location, crop1);
+		v1 = new vegetableThread(v2Location, crop2);
+		v2 = new vegetableThread(v3Location, crop3);
+		add(v0);
+		add(v1);
+		add(v2);
 	}
 
 	
@@ -35,6 +51,10 @@ public class HumanUI extends JPanel {
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
+		g.drawImage(humanHud, 0, 70, null);
+		g.drawImage(humanInv, 55, 0, null);
+		g.drawImage(intHuman, 0, 0, null);
+		
 	}
 }
 

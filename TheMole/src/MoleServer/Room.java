@@ -13,7 +13,8 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class Room {
 	public static final HashMap<String, ChannelGroup> roomManager = new HashMap<String, ChannelGroup>();
-
+	public static final HashMap<Channel, ChannelGroup> roomChannel = new HashMap<Channel, ChannelGroup>();
+	
 	public static void roomCreat(ChannelHandlerContext ctx, String roomHost) {
 		Channel host = ctx.channel();
 		ChannelGroup room = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
@@ -31,6 +32,7 @@ public class Room {
 			ctx.writeAndFlush("FULL");
 		else {
 			roomManager.get(roomHostName).add(guest);
+			
 			for (Channel channel : roomManager.get(roomHostName)) {
 				if(channel == guest)
 					guest.writeAndFlush("JOIN," + roomHostName + "," + myName);
@@ -112,16 +114,22 @@ public class Room {
 	
 	public static void startGame(ChannelHandlerContext ctx, String hostName, String guestName) {
 		Channel host = ctx.channel();
+		roomChannel.put(ctx.channel(), roomManager.get(hostName));
 		int r = (int)(Math.random()*2);
-		
+		int v1 = ((int) (Math.random() * 260)) + 263 * 0;
+		int v2 = ((int) (Math.random() * 260)) + 263 * 1;
+		int v3 = ((int) (Math.random() * 260)) + 263 * 2;
+		int v4 = ((int) (Math.random() * 10));
+		int v5 = ((int) (Math.random() * 10));
+		int v6 = ((int) (Math.random() * 10));
 		for (Channel channel : roomManager.get(hostName)) {
 			if (r == 0 && channel != host) {
-				host.writeAndFlush("MOLESTART," + hostName + "," + "," + guestName + "," + hostName + "," + guestName);
-				channel.writeAndFlush("HUMANSTART,"  + hostName + "," + "," + guestName + "," + guestName + "," + hostName);
+				host.writeAndFlush("MOLESTART," + hostName + "," + guestName + "," + hostName + "," + guestName + "," + v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5 + "," + v6);
+				channel.writeAndFlush("HUMANSTART,"  + hostName + "," + guestName + "," + guestName + "," + hostName + "," + v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5 + "," + v6);
 			} 
 			else if (r == 1 && channel != host) {
-				host.writeAndFlush("HUMANSTART,"  + hostName + "," + "," + guestName + "," + hostName + "," + guestName);
-				channel.writeAndFlush("MOLESTART,"  + hostName + "," + "," + guestName + "," + guestName + "," + hostName);
+				host.writeAndFlush("HUMANSTART,"  + hostName + ","  + guestName + "," + hostName + "," + guestName + "," + v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5 + "," + v6);
+				channel.writeAndFlush("MOLESTART,"  + hostName + "," + guestName + "," + guestName + "," + hostName + "," + v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5 + "," + v6);
 			}
 		}
 	}

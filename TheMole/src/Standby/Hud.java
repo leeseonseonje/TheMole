@@ -1,4 +1,4 @@
-package Mole.Game;
+package Standby;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -14,9 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
-import Standby.BufferedImageLoader;
-import Standby.Game;
 
 public class Hud {
 

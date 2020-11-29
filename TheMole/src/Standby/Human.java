@@ -42,10 +42,7 @@ public class Human implements EntityA {
 			x = 0;
 		if (x >= 800 - 50)
 			x = 800 - 50;
-		/*
-		 * if(y <= 0) y = 0; if(y >= 600 - 64) y = 600 - 64;
-		 */
-		
+
 		rightMove.runAnimation();
 		leftMove.runAnimation();
 		
@@ -126,3 +123,4 @@ public class Human implements EntityA {
 	}
 
 }
+

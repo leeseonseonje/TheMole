@@ -1,8 +1,6 @@
 package Mole.Game;
 
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,9 +10,9 @@ import javax.swing.Timer;
 
 public class Human extends JLabel{
 
-	private static double x = 0;
-	private static double y = 0;
-	private double velX = 0;
+	private int x;
+	private int y;
+	private int velX = 5;
 	private double velY = 0;
 	private static int status = 0; // 1은 오른쪽, 2는 왼쪽,
 
@@ -30,56 +28,57 @@ public class Human extends JLabel{
 			new ImageIcon("img/humanResource/human8.png"), new ImageIcon("img/humanResource/human9.png"),
 			new ImageIcon("img/humanResource/human10.png"), };
 
-	public Human(int x, int y) {
+	public Human(MolePanel pan,int x, int y) {
 		this.x = x;
+		System.out.println(x);	
 		this.y = y;
 		setBounds((int) x, (int) y, 50, 64);
 		setIcon(human[0]);
-		addKeyListener(new KeyListener() {
+		pan.setFocusable(true);
+		pan.addKeyListener(new KeyListener() {
 
-			double x = this.x;
+			//private int x = this.x;
 
 			public void keyPressed(KeyEvent e) {
 				
-				if (e.getKeyChar() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
+				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
 					moving = true;
 					status = 2;
-					System.out.println("왼쪽");
 					//mover.start();
-					setVelX(-3);
-					x -= velX;
+					setX(x-getVelX());				
+					setBounds(getX(),y,50,64);					
+					System.out.println(x);
+
 				}
-				if (e.getKeyChar() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
+				if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
 					moving = true;
 					status = 1;
-					System.out.println("오른쪽");
 					//mover.start();
-					setVelX(3);
-					x += velX;
+					setBounds(x+getVelX(),y,50,64);
 				}
-				if (e.getKeyChar() == KeyEvent.VK_A && shooting == false) {
+				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false) {
 					shooting = true;
 					System.out.println("왼쪽 총알");
 				}
-				if (e.getKeyChar() == KeyEvent.VK_D && shooting == false) {
+				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false) {
 					shooting = true;
 					System.out.println("오른쪽 총알");
 				}
 			}
 
 			public void keyReleased(KeyEvent e) {
-				int key = e.getKeyCode();
-				if (e.getKeyChar() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
+				
+				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
 					setVelX(0);
 					moving = false;
 					setIcon(human[5]);
-				} else if (e.getKeyChar() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
+				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
 					setVelX(0);
 					moving = false;
 					setIcon(human[0]);
-				} else if (e.getKeyChar() == KeyEvent.VK_A) {
+				} else if (e.getKeyCode() == KeyEvent.VK_A) {
 					shooting = false;
-				} else if (e.getKeyChar() == KeyEvent.VK_D) {
+				} else if (e.getKeyCode() == KeyEvent.VK_D) {
 					shooting = false;
 				}
 			}
@@ -90,7 +89,7 @@ public class Human extends JLabel{
 
 		});
 	}
-
+/*
 	public void timer() {
 		mover = new Timer(3000,new ActionListener() {
 			@Override
@@ -109,7 +108,7 @@ public class Human extends JLabel{
 			}
 		});
 	}
-
+	*/
 	public int getX() {
 		return (int)x;
 	}
@@ -118,7 +117,7 @@ public class Human extends JLabel{
 		return (int)y;
 	}
 
-	public double getVelX() {
+	public int getVelX() {
 		return velX;
 	}
 
@@ -126,15 +125,14 @@ public class Human extends JLabel{
 		return velY;
 	}
 
-	public void setX(double x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 
-	public void setY(double y) {
+	public void setY(int y) {
 		this.y = y;
 	}
-
-	public void setVelX(double velX) {
+	public void setVelX(int velX) {
 		this.velX = velX;
 	}
 
@@ -149,5 +147,4 @@ public class Human extends JLabel{
 	public Rectangle getBounds() {
 		return new Rectangle((int) x, (int) y, 50, 64);
 	}
-
 }

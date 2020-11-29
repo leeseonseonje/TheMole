@@ -77,6 +77,7 @@ class MolePanel extends JPanel {
 	
 	public MolePanel() {
 			setLayout(null);
+			//this.setFocusable(true); // 키 리스너
 			
 			try {
 			backImage = ImageIO.read(new File("img/Back4.png"));
@@ -106,7 +107,7 @@ class MolePanel extends JPanel {
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
 			
-			hum = new Human(200,225);
+			this.add(new Human(this,200,225));
 			
 			
 			//i2 = new itemBoxThread(2);
@@ -138,7 +139,7 @@ class MolePanel extends JPanel {
 			
 			add(vegcountLabel);
 			
-			add(hum);
+			//add(hum);
 	}
 
 	public void normalTimer() {

@@ -160,6 +160,6 @@ public class Human extends JLabel{
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle((int) x, (int) y, 50, 64);
+		return new Rectangle(getX(), getY(), 50, 64);
 	}
 }

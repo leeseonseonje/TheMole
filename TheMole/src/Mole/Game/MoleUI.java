@@ -140,16 +140,16 @@ class MolePanel extends JPanel {
 
 		// add(hum);
 	}
-	
+
 	// 인터페이스 그리는 위치
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g); // 여기서 super인 패널에 그림을 그리는것
 		g.drawImage(backImage, 0, 0, null);
-		//g.drawImage(humanHud, 0, 70, null);
+		// g.drawImage(humanHud, 0, 70, null);
 		g.drawImage(moleHud, 715, 70, null);
-		//g.drawImage(humanInv, 55, 0, null);
+		// g.drawImage(humanInv, 55, 0, null);
 		g.drawImage(moleInv, 650, 0, null);
-		//g.drawImage(intHuman, 0, 0, null);
+		// g.drawImage(intHuman, 0, 0, null);
 		g.drawImage(intMole, 740, 0, null);
 	}
 
@@ -266,8 +266,17 @@ class MolePanel extends JPanel {
 	}
 
 	class vegetableThread {
-		private ImageIcon veget = new ImageIcon("img/vegetables.png");
-		JLabel vegetable = new JLabel(veget);
+		private ImageIcon vegetables[] = { new ImageIcon("img/vegetableResource/vegetable0.png"),
+				new ImageIcon("img/vegetableResource/vegetable1.png"),
+				new ImageIcon("img/vegetableResource/vegetable2.png"),
+				new ImageIcon("img/vegetableResource/vegetable3.png"),
+				new ImageIcon("img/vegetableResource/vegetable4.png"),
+				new ImageIcon("img/vegetableResource/vegetable5.png"),
+				new ImageIcon("img/vegetableResource/vegetable6.png"),
+				new ImageIcon("img/vegetableResource/vegetable7.png"),
+				new ImageIcon("img/vegetableResource/vegetable8.png"),
+				new ImageIcon("img/vegetableResource/vegetable9.png"), };
+		JLabel vegetable = new JLabel(vegetables[(int)(Math.random()*10)]);
 		private int x, y, section;
 		private Timer vegtimer;
 		private int vegsecond;
@@ -278,7 +287,7 @@ class MolePanel extends JPanel {
 			this.section = section;
 			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 260;
-			vegetable.setBounds(x, y, 16, 16);
+			vegetable.setBounds(x, y, 32, 32);
 			// vegetable.setIcon(veget);
 			add(vegetable);
 			// System.out.println("작물위치 " + x + " " + y);
@@ -311,7 +320,7 @@ class MolePanel extends JPanel {
 		public void setposition() {
 			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 260;
-			vegetable.setBounds(x, y, 16, 16);
+			vegetable.setBounds(x, y, 32, 32);
 		}
 
 		public void vegtimer() {
@@ -365,14 +374,14 @@ class MolePanel extends JPanel {
 		private double targetX, targetY;
 		private double startX, startY;
 		private double runTime;
-		
+
 		private Human human;
 
-		public int getx() {
+		public int getX() {
 			return x;
 		}
 
-		public int gety() {
+		public int getY() {
 			return y;
 		}
 
@@ -398,12 +407,9 @@ class MolePanel extends JPanel {
 							if (e.getButton() == MouseEvent.BUTTON3) {
 								if (eating == true) // 먹었을 때 해제하게 만듬
 									moleButton.setIcon(mole[12]);
-								if (moleButton.getIcon().equals(mole[13]) 
-										|| moleButton.getIcon().equals(mole[11])
-										|| moleButton.getIcon().equals(mole[10])
-										|| moleButton.getIcon().equals(mole[9])
-										|| moleButton.getIcon().equals(mole[5])
-										|| moleButton.getIcon().equals(mole[4])
+								if (moleButton.getIcon().equals(mole[13]) || moleButton.getIcon().equals(mole[11])
+										|| moleButton.getIcon().equals(mole[10]) || moleButton.getIcon().equals(mole[9])
+										|| moleButton.getIcon().equals(mole[5]) || moleButton.getIcon().equals(mole[4])
 										|| moleButton.getIcon().equals(mole[3])) {
 									timer.stop();
 									calculateChampionMovement(e.getX(), e.getY(), champion);
@@ -488,8 +494,10 @@ class MolePanel extends JPanel {
 			double y = (int) (startY + ((targetY - startY) * progress));
 
 			repaint();
-			if(getBounds().intersects(human.getBounds()))
+			/*
+			if (getBounds().intersects(human.getBounds()))
 				this.moleButton.setVisible(false);
+				*/
 			if (y >= 270 && x >= 12 && x <= 770) {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);
@@ -564,8 +572,9 @@ class MolePanel extends JPanel {
 				runTime = distance / (double) speed;
 			}
 		}
+
 		public Rectangle getBounds() {
-			return new Rectangle(x, y, 32, 32);
+			return new Rectangle(getX(), getY(), 32, 32);
 		}
 	}
 } // MolePanel 종지부

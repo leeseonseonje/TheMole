@@ -11,19 +11,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-public class Human extends JLabel{
+import io.netty.channel.ChannelHandlerContext;
 
+public class Human extends JLabel{
+	
 	private int x;
 	private int y;
 	private boolean timerstop = false;
 	private static int status = 0; // 1은 오른쪽, 2는 왼쪽,
 	public int humsecond = 0;
-
+		
 	private boolean shooting = false;
-
+			
 	private Timer mover;
 	private boolean moving = false;
-
+			
 	private ImageIcon human[] = {  new ImageIcon("img/humanResource/human1.png"),
 			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
 			new ImageIcon("img/humanResource/human4.png"), new ImageIcon("img/humanResource/human5.png"),
@@ -31,7 +33,7 @@ public class Human extends JLabel{
 			new ImageIcon("img/humanResource/human8.png"), new ImageIcon("img/humanResource/human9.png"),
 			new ImageIcon("img/humanResource/human10.png") };
 
-	public Human(MolePanel pan,int x, int y) {
+	public Human(HumanUI pan,int x, int y, ChannelHandlerContext ctx, String name) {
 		this.x = x;
 		this.y = y;
 		setBounds((int) x, (int) y, 50, 64);
@@ -44,6 +46,7 @@ public class Human extends JLabel{
 			public void keyPressed(KeyEvent e) {
 				
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
+					ctx.writeAndFlush("[LEFT]," + name);
 					moving = true;
 					status = 2;
 					setX(-5);
@@ -55,6 +58,7 @@ public class Human extends JLabel{
 					setBounds(getX(),y,50,64);		
 				}
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
+					ctx.writeAndFlush("[RIGHT]," + name);
 					moving = true;
 					status = 1;
 					setX(5);
@@ -82,9 +86,11 @@ public class Human extends JLabel{
 			public void keyReleased(KeyEvent e) {
 				
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
+					ctx.writeAndFlush("[STOP]," + name);
 					moving = false;
-					setIcon(human[0]);
+					setIcon(human[5]);
 				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
+					ctx.writeAndFlush("[STOP]," + name);
 					moving = false;
 					setIcon(human[0]);
 				} else if (e.getKeyCode() == KeyEvent.VK_A) {

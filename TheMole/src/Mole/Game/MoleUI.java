@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class MoleUI extends JFrame {
+/*public class MoleUI extends JFrame {
 	private MolePanel molePanel;
 	
 	
@@ -36,32 +36,19 @@ public class MoleUI extends JFrame {
 
 		add(molePanel);
 		setVisible(true);
-		}
-	
-	public static void main(String[] args) {
-		try {
-			new MoleUI();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
-	
-}
+}*/
 
-class MolePanel extends JPanel {
+public class MoleUI extends JPanel {
+	/*public static void main(String[] args) throws IOException, InterruptedException {
+		new f();
+	}*/
+
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 	public JLabel counterLabel;
 	private JLabel vegcountLabel;
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
-
-	
-
-	public MoleUI frame;
 
 	Timer timer;
 
@@ -77,25 +64,24 @@ class MolePanel extends JPanel {
 	vegetableThread v0;
 	vegetableThread v1;
 	vegetableThread v2;
-	
+
 	private ImageIcon itemteeth = new ImageIcon("img/strongteeth.png");
 	private ImageIcon itemtrap = new ImageIcon("img/trapM.png");
 	private ImageIcon itemsnakepipe = new ImageIcon("img/Snakepipe.png");
 	private JLabel itembox1;
 	private JLabel itembox2;
-	
+
 	itemBoxThread i0;
 	itemBoxThread i1;
 	Human hum;
-	//itemBoxThread i2;
-	//itemBoxThread i3;
-	
-	
+	// itemBoxThread i2;
+	// itemBoxThread i3;
+
 	int second, minute;
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
 
-	public MolePanel() {
+	public MoleUI() {
 		try {
 			setLayout(null);
 			backImage = ImageIO.read(new File("img/Back4.png"));
@@ -122,22 +108,19 @@ class MolePanel extends JPanel {
 			add(v0);
 			add(v1);
 			add(v2);
-			
-
 
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
 			add(i0);
 			add(i1);
-			
-			add(new Human(this,200,225));
-			//i2 = new itemBoxThread(2);
-			//i3 = new itemBoxThread(3);
-			
-			//add(v0);
-			//add(v1);
-			//add(v2);
 
+			//add(new MoleInHumanPerformance(200, 225));
+			// i2 = new itemBoxThread(2);
+			// i3 = new itemBoxThread(3);
+
+			// add(v0);
+			// add(v1);
+			// add(v2);
 
 			counterLabel = new JLabel("");
 			counterLabel.setBounds(345, 0, 100, 50);
@@ -160,13 +143,11 @@ class MolePanel extends JPanel {
 			vegcountLabel.setFont(font2);
 
 			add(vegcountLabel);
-			
-
 
 			itembox1 = new JLabel();
 			itembox2 = new JLabel();
-			itembox1.setBounds(655,6,36,36);
-			itembox2.setBounds(696,6,36,36);
+			itembox1.setBounds(655, 6, 36, 36);
+			itembox2.setBounds(696, 6, 36, 36);
 			itembox1.setVisible(false);
 			add(itembox1);
 			add(itembox2);
@@ -201,14 +182,14 @@ class MolePanel extends JPanel {
 				if (counterLabel.getText().equals("00:00")) {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "ÀÎ°£ ½Â¸®!!", "Result", JOptionPane.PLAIN_MESSAGE);
-					//e.MainFrame main = new MainFrame();
-					//main.setVisible(true);
+					// MainFrame main = new MainFrame();
+					// main.setVisible(true);
 				}
 				if (vegcountLabel.getText().equals("0")) {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "µÎ´õÁö´Â ÀÚÀ¯´Ù µÎ´õÁö ¸¸¸¸¼¼", "Result", JOptionPane.PLAIN_MESSAGE);
-					//e.MainFrame main = new MainFrame();
-					//main.setVisible(true);
+					// MainFrame main = new MainFrame();
+					// main.setVisible(true);
 				}
 			}
 		});
@@ -221,7 +202,6 @@ class MolePanel extends JPanel {
 		private ImageIcon mole = new ImageIcon("img/moleimg.png");
 		private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
 
-		
 		private Timer timer;
 		private double speed = 0.15;
 		private Long startTime;
@@ -233,7 +213,7 @@ class MolePanel extends JPanel {
 		private double targetX, targetY;
 		private double startX, startY;
 		private double runTime;
-		
+
 		private boolean enhenceteeth = false;
 
 		public int getx() {
@@ -290,18 +270,17 @@ class MolePanel extends JPanel {
 		}
 
 		public void molegetitem() {
-			int itemnum = ((int)(Math.random()*10));
+			int itemnum = ((int) (Math.random() * 10));
 			switch (itemnum) {
 			case 0:
 			case 9:
 				System.out.println(itemnum);
 				System.out.println("¹ìÇÇ¸® È¹µæ");
 				System.out.println(itembox1.isVisible());
-				if(itembox1.isVisible() == false) {
+				if (itembox1.isVisible() == false) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemsnakepipe);
-				}
-				else {
+				} else {
 					itembox2.setIcon(itemsnakepipe);
 					System.out.println("2");
 				}
@@ -311,31 +290,29 @@ class MolePanel extends JPanel {
 				System.out.println(itemnum);
 				System.out.println("»ç¶÷ Á¤Áö");
 				System.out.println(itembox1.isVisible());
-				if(itembox1.isVisible() == false) {
+				if (itembox1.isVisible() == false) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemtrap);
-				}
-				else {
+				} else {
 					itembox2.setIcon(itemtrap);
 					System.out.println("2");
 				}
 				break;
-			default: 
+			default:
 				enhenceteeth = true;
 				System.out.println("°­Ã¶ÀÌ»¡ È¹µæ");
 				System.out.println(itembox1.isVisible());
-				if(itembox1.isVisible() == false) {
+				if (itembox1.isVisible() == false) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemteeth);
-				}
-				else {
+				} else {
 					itembox2.setIcon(itemteeth);
 					System.out.println("2");
 				}
 				break;
 			}
 		}
-		
+
 		public void eatTimer() {
 			eating = true;
 			eattimer = new Timer(1000, new ActionListener() {
@@ -372,38 +349,37 @@ class MolePanel extends JPanel {
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
 
-			if (i0.getX() == x && i0.getY() >= y - 20 && i0.timerstop == false&&eating == false) {
+			if (i0.getX() == x && i0.getY() >= y - 20 && i0.timerstop == false && eating == false) {
 				i0.setVisible(false);
 				i0.setsecond(0);
 				i0.itemtimer();
 				i0.itemtimer.start();
 				molegetitem();
-			} else if (i1.getX() == x && i1.getY() >= y - 20 &&i1.timerstop == false && eating == false) {
+			} else if (i1.getX() == x && i1.getY() >= y - 20 && i1.timerstop == false && eating == false) {
 				i1.setVisible(false);
 				i1.setsecond(0);
 				i1.itemtimer();
 				i1.itemtimer.start();
 				molegetitem();
-				}
-			
-			if (v0.getX() == x && v0.getY() >= y - 15 &&v0.timerstop == false && eating == false) {
+			}
+
+			if (v0.getX() == x && v0.getY() >= y - 15 && v0.timerstop == false && eating == false) {
 				v0.setVisible(false);
 				v0.setsecond(0);
 				v0.vegtimer();
 				v0.vegtimer.start();
 				eatsecond = 0;
-				if(enhenceteeth == false) {	
-				eatTimer();
-				eattimer.start();
+				if (enhenceteeth == false) {
+					eatTimer();
+					eattimer.start();
 				} else {
-					enhenceteeth = false ;
-					if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+					enhenceteeth = false;
+					if (itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						enhenceteeth = true;
-					}
-					else if(itembox1.getIcon() == itemteeth)
+					} else if (itembox1.getIcon() == itemteeth)
 						itembox1.setIcon(null);
-					else 
+					else
 						itembox2.setIcon(null);
 				}
 				v0.plusvegcount();
@@ -413,42 +389,40 @@ class MolePanel extends JPanel {
 				v1.vegtimer();
 				v1.vegtimer.start();
 				eatsecond = 0;
-				if(enhenceteeth == false) {	
+				if (enhenceteeth == false) {
 					eatTimer();
 					eattimer.start();
-					} else {
-						enhenceteeth = false ;
-						if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
-							itembox1.setIcon(null);
-							enhenceteeth = true;
-						}
-						else if(itembox1.getIcon() == itemteeth)
-							itembox1.setIcon(null);
-						else 
-							itembox2.setIcon(null);
-						}
+				} else {
+					enhenceteeth = false;
+					if (itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+						itembox1.setIcon(null);
+						enhenceteeth = true;
+					} else if (itembox1.getIcon() == itemteeth)
+						itembox1.setIcon(null);
+					else
+						itembox2.setIcon(null);
+				}
 				v1.plusvegcount();
-				
+
 			} else if (v2.getX() == x && v2.getY() >= y - 15 && v2.timerstop == false && eating == false) {
 				v2.setVisible(false);
 				v2.setsecond(0);
 				v2.vegtimer();
 				v2.vegtimer.start();
 				eatsecond = 0;
-				if(enhenceteeth == false) {	
+				if (enhenceteeth == false) {
 					eatTimer();
 					eattimer.start();
-					} else {
-						enhenceteeth = false ;
-						if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
-							itembox1.setIcon(null);
-							enhenceteeth = true;
-						}
-						else if(itembox1.getIcon() == itemteeth)
-							itembox1.setIcon(null);
-						else 
-							itembox2.setIcon(null);
-					}
+				} else {
+					enhenceteeth = false;
+					if (itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+						itembox1.setIcon(null);
+						enhenceteeth = true;
+					} else if (itembox1.getIcon() == itemteeth)
+						itembox1.setIcon(null);
+					else
+						itembox2.setIcon(null);
+				}
 				v2.plusvegcount();
 			}
 		}
@@ -459,11 +433,11 @@ class MolePanel extends JPanel {
 
 				targetX = x;
 				targetY = y;
-				
-				System.out.println(targetX+"     "+targetY);
+
+				System.out.println(targetX + "     " + targetY);
 				startX = champion.getCenterX();
 				startY = champion.getCenterY();
-				
+
 				/*
 				 * if(targetX - startX > 0) { if(targetY - startY > 0) {
 				 * System.out.println("4»çºÐ¸é"); }else System.out.println("1»çºÐ¸é"); } else if
@@ -492,5 +466,22 @@ class MolePanel extends JPanel {
 		g.drawImage(moleInv, 650, 0, null);
 		g.drawImage(intHuman, 0, 0, null);
 		g.drawImage(intMole, 740, 0, null);
+	}
+}
+
+class f extends JFrame {
+	private MoleUI molePanel;
+
+	public f() throws IOException, InterruptedException { // Mole UI Ã¢
+		setTitle("Mole Game");
+		setSize(800, 600);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		molePanel = new MoleUI(); // molePanel »ý¼º
+
+		add(molePanel);
+		setVisible(true);
 	}
 }

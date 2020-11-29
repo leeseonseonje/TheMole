@@ -12,10 +12,22 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		String[] s = readMessage.split(",");
 		Channel myChannel = ctx.channel();
 
-		if (s[0].equals("[RIGHT]")) {
+		if (s[0].equals("[LEFT]")) {
+			for (Channel channel : Room.roomManager.get(s[1])) {
+				if (channel != myChannel)
+					channel.writeAndFlush("LEFT");
+			}
+		}
+		else if (s[0].equals("[RIGHT]")) {
 			for (Channel channel : Room.roomManager.get(s[1])) {
 				if (channel != myChannel)
 					channel.writeAndFlush("RIGHT");
+			}
+		}
+		else if (s[0].equals("[STOP]")) {
+			for (Channel channel : Room.roomManager.get(s[1])) {
+				if (channel != myChannel)
+					channel.writeAndFlush("STOP");
 			}
 		}
 	}

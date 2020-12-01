@@ -1,7 +1,6 @@
 package Mole.Game;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -24,14 +23,19 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import DB.DBConnection;
+import Mole.Game.Sound.EffectSound;
+import Mole.Game.Sound.Music;
 
 public class LoginForm extends JFrame {
 
 	public static void main(String[] args) {
-
+		Music music = new Music(true); // 음악재생 선언 - 매개변수는 반복여부
+		EffectSound eff = new EffectSound(); // 효과음 테스트 - 성공
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 			LoginForm window = new LoginForm();
+			eff.playSound("fire.wav");
+			music.start(); // 음악재생 시작
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

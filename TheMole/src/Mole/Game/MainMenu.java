@@ -16,19 +16,20 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import DB.DBConnection;
 
 class MainMenu extends JFrame {
 
 	private MainFrame frame;
-	private Font font;
 	private JButton start, end, query, rank, angry, player, title;
 	private BackG mainBG = new BackG();
 
@@ -149,11 +150,11 @@ class MainMenu extends JFrame {
 				new LeaderBoardFrame();
 			}
 		});
-		
+
 		player = new JButton(LoginForm.getId());
-		player.setBounds(675, 10, 100,50 );
+		player.setBounds(675, 10, 100, 50);
 		player.addMouseListener(new MouseAdapter() {
-			
+
 			public void mousePressed(MouseEvent e) {
 				System.out.println("계정 정보 활성화");
 				try {
@@ -161,14 +162,18 @@ class MainMenu extends JFrame {
 					Statement st = con.createStatement();
 					ResultSet rs = st.executeQuery("SELECT * FROM gamer");
 					String value = "";
-					while(rs.next()) {
-						if((LoginForm.getId()).equals(rs.getString("ID"))) {
-								value = String.format("계정명: %s \n총 플레이수: %3d \n인간승리수: %3d \n두더지승리수: %3d \n승률: %.1f \n점수: %4d" 
-									,rs.getString("ID"),rs.getInt("PLAYCOUNT"),rs.getInt("HUMANWIN"),rs.getInt("MOLEWIN"),((rs.getDouble("HUMANWIN")+rs.getInt("MOLEWIN"))/rs.getInt("PLAYCOUNT"))*100,rs.getInt("SCORES"));
+					while (rs.next()) {
+						if ((LoginForm.getId()).equals(rs.getString("ID"))) {
+							value = String.format(
+									"계정명: %s \n총 플레이수: %3d \n인간승리수: %3d \n두더지승리수: %3d \n승률: %.1f \n점수: %4d",
+									rs.getString("ID"), rs.getInt("PLAYCOUNT"), rs.getInt("HUMANWIN"),
+									rs.getInt("MOLEWIN"),
+									((rs.getDouble("HUMANWIN") + rs.getInt("MOLEWIN")) / rs.getInt("PLAYCOUNT")) * 100,
+									rs.getInt("SCORES"));
 						} else
 							continue;
-						//JOptionPane.showInputDialog(this,value);
-						//JOptionPane.showMessageDialog(frame,value);
+						// JOptionPane.showInputDialog(this,value);
+						// JOptionPane.showMessageDialog(frame,value);
 						JOptionPane.showMessageDialog(frame, value, "계정 정보", JOptionPane.PLAIN_MESSAGE);
 					}
 					rs.close();
@@ -181,7 +186,7 @@ class MainMenu extends JFrame {
 			}
 		});
 		mainBG.add(player);
-		
+
 		mainBG.add(rank);
 
 		angry = new JButton(angry_img);
@@ -219,17 +224,16 @@ class MainMenu extends JFrame {
 			try {
 				background = ImageIO.read(new File("img/mole.jpg"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
 		public void paintComponent(Graphics g) {// 그리는 함수
-			//super.paintComponent(g);
+			// super.paintComponent(g);
 			update(g);
-			//g.drawImage(background, 0, 0, null);// background를 그려줌
+			// g.drawImage(background, 0, 0, null);// background를 그려줌
 		}
-		
+
 		public void update(Graphics g) {
 			g.drawImage(background, 0, 0, null);// background를 그려줌
 		}

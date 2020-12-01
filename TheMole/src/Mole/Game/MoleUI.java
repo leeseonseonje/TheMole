@@ -1,5 +1,6 @@
 package Mole.Game;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -47,8 +48,6 @@ class MolePanel extends JPanel {
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
 
-	
-
 	public MoleUI frame;
 
 	Timer timer;
@@ -71,10 +70,17 @@ class MolePanel extends JPanel {
 	private ImageIcon itemsnakepipe = new ImageIcon("img/Snakepipe.png");
 	private JLabel itembox1;
 	private JLabel itembox2;
-	
+	private JLabel humitembox1;
+	private JLabel humitembox2;
 	itemBoxThread i0;
 	itemBoxThread i1;
+	itemBoxThread i2;
+	itemBoxThread i3;
 	Human hum;
+	private boolean humtrap = false;
+	private Timer humstoptimer;
+	private int humstun = 3;
+	public boolean humstop = false;
 	//itemBoxThread i2;
 	//itemBoxThread i3;
 	
@@ -115,10 +121,11 @@ class MolePanel extends JPanel {
 
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
+			
 			add(i0);
 			add(i1);
 			
-			add(new Human(this,200,225));
+			add(new Human(this,225));
 			//i2 = new itemBoxThread(2);
 			//i3 = new itemBoxThread(3);
 			
@@ -149,19 +156,30 @@ class MolePanel extends JPanel {
 
 			add(vegcountLabel);
 			
-
-
 			itembox1 = new JLabel();
 			itembox2 = new JLabel();
+			humitembox1 = new JLabel();
+			humitembox2 = new JLabel();
 			itembox1.setBounds(655,6,36,36);
 			itembox2.setBounds(696,6,36,36);
+			humitembox1.setBounds(655,6,36,36);
+			humitembox2.setBounds(696,6,36,36);
 			itembox1.setVisible(false);
 			add(itembox1);
 			add(itembox2);
+			add(humitembox1);
+			add(humitembox2);
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void sethumtrap(boolean a) {
+		humtrap = a;
+	}
+	public boolean gethumtrap() {
+		return humtrap;
 	}
 
 	public void normalTimer() {
@@ -202,7 +220,7 @@ class MolePanel extends JPanel {
 		});
 	}
 
-	class MoleThread extends Thread {
+	class MoleThread  {
 		private int x, y;
 		private JButton moleButton;
 		private Rectangle champion;
@@ -236,13 +254,13 @@ class MolePanel extends JPanel {
 			this.x = x;
 			this.y = y;
 
-			champion = new Rectangle(x, y, 10, 10);
+			champion = new Rectangle(x, y, 32, 32);
 
 			moleButton = new JButton(mole);
 			moleButton.setBorderPainted(false);
 			moleButton.setFocusPainted(false);
 			moleButton.setContentAreaFilled(false);
-			moleButton.setBounds(x, y, 30, 30);
+			moleButton.setBounds(x, y, 32, 32);
 			add(moleButton);
 
 			moleButton.addActionListener(e -> {
@@ -269,6 +287,7 @@ class MolePanel extends JPanel {
 					});
 				}
 			});
+			
 			timer = new Timer(10, e -> {
 				if (eating == false) {
 					TimeMove();
@@ -298,14 +317,20 @@ class MolePanel extends JPanel {
 			case 8:
 				System.out.println(itemnum);
 				System.out.println("사람 정지");
-				System.out.println(itembox1.isVisible());
 				if(itembox1.isVisible() == false) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemtrap);
+					humstop = true;
+					humstop();
+					humstoptimer.start();
+				}
+				else if (itembox1.getIcon() == itemtrap) {
+					humstun+= 3;
 				}
 				else {
 					itembox2.setIcon(itemtrap);
-					System.out.println("2");
+					humstop();
+					humstoptimer.start();
 				}
 				break;
 			default: 
@@ -318,10 +343,44 @@ class MolePanel extends JPanel {
 				}
 				else {
 					itembox2.setIcon(itemteeth);
-					System.out.println("2");
 				}
 				break;
 			}
+		}
+		
+		public void humstop() {
+			humstoptimer = new Timer(1000, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					humstun--;
+					if (itembox1.getIcon() == itemtrap) {
+						itembox1.setFont(font1);
+						itembox1.setText(humstun + "");
+						itembox1.setVerticalTextPosition(JLabel.CENTER);
+						itembox1.setHorizontalTextPosition(JLabel.CENTER);
+						itembox1.setForeground(Color.cyan);
+					} else {
+						itembox2.setText(humstun + "");
+						itembox2.setFont(font1);
+						itembox2.setVerticalTextPosition(JLabel.CENTER);
+						itembox2.setHorizontalTextPosition(JLabel.CENTER);
+						itembox2.setForeground(Color.cyan);
+					}
+					if(humstun == 0) {
+						if(itembox1.getIcon() == itemtrap) {
+							itembox1.setIcon(null);
+							itembox1.setText(null);
+						}
+						else {
+							itembox1.setIcon(null);
+							itembox1.setText(null);
+						}
+						humstop = false;
+						humstun = 3;
+						humstoptimer.stop();
+					}
+				}
+			});
 		}
 		
 		public void eatTimer() {
@@ -350,14 +409,21 @@ class MolePanel extends JPanel {
 				progress = 1.0;
 				timer.stop();
 			}
-
+			
+			//System.out.println(targetX + " "+targetY);
 			double x = (int) (startX + ((targetX - startX) * progress));
 			double y = (int) (startY + ((targetY - startY) * progress));
 
 			repaint();
-			if (y >= 270 && x >= 12 && x <= 770) {
-				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
-				champion.setRect(x - 5, y - 5, 10, 10);
+			
+			if (y >= 270) {
+                moleButton.setBounds((int) x - 15, (int) y - 15, 32, 32);
+                champion.setRect(x - 15, y - 15, 32, 32);
+            }
+			
+			if(y < 290 && humtrap == true) {
+				moleButton.setVisible(false);
+				humtrap = false;
 			}
 
 			if (i0.getX() == x && i0.getY() >= y - 20 && i0.timerstop == false&&eating == false) {
@@ -448,7 +514,7 @@ class MolePanel extends JPanel {
 				targetX = x;
 				targetY = y;
 				
-				System.out.println(targetX+"     "+targetY);
+				//System.out.println(targetX+"     "+targetY);
 				startX = champion.getCenterX();
 				startY = champion.getCenterY();
 				

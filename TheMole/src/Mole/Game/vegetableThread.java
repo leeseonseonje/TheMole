@@ -16,9 +16,9 @@ public class vegetableThread extends JLabel{
 	public boolean timerstop = false;
 	
 
-	public vegetableThread(int section)  {
+	public vegetableThread(int section) {
 		this.section = section;
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
+		x = ( (int) (Math.random() * 260)) + 263 * this.section;
 		y = 260;
 		setBounds(x, y, 16, 16);
 		setIcon(veget);
@@ -72,6 +72,4 @@ public class vegetableThread extends JLabel{
 			}
 		});
 	}
-
-	
 }

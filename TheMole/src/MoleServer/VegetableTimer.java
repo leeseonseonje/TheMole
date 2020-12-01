@@ -6,12 +6,12 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
 public class VegetableTimer {
-	Timer vegtimer = null;
+	private Timer vegTimer = null;
 	private int vegetableCount = 0;
 
 	public VegetableTimer(ChannelHandlerContext ctx, String vegetableNumber, String name, int section) {
 		Channel mole = ctx.channel();
-		vegtimer = new Timer(1000, e -> {
+		vegTimer = new Timer(1000, e -> {
 			vegetableCount++;
 			if (vegetableCount == 10) {
 				int n = ((int) (Math.random() * 260)) + 263 * section;
@@ -22,8 +22,11 @@ public class VegetableTimer {
 					else
 						channel.writeAndFlush("HUMAN" + vegetableNumber + "," + n + "," + x);
 				}
-				vegtimer.stop();
+				vegTimer.stop();
 			}
 		});
+	}
+	public Timer getVegTimer() {
+		return vegTimer;
 	}
 }

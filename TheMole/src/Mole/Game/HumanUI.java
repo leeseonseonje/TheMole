@@ -24,19 +24,23 @@ public class HumanUI extends JPanel {
 	private BufferedImage humanHud;
 	private BufferedImage humanInv;
 	private BufferedImage intHuman;
-	private JButton humanCharacter;
+	private Human human;
 	
 	private vegetableThread v1;
 	private vegetableThread v2;
 	private vegetableThread v3;
-
+	
+	private itemBoxThread i1;
+	private itemBoxThread i2;
+	private boolean humtrap = false;
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		setLayout(null);
 		backImage = ImageIO.read(new File("img/Back4.png"));
 		humanHud = ImageIO.read(new File("img/humanHud.png"));
 		humanInv = ImageIO.read(new File("img/inventory.png"));
 		intHuman = ImageIO.read(new File("img/humanint.png"));
-		add(new Human(this, 200, 225, ctx, name));
+		human = new Human(this, 200, 225, ctx, name);
+		add(human);
 		
 		v1 = new vegetableThread(v1Location, crop1);
 		v2 = new vegetableThread(v2Location, crop2);
@@ -44,6 +48,14 @@ public class HumanUI extends JPanel {
 		add(v1);
 		add(v2);
 		add(v3);
+		
+		i1 = new itemBoxThread();
+		i2 = new itemBoxThread();
+		add(i1);
+		add(i2);
+		i1.setVisible(false);
+		i2.setVisible(false);
+
 	}
 	public vegetableThread getV1() {
 		return v1;
@@ -54,8 +66,19 @@ public class HumanUI extends JPanel {
 	public vegetableThread getV3() {
 		return v3;
 	}
+	public itemBoxThread getI1() {
+		return i1;
+	}
+	public itemBoxThread getI2() {
+		return i2;
+	}
 
-
+	public void sethumtrap(boolean a) {
+        humtrap = a;
+    }
+    public boolean gethumtrap() {
+        return humtrap;
+    }
 	
 
 	public void paintComponent(Graphics g) {// 그리는 함수

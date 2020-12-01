@@ -1,5 +1,6 @@
 package Mole.Game;
 
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,26 +10,36 @@ import javax.swing.Timer;
 
 public class itemBoxThread extends JLabel{
 	private ImageIcon itemB = new ImageIcon("img/itemBox.png");
-	private int x, y,section;
-	public Timer itemtimer;
+	//private int x, y,section;
+//	public Timer itemtimer;
 	private int itemsecond;
 	private int itemcount = 0;
-	public boolean timerstop = false;
+	private boolean timerstop = false;
 	private boolean enhenceteeth = false;
 	private boolean trap;
 	private boolean snakepipe;
 			
-	public itemBoxThread(int section) {
-		this.section = section;
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
-		y = 255;
-		setBounds(x, y, 40, 40);
+	public itemBoxThread() {
+		//this.section = section;
+		//x = ((int) (Math.random() * 260)) + 263 * this.section;
+		//y = 255;
+		setBounds(0, 0, 0, 0);
 		setIcon(itemB);
 		// itemBox.setIcon(itemB);
 		//System.out.println("아이템위치 " + x + " " + y);
 	}
+	public Rectangle getBounds() {
+        return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+    }
+	
+	public boolean getTimerstop() {
+		return timerstop;
+	}
+	public void setTimerstop(boolean timerstop) {
+		this.timerstop = timerstop;
+	}
 
-	public int getX() {
+/*	public int getX() {
 		return x;
 	}
 	public int getY() {
@@ -45,14 +56,14 @@ public class itemBoxThread extends JLabel{
 	}
 	public int setcount(int count) {
 		return itemcount = count;
-	}
+	}*/
 	
-	public void setposition() {
+/*	public void setposition() {
 		x = ((int) (Math.random() * 260)) + 263 * this.section;
 		y = 255;
 		setBounds(x, y, 40, 40);			 
-	}
-	public void itemtimer() {
+	}*/
+	/*public void itemtimer() {
 		timerstop = true;
 		itemtimer = new Timer(1000,new ActionListener(){
 			@Override
@@ -67,5 +78,5 @@ public class itemBoxThread extends JLabel{
 				}
 			}
 		});
-	}
+	}*/
 }

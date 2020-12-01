@@ -19,6 +19,8 @@ public class MoleInHumanPerformance extends JLabel {
 
 	private Timer mover;
 	private boolean moving = false;
+	
+	private int humanspeed = 5;
 
 	private ImageIcon human[] = { new ImageIcon("img/humanResource/human1.png"),
 			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
@@ -38,7 +40,7 @@ public class MoleInHumanPerformance extends JLabel {
 		if (m.equals("LEFT")) {
 			moving = true;
 			status = 2;
-			setX(-5);
+			setX(-humanspeed);
 			if (timerstop == false) {
 				humsecond = 0;
 				timerstop = true;
@@ -50,7 +52,7 @@ public class MoleInHumanPerformance extends JLabel {
 		else if (m.equals("RIGHT")) {
 			moving = true;
 			status = 1;
-			setX(5);
+			setX(humanspeed);
 			if (timerstop == false) {
 				humsecond = 0;
 				timerstop = true;
@@ -114,7 +116,14 @@ public class MoleInHumanPerformance extends JLabel {
 			}
 		});
 	}
+	public int getHumanspeed() {
+		return humanspeed;
+	}
 
+	public void setHumanspeed(int humanspeed) {
+		this.humanspeed = humanspeed;
+	}
+	
 	public int getX() {
 		return (int) x;
 	}

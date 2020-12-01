@@ -73,8 +73,8 @@ public class MoleUI extends JPanel {
 	private JLabel itembox1;
 	private JLabel itembox2;
 
-	itemBoxThread i0;
-	itemBoxThread i1;
+	private itemBoxThread i1;
+	private itemBoxThread i2;
 	Human hum;
 	// itemBoxThread i2;
 	// itemBoxThread i3;
@@ -112,10 +112,12 @@ public class MoleUI extends JPanel {
 			add(v2);
 			add(v3);
 
-			i0 = new itemBoxThread(0);
-			i1 = new itemBoxThread(1);
-			add(i0);
+			i1 = new itemBoxThread();
+			i2 = new itemBoxThread();
 			add(i1);
+			add(i2);
+			i1.setVisible(false);
+			i2.setVisible(false);
 			
 			moleInHumanPerformance = new MoleInHumanPerformance(200, 225);
 			add(moleInHumanPerformance);
@@ -169,6 +171,12 @@ public class MoleUI extends JPanel {
 	}
 	public vegetableThread getV3() {
 		return v3;
+	}
+	public itemBoxThread getI1() {
+		return i1;
+	}
+	public itemBoxThread getI2() {
+		return i2;
 	}
 
 	public void normalTimer() {
@@ -257,7 +265,7 @@ public class MoleUI extends JPanel {
 			this.name = name;
 
 			champion = new Rectangle(x, y, 32, 32);
-
+			
 			moleButton = new JButton(mole[12]);
 			moleButton.setBorderPainted(false);
 			moleButton.setFocusPainted(false);
@@ -389,6 +397,7 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v1EAT]," + name);
+						v1.setBounds(0, 0, 0, 0);
 						v1.setVisible(false);
 					}
 				}
@@ -404,6 +413,7 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v2EAT]," + name);
+						v2.setBounds(0, 0, 0, 0);
 						v2.setVisible(false);
 					}
 				}
@@ -419,6 +429,7 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v3EAT]," + name);
+						v3.setBounds(0, 0, 0, 0);
 						v3.setVisible(false);
 					}
 				}
@@ -447,22 +458,20 @@ public class MoleUI extends JPanel {
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
 
-			if (i0.getX() == x && i0.getY() >= y - 20 && i0.timerstop == false && eating == false) {
-				i0.setVisible(false);
-				i0.setsecond(0);
-				i0.itemtimer();
-				i0.itemtimer.start();
+			if (i1.getBounds().intersects(champion) && i1.getTimerstop() == false && eating == false) {
+				ctx.writeAndFlush("[MOLEITEM1EAT]," + name);
+				i1.setBounds(0, 0, 0, 0);
+				i1.setVisible(false);
 				molegetitem();
 				
-			} else if (i1.getX() == x && i1.getY() >= y - 20 && i1.timerstop == false && eating == false) {
-				i1.setVisible(false);
-				i1.setsecond(0);
-				i1.itemtimer();
-				i1.itemtimer.start();
+			} else if (i2.getBounds().intersects(champion) && i2.getTimerstop() == false && eating == false) {
+				ctx.writeAndFlush("[MOLEITEM2EAT]," + name);
+				i2.setBounds(0, 0, 0, 0);
+				i2.setVisible(false);
 				molegetitem();
 			}
 
-			if (v1.getX() == x && v1.getY() >= y - 20 && v1.timerstop == false && eating == false) {
+			if (v1.getBounds().intersects(champion)&& v1.timerstop == false && eating == false) {
 				eatsecond = 0;
 				if (enhenceteeth == false) {
 					v1EatTimer();
@@ -478,7 +487,7 @@ public class MoleUI extends JPanel {
 						itembox2.setIcon(null);
 				}*/
 				v1.plusvegcount();
-			} else if (v2.getX() == x && v2.getY() >= y - 20 && v2.timerstop == false && eating == false) {
+			} else if (v2.getBounds().intersects(champion) && v2.timerstop == false && eating == false) {
 			/*	v1.setVisible(false);
 				v1.setsecond(0);
 				v1.vegtimer();
@@ -499,7 +508,7 @@ public class MoleUI extends JPanel {
 				}
 				v2.plusvegcount();
 
-			} else if (v3.getX() == x && v3.getY() >= y - 20 && v3.timerstop == false && eating == false) {
+			} else if (v3.getBounds().intersects(champion) && v3.timerstop == false && eating == false) {
 				/*v2.setVisible(false);
 				v2.setsecond(0);
 				v2.vegtimer();
@@ -533,12 +542,13 @@ public class MoleUI extends JPanel {
 				startX = champion.getCenterX();
 				startY = champion.getCenterY();
 
-				/*
-				 * if(targetX - startX > 0) { if(targetY - startY > 0) {
-				 * System.out.println("4사분면"); }else System.out.println("1사분면"); } else if
-				 * (targetX-startX < 0) { if(targetY - startY > 0) { System.out.println("3사분면");
-				 * }else System.out.println("2사분면"); }
-				 */
+				
+				if (targetX - startX > 0) {
+                    direction = 1;
+                } else if (targetX - startX < 0) {
+                    direction = 2;
+                }
+				 
 
 				double distance = Math
 						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));

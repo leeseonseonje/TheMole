@@ -48,13 +48,13 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			MoleClientMainHandler.mainFrame.add(humanUI);
 			humanUI.setVisible(true);
 		} 
-		else if (readMessage.equals("RIGHT"))
-			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
-		else if (readMessage.equals("LEFT"))
-			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
-		else if (readMessage.equals("STOP"))
-			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
-		else if (readMessage.equals("v1EAT"))
+		else if (s[0].equals("RIGHT"))
+			moleUI.moleInHumanPerformance.moleInHumanMove(s[0]);
+		else if (s[0].equals("LEFT"))
+			moleUI.moleInHumanPerformance.moleInHumanMove(s[0]);
+		else if (s[0].equals("STOP"))
+			moleUI.moleInHumanPerformance.moleInHumanMove(s[0]);
+		else if (s[0].equals("v1EAT"))
 			humanUI.getV1().setVisible(false);
 		else if (s[0].equals("MOLEv1")) {
 			int x = Integer.parseInt(s[1]);
@@ -124,15 +124,16 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			humanUI.getI1().setVisible(false);
 		else if (readMessage.equals("MOLEITEM2EAT"))
 			humanUI.getI2().setVisible(false);
-		else if (readMessage.equals("HUMANITEM1EAT"))
-			moleUI.getI1().setVisible(false);
-		else if (readMessage.equals("HUMANITEM2EAT"))
-			moleUI.getI2().setVisible(false);
-		else if (readMessage.equals("HUMANSPEEDUP")) {
-			moleUI.moleInHumanPerformance.setHumanspeed(10);
-		}
-		else if (readMessage.equals("HUMANSPEEDDOWN")) {
-			moleUI.moleInHumanPerformance.setHumanspeed(5);
+		
+		for (int i = 0; i < s.length; i++) {
+			if (s[i].equals("HUMANITEM1EAT"))
+				moleUI.getI1().setVisible(false);
+			else if (s[i].equals("HUMANITEM2EAT"))
+				moleUI.getI2().setVisible(false);
+			else if (s[i].equals("HUMANSPEEDUP")) 
+				moleUI.moleInHumanPerformance.setHumanspeed(10);
+			else if (s[i].equals("HUMANSPEEDDOWN")) 
+				moleUI.moleInHumanPerformance.setHumanspeed(5);
 		}
 	}
 }

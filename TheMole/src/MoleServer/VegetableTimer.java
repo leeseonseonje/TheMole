@@ -14,7 +14,7 @@ public class VegetableTimer {
 		vegTimer = new Timer(1000, e -> {
 			vegetableCount++;
 			if (vegetableCount == 10) {
-				int n = ((int) (Math.random() * 260)) + 263 * section;
+				int n = ((int) (Math.random() * 260)) + 247 * section;
 				int x = ((int) (Math.random() * 10));
 				for (Channel channel : Room.roomManager.get(name)) {
 					if (channel == mole)

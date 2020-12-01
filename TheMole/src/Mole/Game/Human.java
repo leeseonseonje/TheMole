@@ -78,7 +78,7 @@ public class Human extends JLabel{
 			public void keyPressed(KeyEvent e) {
 				
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
-					ctx.writeAndFlush("[LEFT]," + name);
+					ctx.writeAndFlush("[LEFT]," + name + ",");
 					moving = true;
 					status = 2;
 					setX(-humanspeed);
@@ -90,7 +90,7 @@ public class Human extends JLabel{
 					setBounds(getX(),y,50,64);		
 				}
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
-					ctx.writeAndFlush("[RIGHT]," + name);
+					ctx.writeAndFlush("[RIGHT]," + name + ",");
 					moving = true;
 					status = 1;
 					setX(humanspeed);

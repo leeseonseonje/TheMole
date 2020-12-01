@@ -32,7 +32,10 @@ public class HumanUI extends JPanel {
 	
 	private itemBoxThread i1;
 	private itemBoxThread i2;
+	
 	private boolean humtrap = false;
+	private boolean timerstop = false;
+
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		setLayout(null);
 		backImage = ImageIO.read(new File("img/Back4.png"));
@@ -55,7 +58,7 @@ public class HumanUI extends JPanel {
 		add(i2);
 		i1.setVisible(false);
 		i2.setVisible(false);
-
+		
 	}
 	public vegetableThread getV1() {
 		return v1;
@@ -79,7 +82,12 @@ public class HumanUI extends JPanel {
     public boolean gethumtrap() {
         return humtrap;
     }
-	
+	public boolean getTimerstop() {
+		return timerstop;
+	}
+	public void setTimerstop(boolean timerstop) {
+		this.timerstop = timerstop;
+	}
 
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);

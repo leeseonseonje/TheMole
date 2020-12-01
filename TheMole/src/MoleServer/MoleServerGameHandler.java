@@ -15,19 +15,19 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		if (s[0].equals("[LEFT]")) {
 			for (Channel channel : Room.roomManager.get(s[1])) {
 				if (channel != myChannel)
-					channel.writeAndFlush("LEFT");
+					channel.writeAndFlush("LEFT,");
 			}
 		}
 		else if (s[0].equals("[RIGHT]")) {
 			for (Channel channel : Room.roomManager.get(s[1])) {
 				if (channel != myChannel)
-					channel.writeAndFlush("RIGHT");
+					channel.writeAndFlush("RIGHT,");
 			}
 		}
 		else if (s[0].equals("[STOP]")) {
 			for (Channel channel : Room.roomManager.get(s[1])) {
 				if (channel != myChannel)
-					channel.writeAndFlush("STOP");
+					channel.writeAndFlush("STOP,");
 			}
 		}
 		else if (s[0].equals("[v1EAT]")) {
@@ -66,28 +66,30 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 					channel.writeAndFlush("MOLEITEM2EAT");			
 			}
 		}
-		else if (s[0].equals("[HUMANITEM1EAT]")) {
-			for (Channel channel : Room.roomManager.get(s[1])) {
-				if (channel != myChannel)
-					channel.writeAndFlush("HUMANITEM1EAT");			
+		for (int i = 0; i < s.length; i++) {
+			if (i % 2 == 0)
+				if (s[i].equals("[HUMANITEM1EAT]")) {
+					for (Channel channel : Room.roomManager.get(s[1])) {
+						if (channel != myChannel)
+							channel.writeAndFlush("HUMANITEM1EAT,");			
+				}
+			} else if (s[i].equals("[HUMANITEM2EAT]")) {
+				for (Channel channel : Room.roomManager.get(s[1])) {
+					if (channel != myChannel)
+						channel.writeAndFlush("HUMANITEM2EAT,");			
+				}
 			}
-		}
-		else if (s[0].equals("[HUMANITEM2EAT]")) {
-			for (Channel channel : Room.roomManager.get(s[1])) {
-				if (channel != myChannel)
-					channel.writeAndFlush("HUMANITEM2EAT");			
+			else if (s[0].equals("[HUMANSPEEDUP]")) {
+				for (Channel channel : Room.roomManager.get(s[1])) {
+					if (channel != myChannel)
+						channel.writeAndFlush("HUMANSPEEDUP,");			
+				}
 			}
-		}
-		else if (s[0].equals("[HUMANSPEEDUP]")) {
-			for (Channel channel : Room.roomManager.get(s[1])) {
-				if (channel != myChannel)
-					channel.writeAndFlush("HUMANSPEEDUP");			
-			}
-		}
-		else if (s[0].equals("[HUMANSPEEDDOWN]")) {
-			for (Channel channel : Room.roomManager.get(s[1])) {
-				if (channel != myChannel)
-					channel.writeAndFlush("HUMANSPEEDDOWN");			
+			else if (s[0].equals("[HUMANSPEEDDOWN]")) {
+				for (Channel channel : Room.roomManager.get(s[1])) {
+					if (channel != myChannel)
+						channel.writeAndFlush("HUMANSPEEDDOWN," );			
+				}
 			}
 		}
 	}

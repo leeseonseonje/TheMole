@@ -4,6 +4,7 @@ import Mole.Game.GameStart;
 import Mole.Game.HumanUI;
 import Mole.Game.MoleInHumanPerformance;
 import Mole.Game.MoleUI;
+import Mole.Game.vegetableThread;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -53,11 +54,53 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
 		else if (readMessage.equals("STOP"))
 			moleUI.moleInHumanPerformance.moleInHumanMove(readMessage);
-		else if (readMessage.equals("v0EAT"))
-			humanUI.v0.setVisible(false);
-		else if (s[0].equals("v0")) {
-			moleUI.getV0().setBounds(Integer.parseInt(s[1]), 260, 32, 32);
-			humanUI.getV0().setBounds(Integer.parseInt(s[1]), 260, 32, 32);
+		else if (readMessage.equals("v1EAT"))
+			humanUI.getV1().setVisible(false);
+		else if (s[0].equals("MOLEv1")) {
+			int x = Integer.parseInt(s[1]);
+			int y = Integer.parseInt(s[2]);
+			moleUI.getV1().setIcon(vegetableThread.vegetables[y]);
+			moleUI.getV1().setBounds(x, 255, 32, 32);
+			moleUI.getV1().setVisible(true);
+		}
+		else if (s[0].equals("HUMANv1")) {
+			int x = Integer.parseInt(s[1]);
+			int y = Integer.parseInt(s[2]);
+			humanUI.getV1().setIcon(vegetableThread.vegetables[y]);
+			humanUI.getV1().setBounds(x, 255, 32, 32);
+			humanUI.getV1().setVisible(true);
+		}
+		else if (readMessage.equals("v2EAT"))
+			humanUI.getV2().setVisible(false);
+		else if (s[0].equals("MOLEv2")) {
+			int x = Integer.parseInt(s[1]);
+			int y = Integer.parseInt(s[2]);
+			moleUI.getV2().setIcon(vegetableThread.vegetables[y]);
+			moleUI.getV2().setBounds(x, 255, 32, 32);
+			moleUI.getV2().setVisible(true);
+		}
+		else if (s[0].equals("HUMANv2")) {
+			int x = Integer.parseInt(s[1]);
+			int y = Integer.parseInt(s[2]);
+			humanUI.getV2().setIcon(vegetableThread.vegetables[y]);
+			humanUI.getV2().setBounds(x, 255, 32, 32);
+			humanUI.getV2().setVisible(true);
+		}
+		else if (readMessage.equals("v3EAT"))
+			humanUI.getV3().setVisible(false);
+		else if (s[0].equals("MOLEv3")) {
+			int x = Integer.parseInt(s[1]);
+			int y = Integer.parseInt(s[2]);
+			moleUI.getV3().setIcon(vegetableThread.vegetables[y]);
+			moleUI.getV3().setBounds(x, 255, 32, 32);
+			moleUI.getV3().setVisible(true);
+		}
+		else if (s[0].equals("HUMANv3")) {
+			int x = Integer.parseInt(s[1]);
+			int y = Integer.parseInt(s[2]);
+			humanUI.getV3().setIcon(vegetableThread.vegetables[y]);
+			humanUI.getV3().setBounds(x, 255, 32, 32);
+			humanUI.getV3().setVisible(true);
 		}
 	}
 }

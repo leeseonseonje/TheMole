@@ -109,15 +109,6 @@ class MolePanel extends JPanel {
 
 		this.add(new Human(this, 200, 225));
 
-		// i2 = new itemBoxThread(2);
-		// i3 = new itemBoxThread(3);
-
-		// add(v0);
-		// add(v1);
-		// add(v2);
-
-		// v0.setVisible(false);
-
 		counterLabel = new JLabel("");
 		counterLabel.setBounds(345, 0, 100, 50);
 		counterLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -205,9 +196,7 @@ class MolePanel extends JPanel {
 			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 255;
 			itemBox.setBounds(x, y, 40, 40);
-			// itemBox.setIcon(itemB);
 			add(itemBox);
-			// System.out.println("아이템위치 " + x + " " + y);
 		}
 
 		public int getX() {
@@ -263,6 +252,9 @@ class MolePanel extends JPanel {
 			else if (b == false)
 				itemBox.setVisible(false);
 		}
+		public Rectangle getBounds() {
+			return new Rectangle( x, y, 32, 32);
+		}
 	}
 
 	class vegetableThread {
@@ -288,9 +280,7 @@ class MolePanel extends JPanel {
 			x = ((int) (Math.random() * 260)) + 263 * this.section;
 			y = 260;
 			vegetable.setBounds(x, y, 32, 32);
-			// vegetable.setIcon(veget);
 			add(vegetable);
-			// System.out.println("작물위치 " + x + " " + y);
 		}
 
 		public int getX() {
@@ -345,6 +335,9 @@ class MolePanel extends JPanel {
 			else if (b == false)
 				vegetable.setVisible(false);
 		}
+		public Rectangle getBounds() {
+			return new Rectangle( x, y, 32, 32);
+		}
 	}
 
 	class MoleThread extends Thread {
@@ -389,13 +382,13 @@ class MolePanel extends JPanel {
 			this.x = x;
 			this.y = y;
 
-			champion = new Rectangle(x, y, 10, 10);
+			champion = new Rectangle(x, y, 32, 32);
 
 			moleButton = new JButton(mole[12]);
 			moleButton.setBorderPainted(false);
 			moleButton.setFocusPainted(false);
 			moleButton.setContentAreaFilled(false);
-			moleButton.setBounds(x, y, 30, 30);
+			moleButton.setBounds(x, y, 32, 32);
 			add(moleButton);
 
 			moleButton.addActionListener(e -> {
@@ -437,7 +430,7 @@ class MolePanel extends JPanel {
 					});
 				}
 			});
-			timer = new Timer(30, e -> {
+			timer = new Timer(10, e -> {
 				if (eating == false) {
 
 					molesecond++;
@@ -459,6 +452,10 @@ class MolePanel extends JPanel {
 							moleButton.setIcon(mole[5]);
 					}
 					TimeMove();
+					/*
+					if (getBounds().intersects(human.getBounds()))
+						this.moleButton.setVisible(false);
+						*/
 				} else
 					timer.stop();
 			});
@@ -479,6 +476,7 @@ class MolePanel extends JPanel {
 		}
 
 		public void run() {
+			
 		}
 
 		public void TimeMove() {
@@ -494,15 +492,13 @@ class MolePanel extends JPanel {
 			double y = (int) (startY + ((targetY - startY) * progress));
 
 			repaint();
-			/*
-			if (getBounds().intersects(human.getBounds()))
-				this.moleButton.setVisible(false);
-				*/
+			
 			if (y >= 270 && x >= 12 && x <= 770) {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
-			if (i0.getX() == x && i0.getY() >= y - 20 && i0.timerstop == false) {
+
+			if (i0.getBounds().intersects(champion) && i0.timerstop == false) {
 				i0.setVisible(false);
 				i0.setsecond(0);
 				i0.itemtimer();
@@ -511,7 +507,7 @@ class MolePanel extends JPanel {
 				eatTimer();
 				eattimer.start();
 
-			} else if (i1.getX() == x && i1.getY() >= y - 20 && i1.timerstop == false) {
+			} else if (i1.getBounds().intersects(champion) && i1.timerstop == false) {
 				i1.setVisible(false);
 				i1.setsecond(0);
 				i1.itemtimer();
@@ -521,7 +517,7 @@ class MolePanel extends JPanel {
 				eattimer.start();
 			}
 
-			if (v0.getX() == x && v0.getY() >= y - 15 && v0.timerstop == false && eating == false) {
+			if (v0.getBounds().intersects(champion) && v0.timerstop == false && eating == false) {
 				v0.setVisible(false);
 				v0.setsecond(0);
 				v0.vegtimer();
@@ -530,7 +526,7 @@ class MolePanel extends JPanel {
 				eatTimer();
 				eattimer.start();
 				v0.plusvegcount();
-			} else if (v1.getX() == x && v1.getY() >= y - 15 && v1.timerstop == false && eating == false) {
+			} else if (v1.getBounds().intersects(champion) && v1.timerstop == false && eating == false) {
 				v1.setVisible(false);
 				v1.setsecond(0);
 				v1.vegtimer();
@@ -539,7 +535,7 @@ class MolePanel extends JPanel {
 				eatTimer();
 				eattimer.start();
 				v1.plusvegcount();
-			} else if (v2.getX() == x && v2.getY() >= y - 15 && v2.timerstop == false && eating == false) {
+			} else if (v2.getBounds().intersects(champion) && v2.timerstop == false && eating == false) {
 				v2.setVisible(false);
 				v2.setsecond(0);
 				v2.vegtimer();
@@ -573,8 +569,5 @@ class MolePanel extends JPanel {
 			}
 		}
 
-		public Rectangle getBounds() {
-			return new Rectangle(getX(), getY(), 32, 32);
-		}
 	}
 } // MolePanel 종지부

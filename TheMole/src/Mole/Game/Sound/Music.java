@@ -49,9 +49,6 @@ public class Music extends Thread {
 		try {
 			do {
 				player.play();
-				//fis = new FileInputStream(file); // 해당 음악파일을 불러온다
-				//bis = new BufferedInputStream(fis); // 불러온 음악파일을 버퍼에 담는다
-				//player = new Player(bis);
 			} while (isLoop); // isLoop이 true값이라면 무한반복
 		} catch (Exception e) {
 			System.out.println(e.getMessage()); // 오류 메세지 전송

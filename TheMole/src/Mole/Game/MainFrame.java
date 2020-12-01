@@ -21,21 +21,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import DB.DBConnection;
-
-import Dump.SoundPlayer;
+import Mole.Game.Sound.*;
+import javazoom.jl.decoder.JavaLayerException;
 
 class MainFrame extends JFrame {
 
 	private MainFrame frame;
 	private Font font;
-	private JButton start, end, query, rank, angry, player, title;
+	private JButton start, end, query, rank, angry, player, title, musicPS;
 	private BackG mainBG = new BackG();
+	public boolean playStatus = true;
 
-	private SoundPlayer sound;
-	
 	ImageIcon star_img = new ImageIcon("img/rank.png");
 	ImageIcon star1_img = new ImageIcon("img/rank1.png");
 
@@ -50,6 +48,8 @@ class MainFrame extends JFrame {
 
 	ImageIcon titles_img = new ImageIcon("img/titles.png");
 	ImageIcon angry_img = new ImageIcon("img/angry.png");
+	ImageIcon musicPS_img = new ImageIcon("img/pauseplay2.png");
+	ImageIcon musicPS2_img = new ImageIcon("img/pauseplay3.png");
 
 	public MainFrame() {
 		CustomCursor();
@@ -64,6 +64,10 @@ class MainFrame extends JFrame {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Image icon = kit.getImage("img/moleicon.png");
 		setIconImage(icon);
+
+		// 배경음악 설정
+		SoundJLayer soundToPlay = new SoundJLayer("res/mainframeBG_Ereve.mp3");
+		soundToPlay.play();
 
 		// 시작 버튼 설정
 		start = new JButton(start_img);
@@ -84,7 +88,11 @@ class MainFrame extends JFrame {
 				System.out.println("시작 클릭");
 				setVisible(false);
 				try {
+					if (playStatus == true) {
+						soundToPlay.pause();
+					}
 					new MoleUI();
+
 				} catch (Exception error) {
 					error.printStackTrace();
 				}
@@ -158,9 +166,9 @@ class MainFrame extends JFrame {
 				new LeaderBoardFrame();
 			}
 		});
-		
+
 		player = new JButton(LoginForm.getId());
-		player.setBounds(675, 10, 100,50 );
+		player.setBounds(675, 10, 100, 50);
 		player.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				System.out.println("계정 정보 활성화");
@@ -169,10 +177,14 @@ class MainFrame extends JFrame {
 					Statement st = con.createStatement();
 					ResultSet rs = st.executeQuery("SELECT * FROM gamer");
 					String value = "";
-					while(rs.next()) {
-						if((LoginForm.getId()).equals(rs.getString("ID"))) {
-								value = String.format("계정명: %s \n총 플레이수: %3d \n인간승리수: %3d \n두더지승리수: %3d \n승률: %.1f \n점수: %4d" 
-									,rs.getString("ID"),rs.getInt("PLAYCOUNT"),rs.getInt("HUMANWIN"),rs.getInt("MOLEWIN"),((rs.getDouble("HUMANWIN")+rs.getInt("MOLEWIN"))/rs.getInt("PLAYCOUNT"))*100,rs.getInt("SCORES"));
+					while (rs.next()) {
+						if ((LoginForm.getId()).equals(rs.getString("ID"))) {
+							value = String.format(
+									"계정명: %s \n총 플레이수: %3d \n인간승리수: %3d \n두더지승리수: %3d \n승률: %.1f \n점수: %4d",
+									rs.getString("ID"), rs.getInt("PLAYCOUNT"), rs.getInt("HUMANWIN"),
+									rs.getInt("MOLEWIN"),
+									((rs.getDouble("HUMANWIN") + rs.getInt("MOLEWIN")) / rs.getInt("PLAYCOUNT")) * 100,
+									rs.getInt("SCORES"));
 						} else
 							continue;
 						JOptionPane.showMessageDialog(frame, value, "계정 정보", JOptionPane.PLAIN_MESSAGE);
@@ -187,7 +199,7 @@ class MainFrame extends JFrame {
 			}
 		});
 		mainBG.add(player);
-		
+
 		mainBG.add(rank);
 
 		angry = new JButton(angry_img);
@@ -203,9 +215,34 @@ class MainFrame extends JFrame {
 		title.setContentAreaFilled(false);
 		title.setBounds(170, 60, 476, 146);
 		mainBG.add(title);
-		
-		//SoundPlayer.sound.play();
-		
+
+		musicPS = new JButton(musicPS_img);
+		musicPS.setBorderPainted(false);
+		musicPS.setFocusPainted(false);
+		musicPS.setContentAreaFilled(false);
+		musicPS.setBounds(10, 10, 50, 50);
+		musicPS.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				try {
+					if (playStatus == true) {
+						try {
+							soundToPlay.pause();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						playStatus = false;
+					} else {
+						soundToPlay.play();
+						playStatus = true;
+					}
+				} catch (JavaLayerException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		mainBG.add(musicPS);
+
 		add(mainBG);
 		setVisible(true);// 창이 보이게
 

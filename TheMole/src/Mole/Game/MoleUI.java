@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import MoleServer.MoleClientMainHandler;
 import io.netty.channel.ChannelHandlerContext;
 
 /*public class MoleUI extends JFrame {
@@ -42,9 +43,9 @@ import io.netty.channel.ChannelHandlerContext;
 }*/
 
 public class MoleUI extends JPanel {
-	//public static void main(String[] args) throws IOException, InterruptedException {
-	//	new f();
-//	}
+/*	public static void main(String[] args) throws IOException, InterruptedException {
+		new f();
+	}*/
 
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 	public JLabel counterLabel;
@@ -83,8 +84,9 @@ public class MoleUI extends JPanel {
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
 	public static MoleInHumanPerformance moleInHumanPerformance;
-	
+	private ChannelHandlerContext ctx;
 	public MoleUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) {
+		this.ctx = ctx;
 		try {
 			setLayout(null);
 			backImage = ImageIO.read(new File("img/Back4.png"));
@@ -96,15 +98,222 @@ public class MoleUI extends JPanel {
 			intMole = ImageIO.read(new File("img/moleint.png"));
 
 			m1 = new MoleThread(ctx, name, 50, 400);
+			m1.moleButton.addActionListener(e -> {
+				if (e.getSource() == m1.moleButton) {
+					m1.moleButton.setIcon(m1.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m1.moleButton.getIcon().equals(m1.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 1 + ",");
+									m1.getTimer().stop();
+									m1.calculateChampionMovement(e.getX(), e.getY(), m1.getChampion());
+									m1.setStartTime(System.currentTimeMillis());
+									m1.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m1.moleButton.getIcon().equals(m1.getMole()[13]))
+									m1.moleButton.setIcon(m1.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
 			m2 = new MoleThread(ctx, name, 100, 400);
+			m2.moleButton.addActionListener(e -> {
+				if (e.getSource() == m2.moleButton) {
+					m2.moleButton.setIcon(m2.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m2.moleButton.getIcon().equals(m2.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 2 + ",");
+									m2.getTimer().stop();
+									m2.calculateChampionMovement(e.getX(), e.getY(), m2.getChampion());
+									m2.setStartTime(System.currentTimeMillis());
+									m2.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m2.moleButton.getIcon().equals(m2.getMole()[13]))
+									m2.moleButton.setIcon(m2.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
 			m3 = new MoleThread(ctx, name, 150, 400);
+			m3.moleButton.addActionListener(e -> {
+				if (e.getSource() == m3.moleButton) {
+					m3.moleButton.setIcon(m3.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m3.moleButton.getIcon().equals(m3.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 3 + ",");
+									m3.getTimer().stop();
+									m3.calculateChampionMovement(e.getX(), e.getY(), m3.getChampion());
+									m3.setStartTime(System.currentTimeMillis());
+									m3.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m3.moleButton.getIcon().equals(m3.getMole()[13]))
+									m3.moleButton.setIcon(m3.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
 			m4 = new MoleThread(ctx, name, 50, 450);
+			m4.moleButton.addActionListener(e -> {
+				if (e.getSource() == m4.moleButton) {
+					m4.moleButton.setIcon(m4.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m4.moleButton.getIcon().equals(m4.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 4 + ",");
+									m4.getTimer().stop();
+									m4.calculateChampionMovement(e.getX(), e.getY(), m4.getChampion());
+									m4.setStartTime(System.currentTimeMillis());
+									m4.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m4.moleButton.getIcon().equals(m4.getMole()[13]))
+									m4.moleButton.setIcon(m4.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
 			m5 = new MoleThread(ctx, name, 100, 450);
+			m5.moleButton.addActionListener(e -> {
+				if (e.getSource() == m5.moleButton) {
+					m5.moleButton.setIcon(m5.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m5.moleButton.getIcon().equals(m5.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 5 + ",");
+									m5.getTimer().stop();
+									m5.calculateChampionMovement(e.getX(), e.getY(), m5.getChampion());
+									m5.setStartTime(System.currentTimeMillis());
+									m5.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m5.moleButton.getIcon().equals(m5.getMole()[13]))
+									m5.moleButton.setIcon(m5.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
 			m6 = new MoleThread(ctx, name, 150, 450);
+			m6.moleButton.addActionListener(e -> {
+				if (e.getSource() == m6.moleButton) {
+					m6.moleButton.setIcon(m6.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m6.moleButton.getIcon().equals(m6.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 6 + ",");
+									m6.getTimer().stop();
+									m6.calculateChampionMovement(e.getX(), e.getY(), m6.getChampion());
+									m6.setStartTime(System.currentTimeMillis());
+									m6.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m6.moleButton.getIcon().equals(m6.getMole()[13]))
+									m6.moleButton.setIcon(m6.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
 			m7 = new MoleThread(ctx, name, 50, 500);
+			m7.moleButton.addActionListener(e -> {
+				if (e.getSource() == m7.moleButton) {
+					m7.moleButton.setIcon(m7.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m7.moleButton.getIcon().equals(m7.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 7 + ",");
+									m7.getTimer().stop();
+									m7.calculateChampionMovement(e.getX(), e.getY(), m7.getChampion());
+									m7.setStartTime(System.currentTimeMillis());
+									m7.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m7.moleButton.getIcon().equals(m7.getMole()[13]))
+									m7.moleButton.setIcon(m7.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
 			m8 = new MoleThread(ctx, name, 100, 500);
+			m8.moleButton.addActionListener(e -> {
+				if (e.getSource() == m8.moleButton) {
+					m8.moleButton.setIcon(m8.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m8.moleButton.getIcon().equals(m8.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 8 + ",");
+									m8.getTimer().stop();
+									m8.calculateChampionMovement(e.getX(), e.getY(), m8.getChampion());
+									m8.setStartTime(System.currentTimeMillis());
+									m8.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m8.moleButton.getIcon().equals(m8.getMole()[13]))
+									m8.moleButton.setIcon(m8.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
 			m9 = new MoleThread(ctx, name, 150, 500);
-
+			m9.moleButton.addActionListener(e -> {
+				if (e.getSource() == m9.moleButton) {
+					m9.moleButton.setIcon(m9.getMole()[13]);
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							if (e.getButton() == MouseEvent.BUTTON3) {
+								if (m9.moleButton.getIcon().equals(m9.getMole()[13])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY() + "," + 9 + ",");
+									m9.getTimer().stop();
+									m9.calculateChampionMovement(e.getX(), e.getY(), m9.getChampion());
+									m9.setStartTime(System.currentTimeMillis());
+									m9.getTimer().start();
+								}
+							}
+							if (e.getButton() == MouseEvent.BUTTON1) {
+								if (m9.moleButton.getIcon().equals(m9.getMole()[13]))
+									m9.moleButton.setIcon(m9.getMole()[12]);
+							}
+						}
+					});
+				}
+			});
+			
 			v1 = new vegetableThread(v1Location, crop1);
 			v2 = new vegetableThread(v2Location, crop2);
 			v3 = new vegetableThread(v3Location, crop3);
@@ -204,8 +413,12 @@ public class MoleUI extends JPanel {
 				if (counterLabel.getText().equals("00:00")) {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
-					// MainFrame main = new MainFrame();
-					// main.setVisible(true);
+					ctx.writeAndFlush("[MOLELOSE]," + LoginForm.getId());
+					setVisible(false);
+					if (MoleClientMainHandler.roomTest.testStart.getText().equals("준비취소"))
+						MoleClientMainHandler.roomTest.testStart.setText("준비");
+					MoleClientMainHandler.roomTest.ready.setText("");
+					MoleClientMainHandler.roomTest.setVisible(true);
 				}
 				if (vegcountLabel.getText().equals("0")) {
 					timer.stop();
@@ -219,12 +432,15 @@ public class MoleUI extends JPanel {
 
 	class MoleThread extends Thread {
 		private int x, y;
-		private JButton moleButton;
+		public JButton moleButton;
 		private Rectangle champion;
+		public Rectangle getChampion() {
+			return champion;
+		}
+
 		private int molesecond = 0;
 		private int direction = 0;
-		//private ImageIcon mole = new ImageIcon("img/moleimg.png");
-		//private ImageIcon moleSelect = new ImageIcon("img/moleselect.png");
+	
 		private ImageIcon mole[] = { new ImageIcon("img/moleResource/moleL1.png"),
 				new ImageIcon("img/moleResource/moleL2.png"), new ImageIcon("img/moleResource/moleL3.png"),
 				new ImageIcon("img/moleResource/moleLS1.png"), new ImageIcon("img/moleResource/moleLS2.png"),
@@ -237,6 +453,22 @@ public class MoleUI extends JPanel {
 		private Timer timer;
 		private double speed = 0.15;
 		private Long startTime;
+
+		public void setStartTime(Long startTime) {
+			this.startTime = startTime;
+		}
+
+		public ImageIcon[] getMole() {
+			return mole;
+		}
+
+		public Timer getTimer() {
+			return timer;
+		}
+
+		public Long getStartTime() {
+			return startTime;
+		}
 
 		private Timer eattimer;
 		private int eatsecond;
@@ -265,7 +497,7 @@ public class MoleUI extends JPanel {
 			this.name = name;
 
 			champion = new Rectangle(x, y, 32, 32);
-			
+			//startTime = System.currentTimeMillis();
 			moleButton = new JButton(mole[12]);
 			moleButton.setBorderPainted(false);
 			moleButton.setFocusPainted(false);
@@ -273,7 +505,7 @@ public class MoleUI extends JPanel {
 			moleButton.setBounds(x, y, 32, 32);
 			add(moleButton);
 
-			moleButton.addActionListener(e -> {
+			/*moleButton.addActionListener(e -> {
 				if (e.getSource() == moleButton && eating == false) {
 					moleButton.setIcon(mole[13]);
 					addMouseListener(new MouseAdapter() {
@@ -286,6 +518,7 @@ public class MoleUI extends JPanel {
 										|| moleButton.getIcon().equals(mole[10]) || moleButton.getIcon().equals(mole[9])
 										|| moleButton.getIcon().equals(mole[5]) || moleButton.getIcon().equals(mole[4])
 										|| moleButton.getIcon().equals(mole[3])) {
+									ctx.writeAndFlush("[MOLEMOVE]," + name + "," + e.getX() + "," + e.getY());
 									timer.stop();
 									calculateChampionMovement(e.getX(), e.getY(), champion);
 									startTime = System.currentTimeMillis();
@@ -311,11 +544,11 @@ public class MoleUI extends JPanel {
 						}
 					});
 				}
-			});
+			});*/
 			timer = new Timer(30, e -> {
 				if (eating == false) {
 
-					molesecond++;
+					/*molesecond++;
 					molesecond = molesecond % 4;
 					if (direction == 1) { // 오른쪽방향으로 움직일때 -누름
 						if (molesecond == 1)
@@ -332,7 +565,7 @@ public class MoleUI extends JPanel {
 							moleButton.setIcon(mole[4]);
 						else if (molesecond == 3)
 							moleButton.setIcon(mole[5]);
-					}
+					}*/
 					try {
 						TimeMove();
 					} catch (InterruptedException e1) {
@@ -342,6 +575,7 @@ public class MoleUI extends JPanel {
 					timer.stop();
 			});
 		}
+		
 
 		public void molegetitem() {
 			int itemnum = ((int) (Math.random() * 10));
@@ -399,6 +633,7 @@ public class MoleUI extends JPanel {
 						ctx.writeAndFlush("[v1EAT]," + name);
 						v1.setBounds(0, 0, 0, 0);
 						v1.setVisible(false);
+						moleButton.setIcon(mole[13]);
 					}
 				}
 			});
@@ -415,6 +650,7 @@ public class MoleUI extends JPanel {
 						ctx.writeAndFlush("[v2EAT]," + name);
 						v2.setBounds(0, 0, 0, 0);
 						v2.setVisible(false);
+						moleButton.setIcon(mole[13]);
 					}
 				}
 			});
@@ -431,6 +667,7 @@ public class MoleUI extends JPanel {
 						ctx.writeAndFlush("[v3EAT]," + name);
 						v3.setBounds(0, 0, 0, 0);
 						v3.setVisible(false);
+						moleButton.setIcon(mole[13]);
 					}
 				}
 			});
@@ -476,6 +713,7 @@ public class MoleUI extends JPanel {
 				if (enhenceteeth == false) {
 					v1EatTimer();
 					eattimer.start();
+					moleButton.setIcon(mole[12]);
 				} /*else {
 					enhenceteeth = false;
 					if (itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
@@ -496,6 +734,7 @@ public class MoleUI extends JPanel {
 				if (enhenceteeth == false) {
 					v2EatTimer();
 					eattimer.start();
+					moleButton.setIcon(mole[12]);
 				} else {
 					enhenceteeth = false;
 					if (itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
@@ -517,6 +756,7 @@ public class MoleUI extends JPanel {
 				if (enhenceteeth == false) {
 					v3EatTimer();
 					eattimer.start();
+					moleButton.setIcon(mole[12]);
 				} else {
 					enhenceteeth = false;
 					if (itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {

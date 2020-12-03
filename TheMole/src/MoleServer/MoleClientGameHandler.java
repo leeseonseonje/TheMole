@@ -19,33 +19,33 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 		String[] s = readMessage.split(",");
 		
 		if (s[0].equals("MOLESTART")) {
+			MoleClientMainHandler.roomTest.setVisible(false);
 			gameStart = new GameStart(s[3], s[4]);
 			gameStart.molePlayer.setText(s[3]);
 			gameStart.humanPlayer.setText(s[4]);
+			MoleClientMainHandler.mainFrame.add(gameStart);
+			gameStart.setVisible(true);
 			moleUI = new MoleUI(ctx, s[1], Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]), Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
+			MoleClientMainHandler.mainFrame.add(moleUI);
+			Thread.sleep(2000);
+			gameStart.setVisible(false);
 			System.out.println(s[5]);
 			System.out.println(s[6]);
 			System.out.println(s[7]);
-			MoleClientMainHandler.roomTest.setVisible(false);
-			MoleClientMainHandler.mainFrame.add(gameStart);
-			gameStart.setVisible(true);
-			Thread.sleep(2000);
-			gameStart.setVisible(false);
-			MoleClientMainHandler.mainFrame.add(moleUI);
 			moleUI.setVisible(true);
 		}
 
 		else if (s[0].equals("HUMANSTART")) {
+			MoleClientMainHandler.roomTest.setVisible(false);
 			GameStart gameStart = new GameStart(s[3], s[4]);
 			gameStart.humanPlayer.setText(s[3]);
 			gameStart.molePlayer.setText(s[4]);
-			humanUI = new HumanUI(ctx, s[1], Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]), Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
-			MoleClientMainHandler.roomTest.setVisible(false);
 			MoleClientMainHandler.mainFrame.add(gameStart);
 			gameStart.setVisible(true);
+			humanUI = new HumanUI(ctx, s[1], Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]), Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
+			MoleClientMainHandler.mainFrame.add(humanUI);
 			Thread.sleep(2000);
 			gameStart.setVisible(false);
-			MoleClientMainHandler.mainFrame.add(humanUI);
 			humanUI.setVisible(true);
 		} 
 		else if (s[0].equals("RIGHT"))
@@ -134,6 +134,11 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				moleUI.moleInHumanPerformance.setHumanspeed(10);
 			else if (s[i].equals("HUMANSPEEDDOWN")) 
 				moleUI.moleInHumanPerformance.setHumanspeed(5);
+			else if (s[i].equals("MOLEMOVE")) {
+				int x = Integer.parseInt(s[i + 1]);
+				int y = Integer.parseInt(s[i + 2]);
+				humanUI.moleMessage(s[i + 3], x, y);
+			}
 		}
 	}
 }

@@ -54,7 +54,35 @@ public class DBConnect {
 			con.close();
 		} catch (Exception a) {
 			a.printStackTrace();
-			}
+		}
+	}
+	
+	public static void humanWin(String name) {
+		try {
+			Connection con = DBConnection.makeConnection(); // DB연결
+			PreparedStatement pstmt = con.prepareStatement("update gamer set playcount = playcount + 1, humanwin = humanwin + 1, scores = scores + 50 where id = ? ");
+			pstmt.setString(1, name);
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+		} catch (Exception a) {
+			a.printStackTrace();
+		}	
+	}
+	
+	public static void moleLose(String name) {
+		try {
+			Connection con = DBConnection.makeConnection(); // DB연결
+			PreparedStatement pstmt = con.prepareStatement("update gamer set playcount = playcount + 1, scores = scores - 25 where id = ? ");
+			pstmt.setString(1, name);
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+		} catch (Exception a) {
+			a.printStackTrace();
+		}	
 	}
 }
 

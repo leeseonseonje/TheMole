@@ -93,11 +93,11 @@ public class Human extends JLabel {
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false && pan.humstop==false) {
 					shooting = true;
 					Bullet a = new Bullet(x,2,pan);
-					
+
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.humstop==false) {
 					shooting = true;
-					Bullet b =new Bullet(x,1,pan);
+					Bullet a = new Bullet(x,2,pan);
 				}
 				if (pan.i0.getX() > x - 10 && pan.i0.getX() < x + 3 &&pan.i0.timerstop == false) {
 					pan.i0.setVisible(false);

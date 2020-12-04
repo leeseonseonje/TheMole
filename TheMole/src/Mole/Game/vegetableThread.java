@@ -18,7 +18,8 @@ public class vegetableThread extends JLabel{
 			new ImageIcon("img/vegetableResource/vegetable6.png"),
 			new ImageIcon("img/vegetableResource/vegetable7.png"),
 			new ImageIcon("img/vegetableResource/vegetable8.png"),
-			new ImageIcon("img/vegetableResource/vegetable9.png"), };
+			new ImageIcon("img/vegetableResource/vegetable9.png"), 
+			};
 	
 	private int x, y, section;
 	public Timer vegtimer;

@@ -17,6 +17,7 @@ public class Human extends JLabel{
 	private double y;
 	private boolean timerstop = false;
 	private static int status = 0; // 1은 오른쪽, 2는 왼쪽,
+	private Rectangle champion;
 	
 
 	private boolean shooting = false;
@@ -35,6 +36,8 @@ public class Human extends JLabel{
 	public Human(MolePanel pan,double x, double y) {
 		this.x = (double)x;
 		this.y = (double)y;
+		champion = new Rectangle((int)x, (int)y, 50, 64);
+		
 		setBounds((int) x, (int) y, 50, 64);
 		setIcon(human[0]);
 		pan.setFocusable(true);

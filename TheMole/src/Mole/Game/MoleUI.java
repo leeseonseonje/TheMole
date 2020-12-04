@@ -65,6 +65,8 @@ class MolePanel extends JPanel {
 
 	itemBoxThread i0;
 	itemBoxThread i1;
+	
+	Snake snake;
 
 	Human hum;
 	// itemBoxThread i2;
@@ -106,8 +108,10 @@ class MolePanel extends JPanel {
 
 		i0 = new itemBoxThread(0);
 		i1 = new itemBoxThread(1);
+		snake = new Snake();
 
 		this.add(new Human(this, 200, 225));
+		this.add(snake);
 
 		counterLabel = new JLabel("");
 		counterLabel.setBounds(345, 0, 100, 50);
@@ -136,11 +140,8 @@ class MolePanel extends JPanel {
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g); // 여기서 super인 패널에 그림을 그리는것
 		g.drawImage(backImage, 0, 0, null);
-		// g.drawImage(humanHud, 0, 70, null);
 		g.drawImage(moleHud, 715, 70, null);
-		// g.drawImage(humanInv, 55, 0, null);
 		g.drawImage(moleInv, 650, 0, null);
-		// g.drawImage(intHuman, 0, 0, null);
 		g.drawImage(intMole, 740, 0, null);
 	}
 
@@ -493,9 +494,9 @@ class MolePanel extends JPanel {
 
 			repaint();
 			
-			if (y >= 270 && x >= 12 && x <= 770) {
-				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
-				champion.setRect(x - 5, y - 5, 10, 10);
+			if (y >= 270) {
+				moleButton.setBounds((int) x - 15, (int) y - 15, 32, 32);
+				champion.setRect(x - 15, y - 15, 32, 32);
 			}
 
 			if (i0.getBounds().intersects(champion) && i0.timerstop == false) {
@@ -562,8 +563,7 @@ class MolePanel extends JPanel {
 				else
 					direction = 2;
 
-				double distance = Math
-						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
+				double distance = Math.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
 
 				runTime = distance / (double) speed;
 			}

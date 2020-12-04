@@ -30,11 +30,11 @@ public class LoginForm extends JFrame {
 
 	public static void main(String[] args) {
 		//Music music = new Music(true); // 음악재생 선언 - 매개변수는 반복여부
-		//EffectSound eff = new EffectSound(); // 효과음 테스트 - 성공
+		EffectSound eff = new EffectSound(); // 효과음 테스트 - 성공
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 			LoginForm window = new LoginForm();
-			//eff.playSound("fire.wav");
+			eff.playSound("vegEat.wav");
 			//music.start(); // 음악재생 시작
 		} catch (Exception e) {
 			e.printStackTrace();

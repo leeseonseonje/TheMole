@@ -92,12 +92,15 @@ public class Human extends JLabel {
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false && pan.humstop==false) {
 					shooting = true;
 					System.out.println("¿ŞÂÊ ÃÑ¾Ë");
+					Bullet a = new Bullet(x,2,pan);
+					
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.humstop==false) {
 					shooting = true;
 					System.out.println("¿À¸¥ÂÊ ÃÑ¾Ë");
+					Bullet b =new Bullet(x,1,pan);
 				}
-				if (pan.i0.getX() > x - 3 && pan.i0.getX() < x + 3 &&pan.i0.timerstop == false) {
+				if (pan.i0.getX() > x - 10 && pan.i0.getX() < x + 3 &&pan.i0.timerstop == false) {
 					pan.i0.setVisible(false);
 					pan.i0.setsecond(0);
 					pan.i0.itemtimer();
@@ -186,7 +189,6 @@ public class Human extends JLabel {
 			public void actionPerformed(ActionEvent e) {
 				shosecond--;
 				System.out.println(shosecond);
-
 				if (itembox1.getIcon() == shoes) {
 					humanspeed = 10;
 					itembox1.setFont(font1);
@@ -260,7 +262,7 @@ public class Human extends JLabel {
 
 	public void humangetitem() {
 		System.out.println("¾ÆÀÌÅÛ ¼·Ãë");
-		int itemnum = 0;
+		int itemnum = 1;
 		// int itemnum = ((int)(Math.random()*10));
 		switch (itemnum) {
 		case 0:

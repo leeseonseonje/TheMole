@@ -29,7 +29,7 @@ public class Bullet extends JLabel {
 		} else {
 			this.x = x;
 		}
-		System.out.println(y);
+
 		this.direction = direction;
 
 		if (direction == 1) { // 오른쪽
@@ -55,26 +55,75 @@ public class Bullet extends JLabel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shootsec++;
-				if (direction == 1) { // 오른쪽
-					bulMove(5);
-					setBounds(((int)bul.getX()), (int)y, 50, 64);
-					if (shootsec == 40) {
-						bul.setVisible(false);
-					}
-				}
-				else if (direction == 2) { // 왼쪽
-						bulMove(-5);
-						setBounds(((int)bul.getX()), (int)y, 50, 64);
-						if (shootsec == 40) {
+				for (int i = 0; i < 5; i++) {
+					if (direction == 1) { // 오른쪽
+						bulMove(1);
+						setBounds(((int) bul.getX()), (int) y, 50, 64);
+						if (shootsec == 30) {
 							bul.setVisible(false);
+							shoottimer.stop();
+						}
+					} else if (direction == 2) { // 왼쪽
+						bulMove(-1);
+						setBounds(((int) bul.getX()), (int) y, 50, 64);
+						if (shootsec == 30) {
+							bul.setVisible(false);
+							shoottimer.stop();
 						}
 					}
-				
-				if(mainpanel.m1.getx() == bul.getX()) {
-					
+					if (mainpanel.m1.getx() == bul.getX() && mainpanel.m1.gety() <= 275
+							&& mainpanel.m1.getlife() == true) {
+						mainpanel.m1.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.m2.getx() == bul.getX() && mainpanel.m2.gety() <= 275
+							&& mainpanel.m2.getlife() == true) {
+						mainpanel.m2.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.m3.getx() == bul.getX() && mainpanel.m3.gety() <= 275
+							&& mainpanel.m3.getlife() == true) {
+						mainpanel.m3.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.m4.getx() == bul.getX() && mainpanel.m4.gety() <= 275
+							&& mainpanel.m4.getlife() == true) {
+						mainpanel.m4.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.m5.getx() == bul.getX() && mainpanel.m5.gety() <= 275
+							&& mainpanel.m5.getlife() == true) {
+						mainpanel.m5.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.m6.getx() == bul.getX() && mainpanel.m6.gety() <= 275
+							&& mainpanel.m6.getlife() == true) {
+						mainpanel.m6.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.m7.getx() == bul.getX() && mainpanel.m7.gety() <= 275
+							&& mainpanel.m7.getlife() == true) {
+						mainpanel.m7.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.m8.getx() == bul.getX() && mainpanel.m8.gety() <= 275
+							&& mainpanel.m8.getlife() == true) {
+						mainpanel.m8.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.m9.getx() == bul.getX() && mainpanel.m9.gety() <= 275
+							&& mainpanel.m9.getlife() == true) {
+						mainpanel.m9.moledie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					} else if (mainpanel.snake.getX() == bul.getX() && mainpanel.snake.getmoving() == true) {
+						mainpanel.snake.snakedie();
+						bul.setVisible(false);
+						shoottimer.stop();
+					}
 				}
 			}
-			
+
 		});
 	}
 

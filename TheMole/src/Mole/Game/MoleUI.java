@@ -37,6 +37,7 @@ public class MoleUI extends JFrame {
 
 		add(molePanel);
 		setVisible(true);
+		
 		}
 	
 }
@@ -47,12 +48,13 @@ class MolePanel extends JPanel {
 	private JLabel vegcountLabel;
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
-	private Snake snake;
+	
 
 	public MoleUI frame;
 
 	Timer timer;
-
+	
+	Snake snake;
 	MoleThread m1;
 	MoleThread m2;
 	MoleThread m3;
@@ -101,9 +103,9 @@ class MolePanel extends JPanel {
 			intHuman = ImageIO.read(new File("img/humanint.png"));
 			intMole = ImageIO.read(new File("img/moleint.png"));
 
-			m1 = new MoleThread(50, 400);
-			m2 = new MoleThread(100, 400);
-			m3 = new MoleThread(150, 400);
+			m1 = new MoleThread(50, 275);
+			m2 = new MoleThread(100, 265);
+			m3 = new MoleThread(150, 265);
 			m4 = new MoleThread(50, 450);
 			m5 = new MoleThread(100, 450);
 			m6 = new MoleThread(150, 450);
@@ -117,7 +119,7 @@ class MolePanel extends JPanel {
 
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
-			snake = new Snake();
+			snake = new Snake(this);
 
 			
 			add(i0);
@@ -127,8 +129,9 @@ class MolePanel extends JPanel {
 			add(v2);
 			
 			
-			add(new Human(this,225));
-			this.add(snake);
+			hum = new Human(this,225);
+			add(hum);
+			add(snake);
 			
 			//i2 = new itemBoxThread(2);
 			//i3 = new itemBoxThread(3);
@@ -180,6 +183,7 @@ class MolePanel extends JPanel {
 			e.printStackTrace();
 		}
 	}
+	
 	public void sethumtrap(boolean a) {
 		humtrap = a;
 	}
@@ -194,7 +198,6 @@ class MolePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				second--;
-
 				ddSecond = dFormat.format(second);
 				ddMinute = dFormat.format(minute);
 
@@ -231,6 +234,7 @@ class MolePanel extends JPanel {
 		public int molesecond = 0;
 		private JButton moleButton;
 		private Rectangle champion;
+		private boolean life = true;
 		private ImageIcon mole[] = { new ImageIcon("img/moleResource/moleL1.png"),
 				new ImageIcon("img/moleResource/moleL2.png"), new ImageIcon("img/moleResource/moleL3.png"),
 				new ImageIcon("img/moleResource/moleLS1.png"), new ImageIcon("img/moleResource/moleLS2.png"),
@@ -267,6 +271,7 @@ class MolePanel extends JPanel {
 		public MoleThread(int x, int y) {
 			this.x = x;
 			this.y = y;
+
 
 			champion = new Rectangle(x, y, 32, 32);
 
@@ -346,6 +351,16 @@ class MolePanel extends JPanel {
 				} else
 					timer.stop();
 			});
+		}
+		
+		
+		public void moledie() {
+			moleButton.setVisible(false);
+			champion.setBounds(0,0,0,0);
+			life = false;
+		}
+		public boolean getlife() {
+			return life;
 		}
 		
 		public void molegetitem() {
@@ -474,7 +489,7 @@ class MolePanel extends JPanel {
             }
 			
 			if(y < 290 && humtrap == true) {
-				moleButton.setVisible(false);
+				moledie();
 				humtrap = false;
 			}
 

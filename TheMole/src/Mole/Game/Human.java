@@ -22,6 +22,7 @@ public class Human extends JLabel {
 	public int shosecond = 15;
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private boolean shooting = false;
+	private int humanlife = 2;
 
 
 	private Timer mover;
@@ -33,7 +34,7 @@ public class Human extends JLabel {
 
 	private JLabel itembox1;
 	private JLabel itembox2;
-	private int humanspeed = 5;
+	private int humanspeed = 2;
 
 	ImageIcon shoes = new ImageIcon("img/shoes.png");
 	ImageIcon bullets = new ImageIcon("img/bullet.png");
@@ -91,13 +92,11 @@ public class Human extends JLabel {
 				}
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false && pan.humstop==false) {
 					shooting = true;
-					System.out.println("¿ŞÂÊ ÃÑ¾Ë");
 					Bullet a = new Bullet(x,2,pan);
 					
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.humstop==false) {
 					shooting = true;
-					System.out.println("¿À¸¥ÂÊ ÃÑ¾Ë");
 					Bullet b =new Bullet(x,1,pan);
 				}
 				if (pan.i0.getX() > x - 10 && pan.i0.getX() < x + 3 &&pan.i0.timerstop == false) {
@@ -140,7 +139,7 @@ public class Human extends JLabel {
 			}
 		});
 	}
-
+	
 	
 
 	public void mover() {
@@ -179,6 +178,30 @@ public class Human extends JLabel {
 					mover.stop();
 					timerstop = false;
 				}
+				if(mainpanel.m1.getx() >= x - 5 && mainpanel.m1.getx() <= x + 5 && mainpanel.m1.gety()<= 275) {
+					mainpanel.m1.moledie();
+				} else if(mainpanel.m2.getx() >= x - 5 && mainpanel.m2.getx() <= x + 5&& mainpanel.m2.gety()<= 275) {
+					mainpanel.m2.moledie();
+				} else if(mainpanel.m3.getx() >= x - 5 && mainpanel.m3.getx() <= x + 5 && mainpanel.m3.gety()<= 275) {
+					mainpanel.m3.moledie();
+				} else if(mainpanel.m4.getx() >= x - 5 && mainpanel.m4.getx() <= x + 5 && mainpanel.m4.gety()<= 275) {
+					mainpanel.m4.moledie();
+				}
+				else if(mainpanel.m5.getx() >= x - 5 && mainpanel.m5.getx() <= x + 5 && mainpanel.m5.gety()<= 275) {
+					mainpanel.m5.moledie();
+				}
+				else if(mainpanel.m6.getx() >= x - 5 && mainpanel.m6.getx() <= x + 5 && mainpanel.m6.gety()<= 275) {
+					mainpanel.m6.moledie();
+				}
+				else if(mainpanel.m7.getx() >= x - 5 && mainpanel.m7.getx() <= x + 5 && mainpanel.m7.gety()<= 275) {
+					mainpanel.m7.moledie();
+				}
+				else if(mainpanel.m8.getx() >= x - 5 && mainpanel.m8.getx() <= x + 5 && mainpanel.m8.gety()<= 275) {
+					mainpanel.m8.moledie();
+				}
+				else if(mainpanel.m9.getx() >= x - 5 && mainpanel.m9.getx() <= x + 5 && mainpanel.m9.gety()<= 275) {
+					mainpanel.m9.moledie();
+				}
 			}
 		});
 	}
@@ -188,9 +211,8 @@ public class Human extends JLabel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shosecond--;
-				System.out.println(shosecond);
 				if (itembox1.getIcon() == shoes) {
-					humanspeed = 10;
+					humanspeed = 5;
 					itembox1.setFont(font1);
 					itembox1.setText(shosecond + "");
 					itembox1.setVerticalTextPosition(JLabel.CENTER);
@@ -258,6 +280,13 @@ public class Human extends JLabel {
 			}
 
 		});
+	}
+	public int gethumanlife() {
+		return humanlife;
+	}
+	public void minushumanlife(int a) {
+		humanlife -= 1;
+		System.out.println("¹ì´êÀ½" );
 	}
 
 	public void humangetitem() {

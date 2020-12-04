@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-public class vegetableThread {
+public class vegetableThread extends JLabel{
 	private ImageIcon vegetables[] = { new ImageIcon("img/vegetableResource/vegetable0.png"),
 			new ImageIcon("img/vegetableResource/vegetable1.png"),
 			new ImageIcon("img/vegetableResource/vegetable2.png"),
@@ -19,19 +19,19 @@ public class vegetableThread {
 			new ImageIcon("img/vegetableResource/vegetable7.png"),
 			new ImageIcon("img/vegetableResource/vegetable8.png"),
 			new ImageIcon("img/vegetableResource/vegetable9.png"), };
-	JLabel vegetable = new JLabel(vegetables[(int)(Math.random()*10)]);
+	
 	private int x, y, section;
 	public Timer vegtimer;
 	private int vegsecond;
 	private int vegcount = 0;
 	public boolean timerstop = false;
 
-	public vegetableThread(int section,MolePanel pan) {
+	public vegetableThread(int section) {
 		this.section = section;
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
-		y = 260;
-		vegetable.setBounds(x, y, 32, 32);
-		pan.add(vegetable);
+		x = ((int) (Math.random() * 260)) + 247 * this.section;
+		y = 235;
+		this.setBounds(x, y, 32, 32);
+		this.setIcon(vegetables[(int)(Math.random()*10)]); 
 	}
 
 	public int getX() {
@@ -60,8 +60,8 @@ public class vegetableThread {
 
 	public void setposition() {
 		x = ((int) (Math.random() * 260)) + 263 * this.section;
-		y = 260;
-		vegetable.setBounds(x, y, 32, 32);
+		y = 235;
+		this.setBounds(x, y, 32, 32);
 	}
 
 	public void vegtimer() {
@@ -72,19 +72,12 @@ public class vegetableThread {
 				vegsecond++;
 				if (vegsecond == 10) {
 					setposition();
-					vegetable.setVisible(true);
+					setVisible(true);
 					vegtimer.stop();
 					timerstop = false;
 				}
 			}
 		});
-	}
-
-	public void setVisible(boolean b) {
-		if (b == true)
-			vegetable.setVisible(true);
-		else if (b == false)
-			vegetable.setVisible(false);
 	}
 	public Rectangle getBounds() {
 		return new Rectangle( x, y, 32, 32);

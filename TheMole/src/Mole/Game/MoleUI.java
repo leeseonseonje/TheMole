@@ -111,9 +111,9 @@ class MolePanel extends JPanel {
 			m8 = new MoleThread(100, 500);
 			m9 = new MoleThread(150, 500);
 
-			v0 = new vegetableThread(0,this);
-			v1 = new vegetableThread(1,this);
-			v2 = new vegetableThread(2,this);
+			v0 = new vegetableThread(0);
+			v1 = new vegetableThread(1);
+			v2 = new vegetableThread(2);
 
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
@@ -122,6 +122,10 @@ class MolePanel extends JPanel {
 			
 			add(i0);
 			add(i1);
+			add(v0);
+			add(v1);
+			add(v2);
+			
 			
 			add(new Human(this,225));
 			this.add(snake);

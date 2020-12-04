@@ -295,7 +295,7 @@ class MolePanel extends JPanel {
 					timer.stop();
 			});
 		}
-
+		
 		public void molegetitem() {
 			int itemnum = ((int)(Math.random()*10));
 			switch (itemnum) {
@@ -537,7 +537,7 @@ class MolePanel extends JPanel {
 		}
 	}
 
-	public void paintComponent(Graphics g) {// 그리는 함수
+	public void paintComponent(Graphics g) { // 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
 		g.drawImage(humanHud, 0, 70, null);

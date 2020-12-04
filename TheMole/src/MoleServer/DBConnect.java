@@ -71,7 +71,20 @@ public class DBConnect {
 		}	
 	}
 	
-	public static void moleLose(String name) {
+	public static void moleWin(String name) {
+		try {
+			Connection con = DBConnection.makeConnection(); // DB연결
+			PreparedStatement pstmt = con.prepareStatement("update gamer set playcount = playcount + 1, molewin = molewin + 1, scores = scores + 50 where id = ? ");
+			pstmt.setString(1, name);
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+		} catch (Exception a) {
+			a.printStackTrace();
+		}	
+	}
+	public static void gameLose(String name) {
 		try {
 			Connection con = DBConnection.makeConnection(); // DB연결
 			PreparedStatement pstmt = con.prepareStatement("update gamer set playcount = playcount + 1, scores = scores - 25 where id = ? ");

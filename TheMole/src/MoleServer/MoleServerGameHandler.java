@@ -61,27 +61,27 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		}
 		for (int i = 0; i < s.length; i++) {
 			if (s[i].equals("[HUMANITEM1EAT]")) {
-				for (Channel channel : Room.roomManager.get(s[1])) {
+				for (Channel channel : Room.roomManager.get(s[i+1])) {
 					if (channel != myChannel)
 						channel.writeAndFlush("HUMANITEM1EAT,");
 				}
 			} else if (s[i].equals("[HUMANITEM2EAT]")) {
-				for (Channel channel : Room.roomManager.get(s[1])) {
+				for (Channel channel : Room.roomManager.get(s[i+1])) {
 					if (channel != myChannel)
 						channel.writeAndFlush("HUMANITEM2EAT,");
 				}
 			} else if (s[i].equals("[HUMANSPEEDUP]")) {
-				for (Channel channel : Room.roomManager.get(s[1])) {
+				for (Channel channel : Room.roomManager.get(s[i+1])) {
 					if (channel != myChannel)
 						channel.writeAndFlush("HUMANSPEEDUP,");
 				}
 			} else if (s[i].equals("[HUMANSPEEDDOWN]")) {
-				for (Channel channel : Room.roomManager.get(s[1])) {
+				for (Channel channel : Room.roomManager.get(s[i+1])) {
 					if (channel != myChannel)
 						channel.writeAndFlush("HUMANSPEEDDOWN,");
 				}
 			} else if (s[i].equals("[MOLEMOVE]")) {
-				for (Channel channel : Room.roomManager.get(s[1])) {
+				for (Channel channel : Room.roomManager.get(s[i+1])) {
 					if (channel != myChannel)
 						channel.writeAndFlush("MOLEMOVE," + s[i + 2] + "," + s[i + 3] + "," + s[i + 4] + ",");
 				}
@@ -91,6 +91,10 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		if (s[0].equals("[HUMANWIN]"))
 			DBConnect.humanWin(s[1]);
 		else if (s[0].equals("[MOLELOSE]"))
-			DBConnect.moleLose(s[1]);
+			DBConnect.gameLose(s[1]);
+		else if (s[0].equals("[MOLEWIN]"))
+			DBConnect.moleWin(s[1]);
+		else if (s[0].equals("[HUMANLOSE]"))
+			DBConnect.gameLose(s[1]);
 	}
 }

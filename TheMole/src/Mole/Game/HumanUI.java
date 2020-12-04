@@ -36,7 +36,7 @@ public class HumanUI extends JPanel {
 	private itemBoxThread i1;
 	private itemBoxThread i2;
 	
-	public static HumanInMole m1, m2, m3, m4, m5, m6, m7, m8, m9;
+	private HumanInMole m1, m2, m3, m4, m5, m6, m7, m8, m9;
 	
 	private boolean humtrap = false;
 	private boolean timerstop = false;
@@ -49,6 +49,7 @@ public class HumanUI extends JPanel {
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
 	private ChannelHandlerContext ctx;
+	private int vegcount = 15;
 	
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		this.ctx = ctx;
@@ -137,7 +138,13 @@ public class HumanUI extends JPanel {
 	public void setTimerstop(boolean timerstop) {
 		this.timerstop = timerstop;
 	}
-
+	public int getVegcount() {
+		return vegcount;
+	}
+	public void setVegcount(int vegcount) {
+		this.vegcount = vegcount;
+	}
+	
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
@@ -193,6 +200,16 @@ public class HumanUI extends JPanel {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
 					ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId());
+					setVisible(false);
+					if (MoleClientMainHandler.roomTest.testStart.getText().equals("준비취소"))
+						MoleClientMainHandler.roomTest.testStart.setText("준비");
+					MoleClientMainHandler.roomTest.ready.setText("");
+					MoleClientMainHandler.roomTest.setVisible(true);
+				}
+				else if (vegcount == 0) {
+					timer.stop();
+					JOptionPane.showMessageDialog(null, "두더지는 자유다 두더지 만만세", "Result", JOptionPane.PLAIN_MESSAGE);
+					ctx.writeAndFlush("[HUMANLOSE]," + LoginForm.getId());
 					setVisible(false);
 					if (MoleClientMainHandler.roomTest.testStart.getText().equals("준비취소"))
 						MoleClientMainHandler.roomTest.testStart.setText("준비");

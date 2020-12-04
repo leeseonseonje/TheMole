@@ -11,7 +11,7 @@ public class ItemTimer {
 	private int cnt = 1;
 	public ItemTimer(ChannelHandlerContext ctx, Channel host, String name, String hostRole, String guestRole) {
 		itemTimer = new Timer(1000, e -> {
-		itemCount++;
+		++itemCount;
 			if (itemCount % 30 == 0) {
 				int a = ((int) (Math.random() * 400)) + 400 * 0;
 				int b =((int) (Math.random() * 400)) + 400 * 1;

@@ -35,7 +35,7 @@ public class Human extends JLabel {
 
 	private JLabel itembox1;
 	private JLabel itembox2;
-	private int humanspeed = 5;
+	private int humanspeed = 3;
 	
 	private int bulletcount = 5;
 
@@ -62,15 +62,14 @@ public class Human extends JLabel {
 
 		itembox1 = new JLabel();
 		itembox2 = new JLabel();
-		itembox1.setBounds(62, 7, 36, 36);
-		itembox2.setBounds(104, 7, 36, 36);
+		itembox1.setBounds(60, 5, 38, 38);
+		itembox2.setBounds(102, 5, 38, 38);
 
 		pan.add(itembox1);
 		pan.add(itembox2);
 		itembox1.setVisible(false);
 		pan.addKeyListener(new KeyListener() {
 
-			// private int x = this.x;
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_LEFT && pan.humstop == false) { // 왼쪽 방향키
 					moving = true;
@@ -183,28 +182,28 @@ public class Human extends JLabel {
 					mover.stop();
 					timerstop = false;
 				}
-				if(mainpanel.m1.getx() >= x - 5 && mainpanel.m1.getx() <= x + 5 && mainpanel.m1.gety()<= 275) {
+				if(mainpanel.m1.getx() >= x - 5 && mainpanel.m1.getx() <= x + 5 && mainpanel.m1.gety()<= 275 && mainpanel.m1.getlife() == true) {
 					mainpanel.m1.moledie();
-				} else if(mainpanel.m2.getx() >= x - 5 && mainpanel.m2.getx() <= x + 5&& mainpanel.m2.gety()<= 275) {
+				} else if(mainpanel.m2.getx() >= x - 5 && mainpanel.m2.getx() <= x + 5&& mainpanel.m2.gety()<= 275 && mainpanel.m2.getlife() == true) {
 					mainpanel.m2.moledie();
-				} else if(mainpanel.m3.getx() >= x - 5 && mainpanel.m3.getx() <= x + 5 && mainpanel.m3.gety()<= 275) {
+				} else if(mainpanel.m3.getx() >= x - 5 && mainpanel.m3.getx() <= x + 5 && mainpanel.m3.gety()<= 275 && mainpanel.m3.getlife() == true) {
 					mainpanel.m3.moledie();
-				} else if(mainpanel.m4.getx() >= x - 5 && mainpanel.m4.getx() <= x + 5 && mainpanel.m4.gety()<= 275) {
+				} else if(mainpanel.m4.getx() >= x - 5 && mainpanel.m4.getx() <= x + 5 && mainpanel.m4.gety()<= 275 && mainpanel.m4.getlife() == true) {
 					mainpanel.m4.moledie();
 				}
-				else if(mainpanel.m5.getx() >= x - 5 && mainpanel.m5.getx() <= x + 5 && mainpanel.m5.gety()<= 275) {
+				else if(mainpanel.m5.getx() >= x - 5 && mainpanel.m5.getx() <= x + 5 && mainpanel.m5.gety()<= 275 && mainpanel.m5.getlife() == true) {
 					mainpanel.m5.moledie();
 				}
-				else if(mainpanel.m6.getx() >= x - 5 && mainpanel.m6.getx() <= x + 5 && mainpanel.m6.gety()<= 275) {
+				else if(mainpanel.m6.getx() >= x - 5 && mainpanel.m6.getx() <= x + 5 && mainpanel.m6.gety()<= 275 && mainpanel.m6.getlife() == true) {
 					mainpanel.m6.moledie();
 				}
-				else if(mainpanel.m7.getx() >= x - 5 && mainpanel.m7.getx() <= x + 5 && mainpanel.m7.gety()<= 275) {
+				else if(mainpanel.m7.getx() >= x - 5 && mainpanel.m7.getx() <= x + 5 && mainpanel.m7.gety()<= 275 && mainpanel.m7.getlife() == true) {
 					mainpanel.m7.moledie();
 				}
-				else if(mainpanel.m8.getx() >= x - 5 && mainpanel.m8.getx() <= x + 5 && mainpanel.m8.gety()<= 275) {
+				else if(mainpanel.m8.getx() >= x - 5 && mainpanel.m8.getx() <= x + 5 && mainpanel.m8.gety()<= 275 && mainpanel.m8.getlife() == true) {
 					mainpanel.m8.moledie();
 				}
-				else if(mainpanel.m9.getx() >= x - 5 && mainpanel.m9.getx() <= x + 5 && mainpanel.m9.gety()<= 275) {
+				else if(mainpanel.m9.getx() >= x - 5 && mainpanel.m9.getx() <= x + 5 && mainpanel.m9.gety()<= 275 && mainpanel.m9.getlife() == true) {
 					mainpanel.m9.moledie();
 				}
 			}
@@ -218,14 +217,14 @@ public class Human extends JLabel {
 				shosecond--;
 				System.out.println(shosecond);
 				if (itembox1.getIcon() == shoes) {
-					humanspeed = 10;
+					humanspeed = 5;
 					itembox1.setFont(font1);
 					itembox1.setText(shosecond + "");
 					itembox1.setVerticalTextPosition(JLabel.CENTER);
 					itembox1.setHorizontalTextPosition(JLabel.CENTER);
 					itembox1.setForeground(Color.cyan);
 				} else {
-					humanspeed = 10;
+					humanspeed = 5;
 					itembox2.setText(shosecond + "");
 					itembox2.setFont(font1);
 					itembox2.setVerticalTextPosition(JLabel.CENTER);
@@ -233,7 +232,7 @@ public class Human extends JLabel {
 					itembox2.setForeground(Color.cyan);
 				}
 				if (shosecond == 0) {
-					humanspeed = 5;
+					humanspeed = 3;
 					System.out.println("사람속도 하향");
 					if (itembox1.getIcon() == shoes) {
 						itembox1.setIcon(null);

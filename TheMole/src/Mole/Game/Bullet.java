@@ -11,9 +11,10 @@ import javax.swing.Timer;
 public class Bullet extends JLabel {
 	
 	private double x;
-	private double y = 235;
+	private double y = 255;
 	private int direction = 0;
 
+	private Human hum;
 	private Timer shoottimer;
 	private int shootsec = 0;
 	MolePanel mainpanel;
@@ -55,14 +56,14 @@ public class Bullet extends JLabel {
 				for (int i = 0; i < 5; i++) {
 					if (direction == 1) { 
 						bulMove(1);
-						setBounds(((int) bul.getX()), (int) y, 50, 64);
+						setBounds(((int) bul.getX()), (int) y, 16, 16);
 						if (shootsec == 30) {
 							bul.setVisible(false);
 							shoottimer.stop();
 						}
 					} else if (direction == 2) { 
 						bulMove(-1);
-						setBounds(((int) bul.getX()), (int) y, 50, 64);
+						setBounds(((int) bul.getX()), (int) y, 16, 16);
 						if (shootsec == 30) {
 							bul.setVisible(false);
 							shoottimer.stop();
@@ -70,19 +71,22 @@ public class Bullet extends JLabel {
 					}
 					if (mainpanel.m1.getx() == bul.getX() && mainpanel.m1.gety() <= 275
 							&& mainpanel.m1.getlife() == true) {
-						mainpanel.m1.moledie();
+						System.out.println("Á×À½");
 						bul.setVisible(false);
 						shoottimer.stop();
+						mainpanel.m1.moledie();
 					} else if (mainpanel.m2.getx() == bul.getX() && mainpanel.m2.gety() <= 275
 							&& mainpanel.m2.getlife() == true) {
-						mainpanel.m2.moledie();
+						System.out.println("Á×À½");
 						bul.setVisible(false);
 						shoottimer.stop();
+						mainpanel.m2.moledie();
 					} else if (mainpanel.m3.getx() == bul.getX() && mainpanel.m3.gety() <= 275
 							&& mainpanel.m3.getlife() == true) {
-						mainpanel.m3.moledie();
+						System.out.println("Á×À½");
 						bul.setVisible(false);
 						shoottimer.stop();
+						mainpanel.m3.moledie();
 					} else if (mainpanel.m4.getx() == bul.getX() && mainpanel.m4.gety() <= 275
 							&& mainpanel.m4.getlife() == true) {
 						mainpanel.m4.moledie();
@@ -113,10 +117,12 @@ public class Bullet extends JLabel {
 						mainpanel.m9.moledie();
 						bul.setVisible(false);
 						shoottimer.stop();
-					} else if (mainpanel.snake.getX() == bul.getX() && mainpanel.snake.getmoving() == true) {
-						mainpanel.snake.snakedie();
-						bul.setVisible(false);
-						shoottimer.stop();
+					} else if (mainpanel.isSnake == true){
+						if (mainpanel.snake.getX() == bul.getX() && mainpanel.snake.getmoving() == true) {
+							mainpanel.snake.snakedie();
+							bul.setVisible(false);
+							shoottimer.stop();
+						}
 					}
 				}
 			}

@@ -20,7 +20,7 @@ public class itemBoxThread extends JLabel{
 			
 	public itemBoxThread(int section) {
 		this.section = section;
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
+		x = ((int) (Math.random() * 400)) + 375 * this.section;
 		y = 235;
 		setBounds(x, y, 40, 40);
 		setIcon(itemB);
@@ -46,7 +46,7 @@ public class itemBoxThread extends JLabel{
 	}
 	
 	public void setposition() {
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
+		x = ((int) (Math.random() * 400)) + 375 * this.section;
 		y = 235;
 		setBounds(x, y, 40, 40);			 
 	}

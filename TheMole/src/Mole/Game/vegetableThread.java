@@ -59,7 +59,7 @@ public class vegetableThread extends JLabel{
 	}
 
 	public void setposition() {
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
+		x = ((int) (Math.random() * 260)) + 247 * this.section;
 		y = 235;
 		this.setBounds(x, y, 32, 32);
 	}

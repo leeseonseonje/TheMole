@@ -106,10 +106,10 @@ class MolePanel extends JPanel {
 			m1 = new MoleThread(50, 275);
 			m2 = new MoleThread(100, 265);
 			m3 = new MoleThread(150, 265);
-			m4 = new MoleThread(50, 450);
+			m4 = new MoleThread(50, 350);
 			m5 = new MoleThread(100, 450);
 			m6 = new MoleThread(150, 450);
-			m7 = new MoleThread(50, 500);
+			m7 = new MoleThread(50, 300);
 			m8 = new MoleThread(100, 500);
 			m9 = new MoleThread(150, 500);
 
@@ -600,6 +600,7 @@ class MolePanel extends JPanel {
 				double distance = Math
 						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
 
+			
 				runTime = distance / (double) speed;
 //				if ((x <= v0.getx() + 10 && x > v0.getx() - 10) || (x <= v1.getx() + 10 && x > v1.getx() - 10)
 //						|| (x <= v2.getx() + 10 && x > v2.getx() - 10) && y < 290) {

@@ -34,7 +34,7 @@ public class Human extends JLabel {
 
 	private JLabel itembox1;
 	private JLabel itembox2;
-	private int humanspeed = 2;
+	private int humanspeed = 3;
 
 	ImageIcon shoes = new ImageIcon("img/shoes.png");
 	ImageIcon bullets = new ImageIcon("img/bullet.png");
@@ -71,33 +71,41 @@ public class Human extends JLabel {
 				if (e.getKeyCode() == KeyEvent.VK_LEFT && pan.humstop==false) { // 왼쪽 방향키
 					moving = true;
 					status = 2;
-					setX(-humanspeed);
+					for(int i = 0 ;i< humanspeed;i++)
+						setX(-1);
+					setBounds(getX(), y, 50, 64);
 					if (timerstop == false) {
 						humsecond = 0;
 						timerstop = true;
 						timerstart();
 					}
-					setBounds(getX(), y, 50, 64);
+					
 				}
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT && pan.humstop==false) { // 오른쪽 방향키
 					moving = true;
 					status = 1;
-					setX(humanspeed);
+					for(int i = 0 ;i< humanspeed;i++)
+						setX(1);
+					setBounds(getX(), y, 50, 64);
 					if (timerstop == false) {
 						humsecond = 0;
 						timerstop = true;
 						timerstart();
 					}
-					setBounds(getX(), y, 50, 64);
+					
 				}
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false && pan.humstop==false) {
 					shooting = true;
-					Bullet a = new Bullet(x,2,pan);
+					Bullet a = new Bullet(x,2,status,pan);
 
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.humstop==false) {
 					shooting = true;
-					Bullet a = new Bullet(x,2,pan);
+					Bullet a = new Bullet(x,1,status,pan);
+				}
+				if (e.getKeyCode() == KeyEvent.VK_S && shooting == false && pan.humstop==false) {
+					shooting = true;
+					Bullet a = new Bullet(x,3,status,pan);
 				}
 				if (pan.i0.getX() > x - 10 && pan.i0.getX() < x + 3 &&pan.i0.timerstop == false) {
 					pan.i0.setVisible(false);
@@ -131,6 +139,8 @@ public class Human extends JLabel {
 					shooting = false;
 				} else if (e.getKeyCode() == KeyEvent.VK_D) {
 					shooting = false;
+				} else if (e.getKeyCode() == KeyEvent.VK_S) {
+					shooting = false;
 				}
 			}
 
@@ -149,9 +159,6 @@ public class Human extends JLabel {
 				humsecond++;
 				humsecond = humsecond % 5;
 				if (moving == true && status == 1) { // 오른쪽방향으로 움직일때 -누름
-					/*
-					 * for(int i = 0;i<6;i++) { setX(1); }
-					 */
 					if (humsecond == 1)
 						setIcon(human[1]);
 					else if (humsecond == 2)
@@ -291,8 +298,7 @@ public class Human extends JLabel {
 
 	public void humangetitem() {
 		System.out.println("아이템 섭취");
-		int itemnum = 1;
-		// int itemnum = ((int)(Math.random()*10));
+		int itemnum = ((int)(Math.random()*10));
 		switch (itemnum) {
 		case 0:
 		case 9:

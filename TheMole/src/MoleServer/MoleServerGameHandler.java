@@ -85,9 +85,18 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 					if (channel != myChannel)
 						channel.writeAndFlush("MOLEMOVE," + s[i + 2] + "," + s[i + 3] + "," + s[i + 4] + ",");
 				}
-			}
+			} else if (s[i].equals("[MOLETRAP]")) {
+				for (Channel channel : Room.roomManager.get(s[i+1])) {
+					if (channel != myChannel)
+						channel.writeAndFlush("MOLETRAP,");
+				}
+			} else if (s[i].equals("[MOLEDIE]")) {
+				for (Channel channel : Room.roomManager.get(s[i+1])) {
+					if (channel != myChannel)
+						channel.writeAndFlush("MOLEDIE," + s[i+2] + ",");
+				}
+			}	
 		}
-		
 		if (s[0].equals("[HUMANWIN]"))
 			DBConnect.humanWin(s[1]);
 		else if (s[0].equals("[MOLELOSE]"))

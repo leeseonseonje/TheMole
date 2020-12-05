@@ -21,15 +21,8 @@ public class vegetableThread extends JLabel{
 	
 
 	public vegetableThread(int section, int crop)  {
-		//this.section = section;
-		//x = section;
-		//y = 255;
 		setBounds(section, 255, 32, 32);
 		setIcon(vegetables[crop]);
-		//System.out.println(section + "!!!!");
-		// vegetable.setIcon(veget);
-		
-		// System.out.println("작물위치 " + x + " " + y);
 	}
 	public ImageIcon[] getVegetables() {
 		return vegetables;
@@ -38,51 +31,7 @@ public class vegetableThread extends JLabel{
         return new Rectangle(this.getX(), this.getY(), 32, 32);
     }
 
-	/*public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}*/
-
-/*	public void setsecond(int second) {
-		vegsecond = second;
-	}
-
-	public int getsecond() {
-		return vegsecond;
-	}
-
-	public int getvegcount() {
-		return vegcount;
-	}*/
-
 	public int plusvegcount() {
 		return vegcount++;
 	}
-
-/*	public void setposition() {
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
-		y = 260;
-		setBounds(x, y, 16, 16);
-	}
-
-	public void vegtimer() {
-		timerstop = true;
-		vegtimer = new Timer(1000, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				vegsecond++;
-				if (vegsecond == 10) {
-					setposition();
-					setVisible(true);
-					vegtimer.stop();
-					timerstop = false;
-				}
-			}
-		});
-	}*/
-
-	
 }

@@ -12,9 +12,9 @@ public class ItemTimer {
 	public ItemTimer(ChannelHandlerContext ctx, Channel host, String name, String hostRole, String guestRole) {
 		itemTimer = new Timer(1000, e -> {
 		++itemCount;
-			if (itemCount % 30 == 0) {
+			if (itemCount % 10 == 0) {
 				int a = ((int) (Math.random() * 400)) + 400 * 0;
-				int b =((int) (Math.random() * 400)) + 400 * 1;
+				int b =((int) (Math.random() * 400)) + 385 * 1;
 				for (Channel channel : Room.roomManager.get(name)) {
 					if (channel == host)
 						host.writeAndFlush(hostRole + "," + a + "," + b);

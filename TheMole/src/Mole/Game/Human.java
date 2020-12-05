@@ -26,6 +26,8 @@ public class Human extends JLabel{
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private boolean shooting = false;
 			
+	private Timer moleTrapTimer;
+	private int moleTrapCount;
 	private Timer mover;
 	private Timer humtraptimer;
 	private int humtrapsecond = 10;
@@ -42,6 +44,7 @@ public class Human extends JLabel{
 	private ImageIcon trapM = new ImageIcon("img/trapH.png");
 	private ChannelHandlerContext ctx;
 	private String name;
+	private boolean moleKill = true;
 	
 	private ImageIcon human[] = {  new ImageIcon("img/humanResource/human1.png"),
 			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
@@ -103,11 +106,11 @@ public class Human extends JLabel{
 				}
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false) {
 					shooting = true;
-					System.out.println("øﬁ¬  √—æÀ");
+					Bullet a = new Bullet(getX(), 2, pan);
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false) {
 					shooting = true;
-					System.out.println("ø¿∏•¬  √—æÀ");
+					Bullet b =new Bullet(getX(), 1, pan);
 				}
 				
 				if (pan.getI1().getX() > getX() - 10 && pan.getI1().getX() < getX() + 3 && pan.getI1().getTimerstop() == false) {
@@ -150,6 +153,13 @@ public class Human extends JLabel{
 			}
 
 		});
+	}
+	public boolean getMoleKill() {
+		return moleKill;
+	}
+
+	public void setMoleKill(boolean moleKill) {
+		this.moleKill = moleKill;
 	}
 	public void shoesTimer() {
 		shoesTimer = new Timer(1000, new ActionListener() {
@@ -195,7 +205,19 @@ public class Human extends JLabel{
 			}
 		});
 	}
-	
+	public Timer moleTrapTimer() {
+		return moleTrapTimer = new Timer(1000, e-> {
+			System.out.println("∏ÿ√„");
+			moleTrapCount++;
+			humanspeed = 0;
+			if (moleTrapCount == 3) {
+				moleTrapTimer.stop();
+				humanspeed = 5;
+				System.out.println("«Æ∏≤");
+				moleTrapCount = 0;
+			}
+		});
+	}
 	public void humtraptimer() {
 		humanUi.sethumtrap(true);
 		humtraptimer = new Timer(1000, new ActionListener() {
@@ -224,11 +246,10 @@ public class Human extends JLabel{
 					}
 					humtrapsecond = 10;
 					humanUi.sethumtrap(false);
+					moleKill = true;
 					humtraptimer.stop();
 				}
-
 			}
-
 		});
 	}
 	
@@ -243,11 +264,14 @@ public class Human extends JLabel{
 				itembox1.setIcon(trapM);
 				humtraptimer();
 				humtraptimer.start();
+				moleKill = false;
 			} else if (itembox1.getIcon() == trapM || itembox2.getIcon() == trapM) {
 				humtrapsecond += 10;
+				moleKill = false;
 			} else {
 				humtraptimer();
 				humtraptimer.start();
+				moleKill = false;
 				itembox2.setIcon(trapM);
 			}
 			break;

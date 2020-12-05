@@ -15,25 +15,26 @@ public class HumanInMole extends JButton {
 	private double speed = 0.15;
 	private Long startTime;
 	
-	 private double targetX, targetY;
-     private double startX, startY;
-     private double runTime;
-     
-     private int x, y;
-     private int direction = 0;
-     private int molesecond = 0;
-     
+	private double targetX, targetY;
+	private double startX, startY;
+	private double runTime;
+
+	private int x, y;
+	private int direction = 0;
+	private int molesecond = 0;
+    private HumanUI human;
+    private boolean moleDeath = true;
 	private ImageIcon mole[] = { new ImageIcon("img/moleResource/moleL1.png"),
 			new ImageIcon("img/moleResource/moleL2.png"), new ImageIcon("img/moleResource/moleL3.png"),
 			new ImageIcon("img/moleResource/moleR1.png"),new ImageIcon("img/moleResource/moleR2.png"),
 			new ImageIcon("img/moleResource/moleR3.png"),new ImageIcon("img/moleResource/moleS.png") };
 
 	
-	public HumanInMole(int x, int y) {
+	public HumanInMole(HumanUI human, int x, int y) {
+		this.human = human;
 		this.x = x;
 		this.y = y;
 		champion = new Rectangle(x, y, 32, 32);
-		
 		setIcon(mole[6]);
 		setBorderPainted(false);
 		setFocusPainted(false);
@@ -43,6 +44,13 @@ public class HumanInMole extends JButton {
 	}
 	public Timer getTimer() {
 		return timer;
+	}
+    
+	public boolean getMoleDeath() {
+		return moleDeath;
+	}
+	public void setMoleDeath(boolean moleDeath) {
+		this.moleDeath = moleDeath;
 	}
 
 	
@@ -100,9 +108,18 @@ public class HumanInMole extends JButton {
 			setBounds((int) x - 15, (int) y - 15, 30, 30);
 			champion.setRect(x - 5, y - 5, 10, 10);
 		}
-		if (y < 300)
-			setVisible(true);
-		else if (y > 300)
+		if (y < 300) {
+			if (moleDeath == true && human.getHuman().getMoleKill() == false) {
+				moleDeath = false;
+				human.moleDieMessage();
+				moleDeath = true;
+				human.remove(this);
+				champion.setRect(0, 0, 0, 0);
+				human.getHuman().setMoleKill(true);
+			} else
+				setVisible(true);
+		}
+		else if (y > 300 )
 			setVisible(false);
 	}
 	

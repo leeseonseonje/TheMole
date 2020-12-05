@@ -49,10 +49,12 @@ public class HumanUI extends JPanel {
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
 	private ChannelHandlerContext ctx;
+	private String name;
 	private int vegcount = 15;
 	
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		this.ctx = ctx;
+		this.name = name;
 		setLayout(null);
 		backImage = ImageIO.read(new File("img/Back4.png"));
 		humanHud = ImageIO.read(new File("img/humanHud.png"));
@@ -75,15 +77,15 @@ public class HumanUI extends JPanel {
 		i1.setVisible(false);
 		i2.setVisible(false);
 		
-		m1 = new HumanInMole(50, 400);
-		m2 = new HumanInMole(100, 400);
-		m3 = new HumanInMole(150, 400);
-		m4 = new HumanInMole(50, 450);
-		m5 = new HumanInMole(100, 450);
-		m6 = new HumanInMole(150, 450);
-		m7 = new HumanInMole(50, 500);
-		m8 = new HumanInMole(100, 500);
-		m9 = new HumanInMole(150, 500);
+		m1 = new HumanInMole(this, 50, 400);
+		m2 = new HumanInMole(this, 100, 400);
+		m3 = new HumanInMole(this, 150, 400);
+		m4 = new HumanInMole(this ,50, 450);
+		m5 = new HumanInMole(this, 100, 450);
+		m6 = new HumanInMole(this, 150, 450);
+		m7 = new HumanInMole(this, 50, 500);
+		m8 = new HumanInMole(this, 100, 500);
+		m9 = new HumanInMole(this, 150, 500);
 		add(m1);
 		add(m2);
 		add(m3);
@@ -125,7 +127,36 @@ public class HumanUI extends JPanel {
 	public itemBoxThread getI2() {
 		return i2;
 	}
-
+	public Human getHuman() {
+		return human;
+	}
+	public HumanInMole getM1() {
+		return m1;
+	}
+	public HumanInMole getM2() {
+		return m2;
+	}
+	public HumanInMole getM3() {
+		return m3;
+	}
+	public HumanInMole getM4() {
+		return m4;
+	}
+	public HumanInMole getM5() {
+		return m5;
+	}
+	public HumanInMole getM6() {
+		return m6;
+	}
+	public HumanInMole getM7() {
+		return m7;
+	}
+	public HumanInMole getM8() {
+		return m8;
+	}
+	public HumanInMole getM9() {
+		return m9;
+	}
 	public void sethumtrap(boolean a) {
         humtrap = a;
     }
@@ -144,6 +175,7 @@ public class HumanUI extends JPanel {
 	public void setVegcount(int vegcount) {
 		this.vegcount = vegcount;
 	}
+
 	
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
@@ -173,6 +205,26 @@ public class HumanUI extends JPanel {
 			m8.humanInMoleMove(message, x, y);
 		else if (message.equals("9"))
 			m9.humanInMoleMove(message, x, y);
+	}
+	public void moleDieMessage() {
+		if (m1.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");
+		else if (m2.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");
+		else if (m3.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");
+		else if (m4.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 4 + ",");
+		else if (m5.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");
+		else if (m6.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");
+		else if (m7.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");
+		else if (m8.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");
+		else if (m9.getMoleDeath() == false)
+			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 9 + ",");
 	}
 	public void normalTimer() {
 		timer = new Timer(1000, new ActionListener() {

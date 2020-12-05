@@ -10,8 +10,6 @@ import javax.swing.Timer;
 
 public class itemBoxThread extends JLabel{
 	private ImageIcon itemB = new ImageIcon("img/itemBox.png");
-	//private int x, y,section;
-//	public Timer itemtimer;
 	private int itemsecond;
 	private int itemcount = 0;
 	private boolean timerstop = false;
@@ -20,13 +18,8 @@ public class itemBoxThread extends JLabel{
 	private boolean snakepipe;
 			
 	public itemBoxThread() {
-		//this.section = section;
-		//x = ((int) (Math.random() * 260)) + 263 * this.section;
-		//y = 255;
 		setBounds(0, 0, 0, 0);
 		setIcon(itemB);
-		// itemBox.setIcon(itemB);
-		//System.out.println("아이템위치 " + x + " " + y);
 	}
 	public Rectangle getBounds() {
         return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -39,44 +32,4 @@ public class itemBoxThread extends JLabel{
 		this.timerstop = timerstop;
 	}
 
-/*	public int getX() {
-		return x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setsecond(int second) {
-		itemsecond = second;
-	}
-	public int getsecond() {
-		return itemsecond;
-	}
-	public int getcouont() {
-		return itemcount;
-	}
-	public int setcount(int count) {
-		return itemcount = count;
-	}*/
-	
-/*	public void setposition() {
-		x = ((int) (Math.random() * 260)) + 263 * this.section;
-		y = 255;
-		setBounds(x, y, 40, 40);			 
-	}*/
-	/*public void itemtimer() {
-		timerstop = true;
-		itemtimer = new Timer(1000,new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				itemsecond++;
-				if(itemsecond == 30) {
-					setposition();
-					setVisible(true);
-					itemtimer.stop();
-					timerstop = false;
-					itemcount++;
-				}
-			}
-		});
-	}*/
 }

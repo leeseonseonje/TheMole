@@ -21,16 +21,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import DB.DBConnection;
+import Mole.Game.Sound.*;
+import javazoom.jl.decoder.JavaLayerException;
 
 class MainFrame extends JFrame {
 
 	private MainFrame frame;
-	private Font font;
-	private JButton start, end, query, rank, angry, player, title;
+	private JButton start, end, query, rank, angry, player, title, music;
 	private BackG mainBG = new BackG();
+	public boolean playStatus = true;
 
 	ImageIcon star_img = new ImageIcon("img/rank.png");
 	ImageIcon star1_img = new ImageIcon("img/rank1.png");
@@ -46,6 +47,9 @@ class MainFrame extends JFrame {
 
 	ImageIcon titles_img = new ImageIcon("img/titles.png");
 	ImageIcon angry_img = new ImageIcon("img/angry.png");
+	
+	ImageIcon music_img = new ImageIcon("img/music.png");
+	ImageIcon music1_img = new ImageIcon("img/music1.png");
 
 	public MainFrame() {
 		CustomCursor();
@@ -61,12 +65,16 @@ class MainFrame extends JFrame {
 		Image icon = kit.getImage("img/moleicon.png");
 		setIconImage(icon);
 
+		// 배경음악 설정
+		SoundJLayer soundToPlay = new SoundJLayer("res/mainframeBG_Ereve.mp3");
+		soundToPlay.play();
+
 		// 시작 버튼 설정
 		start = new JButton(start_img);
 		start.setBorderPainted(false);
 		start.setFocusPainted(false);
 		start.setContentAreaFilled(false);
-		start.setBounds(270, 350, 250, 75);
+		start.setBounds(130, 475, 250, 75);
 		start.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				start.setIcon(start1_img);
@@ -80,7 +88,11 @@ class MainFrame extends JFrame {
 				System.out.println("시작 클릭");
 				setVisible(false);
 				try {
+					if (playStatus == true) {
+						soundToPlay.pause();
+					}
 					new MoleUI();
+
 				} catch (Exception error) {
 					error.printStackTrace();
 				}
@@ -93,7 +105,7 @@ class MainFrame extends JFrame {
 		end.setBorderPainted(false);
 		end.setFocusPainted(false);
 		end.setContentAreaFilled(false);
-		end.setBounds(270, 430, 250, 75);
+		end.setBounds(400, 475, 250, 75);
 		end.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				end.setIcon(end1_img);
@@ -128,7 +140,15 @@ class MainFrame extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				System.out.println("도움말 클릭");
 				setVisible(false);
-				new QuestionFrame();
+				try {
+					if (playStatus == true) {
+						soundToPlay.pause();
+					}
+					new QuestionFrame();
+
+				} catch (Exception error) {
+					error.printStackTrace();
+				}
 			}
 		});
 		mainBG.add(query);
@@ -151,12 +171,20 @@ class MainFrame extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				System.out.println("리더보드 클릭");
 				setVisible(false);
-				new LeaderBoardFrame();
+				try {
+					if (playStatus == true) {
+						soundToPlay.pause();
+					}
+					new LeaderBoardFrame();
+
+				} catch (Exception error) {
+					error.printStackTrace();
+				}
 			}
 		});
-		
+
 		player = new JButton(LoginForm.getId());
-		player.setBounds(675, 10, 100,50 );
+		player.setBounds(675, 10, 100, 50);
 		player.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				System.out.println("계정 정보 활성화");
@@ -165,10 +193,14 @@ class MainFrame extends JFrame {
 					Statement st = con.createStatement();
 					ResultSet rs = st.executeQuery("SELECT * FROM gamer");
 					String value = "";
-					while(rs.next()) {
-						if((LoginForm.getId()).equals(rs.getString("ID"))) {
-								value = String.format("계정명: %s \n총 플레이수: %3d \n인간승리수: %3d \n두더지승리수: %3d \n승률: %.1f \n점수: %4d" 
-									,rs.getString("ID"),rs.getInt("PLAYCOUNT"),rs.getInt("HUMANWIN"),rs.getInt("MOLEWIN"),((rs.getDouble("HUMANWIN")+rs.getInt("MOLEWIN"))/rs.getInt("PLAYCOUNT"))*100,rs.getInt("SCORES"));
+					while (rs.next()) {
+						if ((LoginForm.getId()).equals(rs.getString("ID"))) {
+							value = String.format(
+									"계정명: %s \n총 플레이수: %3d \n인간승리수: %3d \n두더지승리수: %3d \n승률: %.1f \n점수: %4d",
+									rs.getString("ID"), rs.getInt("PLAYCOUNT"), rs.getInt("HUMANWIN"),
+									rs.getInt("MOLEWIN"),
+									((rs.getDouble("HUMANWIN") + rs.getInt("MOLEWIN")) / rs.getInt("PLAYCOUNT")) * 100,
+									rs.getInt("SCORES"));
 						} else
 							continue;
 						JOptionPane.showMessageDialog(frame, value, "계정 정보", JOptionPane.PLAIN_MESSAGE);
@@ -183,7 +215,7 @@ class MainFrame extends JFrame {
 			}
 		});
 		mainBG.add(player);
-		
+
 		mainBG.add(rank);
 
 		angry = new JButton(angry_img);
@@ -199,6 +231,40 @@ class MainFrame extends JFrame {
 		title.setContentAreaFilled(false);
 		title.setBounds(170, 60, 476, 146);
 		mainBG.add(title);
+
+		music = new JButton(music_img);
+		music.setBorderPainted(false);
+		music.setFocusPainted(false);
+		music.setContentAreaFilled(false);
+		music.setBounds(10, 10, 50, 50);
+		music.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				music.setIcon(music1_img);
+			}
+
+			public void mouseExited(MouseEvent e) {
+				music.setIcon(music_img);
+			}
+			public void mousePressed(MouseEvent e) {
+				try {
+					if (playStatus == true) {
+						try {
+							soundToPlay.pause();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						playStatus = false;
+					} else {
+						soundToPlay.play();
+						playStatus = true;
+					}
+				} catch (JavaLayerException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		mainBG.add(music);
 
 		add(mainBG);
 		setVisible(true);// 창이 보이게

@@ -13,19 +13,21 @@ public class Snake extends JLabel {
 	private int x;
 	private int y;
 	private static int status; // 생성될때 값을 지니고, 값에 따라 오는 방향이 달라진다.
+	MolePanel mainpanel;
+	Human hum;
 
 	private Timer move;
 	private int snakeTempo = 0;
-	
-	private Human human;
+	private boolean moving = true;
 
 	// 4개의 스프라이트 이미지를 가짐
 	private ImageIcon snake[] = { new ImageIcon("img/snakeResource/snakeL1.png"),
 			new ImageIcon("img/snakeResource/snakeL2.png"), new ImageIcon("img/snakeResource/snakeR1.png"),
 			new ImageIcon("img/snakeResource/snakeR2.png") };
 
-	public Snake() {
+	public Snake(MolePanel m) {
 		this.y = 250;
+		mainpanel = m;
 
 		status = (int) (Math.random() * 2);
 		if (status == 0) // 왼쪽으로 보고 이동하는 뱀
@@ -41,9 +43,18 @@ public class Snake extends JLabel {
 		moveStart();
 	}
 	
+	public boolean getmoving() {
+		return moving;
+	}
+	
 	public void moveStart() {
 		move();
 		move.start();
+	}
+	public void snakedie() {
+		setVisible(false);
+		move.stop();
+		moving = false;
 	}
 
 	public void move() {
@@ -67,17 +78,16 @@ public class Snake extends JLabel {
 						setIcon(snake[3]);
 					setBounds(getX(),y,32,32);	
 				}
+				if(mainpanel.hum.getX() == getX()) {
+					mainpanel.hum.minushumanlife(1);
+					snakedie();
+				}
 			}
 		});
-	}
-	public void collisionCheck(JLabel human) {
-		if(this.getBounds().intersects(human.getBounds()))
-			this.setVisible(false);
 	}
 
 	public void moveX(int x) {
 		this.x = this.x + x;
-		collisionCheck(human);
 		if (status == 0) {
 			if (this.x < 20)
 				this.setVisible(false);
@@ -104,7 +114,6 @@ public class Snake extends JLabel {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle((int) x, (int) y, 50, 64);
+		return new Rectangle((int) x, (int) y, 32, 32);
 	}
-
 }

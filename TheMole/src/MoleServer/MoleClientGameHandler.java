@@ -50,11 +50,11 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			gameStart.setVisible(false);
 			humanUI.setVisible(true);
 		} else if (s[0].equals("RIGHT"))
-			moleUI.moleInHumanPerformance.moleInHumanMove(s[0]);
+			moleUI.getMoleInHumanPerformance().moleInHumanMove(s[0]);
 		else if (s[0].equals("LEFT"))
-			moleUI.moleInHumanPerformance.moleInHumanMove(s[0]);
+			moleUI.getMoleInHumanPerformance().moleInHumanMove(s[0]);
 		else if (s[0].equals("STOP"))
-			moleUI.moleInHumanPerformance.moleInHumanMove(s[0]);
+			moleUI.getMoleInHumanPerformance().moleInHumanMove(s[0]);
 		else if (s[0].equals("v1EAT")) {
 			humanUI.getV1().setVisible(false);
 			humanUI.setVegcount(humanUI.getVegcount() - 1);
@@ -127,9 +127,9 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			else if (s[i].equals("HUMANITEM2EAT"))
 				moleUI.getI2().setVisible(false);
 			else if (s[i].equals("HUMANSPEEDUP"))
-				moleUI.moleInHumanPerformance.setHumanspeed(10);
+				moleUI.getMoleInHumanPerformance().setHumanspeed(10);
 			else if (s[i].equals("HUMANSPEEDDOWN"))
-				moleUI.moleInHumanPerformance.setHumanspeed(5);
+				moleUI.getMoleInHumanPerformance().setHumanspeed(5);
 			else if (s[i].equals("MOLEMOVE")) {
 				int x = Integer.parseInt(s[i + 1]);
 				int y = Integer.parseInt(s[i + 2]);
@@ -138,6 +138,10 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				humanUI.getHuman().moleTrapTimer().start();
 			else if (s[i].equals("MOLEDIE"))
 				moleUI.moleDie(s[i+1]);
+			else if (s[i].equals("SNAKE")) {
+				int x = Integer.parseInt(s[i+1]);
+				humanUI.makeSnake(x);
+			}
 		}
 	}
 }

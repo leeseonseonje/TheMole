@@ -51,6 +51,11 @@ public class HumanUI extends JPanel {
 	private ChannelHandlerContext ctx;
 	private String name;
 	private int vegcount = 15;
+	private int humanlife = 2;
+	private int snakesecond = 15;
+	private HumanSnake snake;
+	private Timer snakeTimer;
+	private boolean isSnake = false;
 	
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		this.ctx = ctx;
@@ -157,6 +162,10 @@ public class HumanUI extends JPanel {
 	public HumanInMole getM9() {
 		return m9;
 	}
+	public void makeSnake(int x) {
+		snake = new HumanSnake(this, x);
+		add(snake);
+	}
 	public void sethumtrap(boolean a) {
         humtrap = a;
     }
@@ -238,7 +247,6 @@ public class HumanUI extends JPanel {
 				ddMinute = dFormat.format(minute);
 
 				counterLabel.setText(ddMinute + ":" + ddSecond);
-				//vegcountLabel.setText(15 - (v0.getvegcount() + v1.getvegcount() + v2.getvegcount()) + "");
 
 				if (second == -1) {
 					second = 59;
@@ -273,21 +281,5 @@ public class HumanUI extends JPanel {
 	}
 }
 
-/*class H extends JFrame {
-    private HumanUI humanPanel;
-
-    public H() throws IOException {
-        setTitle("Mole Game");
-        setSize(800, 600);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        humanPanel = new HumanUI();
-        add(humanPanel);
-
-        setVisible(true);
-    }
-}*/
 
 

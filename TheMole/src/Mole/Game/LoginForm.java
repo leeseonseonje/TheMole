@@ -148,8 +148,7 @@ public class LoginForm extends JFrame {
 						}
 					}
 				}
-			}
-			
+			}		
 		});
 		
 		signupButton = new JButton("SignUp");

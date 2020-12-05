@@ -14,7 +14,8 @@ public class MoleInHumanPerformance extends JLabel {
 	private boolean timerstop = false;
 	private static int status = 0; // 1Àº ¿À¸¥ÂÊ, 2´Â ¿ÞÂÊ,
 	public int humsecond = 0;
-
+	private int humanlife = 2;
+	
 	private boolean shooting = false;
 
 	private Timer mover;
@@ -66,7 +67,13 @@ public class MoleInHumanPerformance extends JLabel {
 			setIcon(human[0]);
 		}
 	}
-
+	public int gethumanlife() {
+		return humanlife;
+	}
+	public void minushumanlife(int a) {
+		humanlife -= 1;
+		System.out.println("¹ì´êÀ½" );
+	}
 	public void timerstart() {
 		mover();
 		mover.start();

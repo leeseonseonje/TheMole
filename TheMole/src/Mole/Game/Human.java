@@ -46,6 +46,8 @@ public class Human extends JLabel{
 	private String name;
 	private boolean moleKill = true;
 	
+	private int humanlife = 2;
+	
 	private ImageIcon human[] = {  new ImageIcon("img/humanResource/human1.png"),
 			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
 			new ImageIcon("img/humanResource/human4.png"), new ImageIcon("img/humanResource/human5.png"),
@@ -160,6 +162,13 @@ public class Human extends JLabel{
 
 	public void setMoleKill(boolean moleKill) {
 		this.moleKill = moleKill;
+	}
+	public int gethumanlife() {
+		return humanlife;
+	}
+	public void minushumanlife(int a) {
+		humanlife -= 1;
+		System.out.println("πÏ¥Í¿Ω" );
 	}
 	public void shoesTimer() {
 		shoesTimer = new Timer(1000, new ActionListener() {

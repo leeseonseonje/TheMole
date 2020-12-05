@@ -288,9 +288,7 @@ public class Human extends JLabel {
 					mainpanel.sethumtrap(false);
 					humtraptimer.stop();
 				}
-
 			}
-
 		});
 	}
 	public int gethumanlife() {
@@ -303,7 +301,7 @@ public class Human extends JLabel {
 
 	public void humangetitem() {
 		System.out.println("¾ÆÀÌÅÛ ¼·Ãë");
-		//int itemnum = 1;
+		//int itemnum = 0;
 		int itemnum = ((int)(Math.random()*10));
 		switch (itemnum) {
 		case 0:

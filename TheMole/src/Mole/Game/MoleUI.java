@@ -472,6 +472,7 @@ class MolePanel extends JPanel {
 			int itemnum = ((int)(Math.random()*10));
 			switch (itemnum) {
 			case 0:
+			case 2:
 			case 9:
 				System.out.println(itemnum);
 				System.out.println("πÏ««∏Æ »πµÊ");
@@ -596,6 +597,7 @@ class MolePanel extends JPanel {
 			if(y < 290 && humtrap == true) {
 				moleButton.setVisible(false);
 				humtrap = false;
+				molecount--;
 			}
 
 			if (i0.getBounds().intersects(champion) && i0.timerstop == false) {

@@ -1,5 +1,6 @@
 package Mole.Game;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -47,10 +48,15 @@ class MolePanel extends JPanel {
 
 	private JLabel counterLabel;
 	private JLabel vegcountLabel;
+	private JLabel bulletLabel;
+	private JLabel lifeLabel;
+	private JLabel moleCountLabel;
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
-
+	public int snakesecond = 15;
+	
 	public MoleUI frame;
+	
 
 	Timer timer;
 
@@ -73,10 +79,26 @@ class MolePanel extends JPanel {
 	vegetableThread v1;
 	vegetableThread v2;
 
+	private ImageIcon itemteeth = new ImageIcon("img/itemResource/strongteeth.png");
+	private ImageIcon itemtrap = new ImageIcon("img/itemResource/trapM.png");
+	private ImageIcon itemsnakepipe = new ImageIcon("img/itemResource/Snakepipe.png");
+	private JLabel itembox1;
+	private JLabel itembox2;
+	private JLabel humitembox1;
+	private JLabel humitembox2;
 	itemBoxThread i0;
 	itemBoxThread i1;
+	itemBoxThread i2;
+	itemBoxThread i3;
+	
+	Snake snake;
 
 	Human hum;
+	private boolean humtrap = false;
+	private Timer snakeTimer;
+	private Timer humstoptimer;
+	private int humstun = 3;
+	public boolean humstop = false;
 	// itemBoxThread i2;
 	// itemBoxThread i3;
 
@@ -85,10 +107,11 @@ class MolePanel extends JPanel {
 	DecimalFormat dFormat = new DecimalFormat("00");
 
 	public MolePanel() {
-		setLayout(null);
+		
 		// this.setFocusable(true); // 키 리스너
 
 		try {
+			setLayout(null);
 			backImage = ImageIO.read(new File("img/Back4.png"));
 			humanHud = ImageIO.read(new File("img/humanHud.png"));
 			moleHud = ImageIO.read(new File("img/moleHud.png"));
@@ -96,63 +119,109 @@ class MolePanel extends JPanel {
 			moleInv = ImageIO.read(new File("img/inventory.png"));
 			intHuman = ImageIO.read(new File("img/humanint.png"));
 			intMole = ImageIO.read(new File("img/moleint.png"));
-		} catch (Exception e) {
+		
+			m1 = new MoleThread(50, 400, this);
+			m2 = new MoleThread(100, 400, this);
+			m3 = new MoleThread(150, 400, this);
+			m4 = new MoleThread(50, 450, this);
+			m5 = new MoleThread(100, 450, this);
+			m6 = new MoleThread(150, 450, this);
+			m7 = new MoleThread(50, 500, this);
+			m8 = new MoleThread(100, 500, this);
+			m9 = new MoleThread(150, 500, this);
+			
+			v0 = new vegetableThread(0);
+			v1 = new vegetableThread(1);
+			v2 = new vegetableThread(2);
+			
+			i0 = new itemBoxThread(0);
+			i1 = new itemBoxThread(1);
+			
+			hum = new Human(this, 225);	
+			
+			add(i0);
+			add(i1);
+			add(v0);
+			add(v1);
+			add(v2);
+
+			add(hum);
+			
+
+			counterLabel = new JLabel("");
+			counterLabel.setBounds(345, 0, 100, 50);
+			counterLabel.setHorizontalAlignment(JLabel.CENTER);
+			counterLabel.setFont(font1);
+
+			add(counterLabel);
+	
+			counterLabel.setText("03:00");
+			second = 0;
+			minute = 3;
+			normalTimer();
+			timer.start();
+	
+			vegcountLabel = new JLabel("15");
+			vegcountLabel.setBounds(758, 90, 20, 20);
+			vegcountLabel.setHorizontalAlignment(JLabel.CENTER);
+			vegcountLabel.setFont(font2);
+			
+			bulletLabel = new JLabel("5");
+			bulletLabel.setBounds(21, 90, 20, 20);
+			bulletLabel.setHorizontalAlignment(JLabel.CENTER);
+			bulletLabel.setFont(font2);
+			
+			lifeLabel = new JLabel("2");
+			lifeLabel.setBounds(21, 70, 20, 20);
+			lifeLabel.setHorizontalAlignment(JLabel.CENTER);
+			lifeLabel.setFont(font2);
+			
+			moleCountLabel = new JLabel("9");
+			moleCountLabel.setBounds(758, 70, 20, 20);
+			moleCountLabel.setHorizontalAlignment(JLabel.CENTER);
+			moleCountLabel.setFont(font2);
+	
+			add(vegcountLabel);
+			add(bulletLabel);
+			add(lifeLabel);
+			add(moleCountLabel);
+	
+			itembox1 = new JLabel();
+			itembox2 = new JLabel();
+			humitembox1 = new JLabel();
+			humitembox2 = new JLabel();
+			itembox1.setBounds(655,6,36,36);
+			itembox2.setBounds(696,6,36,36);
+			humitembox1.setBounds(655,6,36,36);
+			humitembox2.setBounds(696,6,36,36);
+			itembox1.setVisible(false);
+			add(itembox1);
+			add(itembox2);
+			add(humitembox1);
+			add(humitembox2);
+			
+			soundToPlay.play();
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		m1 = new MoleThread(50, 400);
-		m1.start();
-		m2 = new MoleThread(100, 400);
-		m3 = new MoleThread(150, 400);
-		m4 = new MoleThread(50, 450);
-		m5 = new MoleThread(100, 450);
-		m6 = new MoleThread(150, 450);
-		m7 = new MoleThread(50, 500);
-		m8 = new MoleThread(100, 500);
-		m9 = new MoleThread(150, 500);
-
-		v0 = new vegetableThread(0);
-		v1 = new vegetableThread(1);
-		v2 = new vegetableThread(2);
-
-		i0 = new itemBoxThread(0);
-		i1 = new itemBoxThread(1);
-
-		this.add(new Human(this, 200, 225));
-
-		counterLabel = new JLabel("");
-		counterLabel.setBounds(345, 0, 100, 50);
-		counterLabel.setHorizontalAlignment(JLabel.CENTER);
-		counterLabel.setFont(font1);
-
-		add(counterLabel);
-
-		counterLabel.setText("03:00");
-		second = 0;
-		minute = 3;
-		normalTimer();
-		timer.start();
-
-		vegcountLabel = new JLabel("15");
-		vegcountLabel.setBounds(758, 90, 20, 20);
-		vegcountLabel.setHorizontalAlignment(JLabel.CENTER);
-		vegcountLabel.setFont(font2);
-
-		add(vegcountLabel);
-
-		soundToPlay.play();
-		
-		// add(hum);
+	}
+	public void sethumtrap(boolean a) {
+		humtrap = a;
+	}
+	public boolean gethumtrap() {
+		return humtrap;
 	}
 
 	// 인터페이스 그리는 위치
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g); // 여기서 super인 패널에 그림을 그리는것
 		g.drawImage(backImage, 0, 0, null);
-		// g.drawImage(humanHud, 0, 70, null);
+		g.drawImage(humanHud, 0, 70, null);
 		g.drawImage(moleHud, 715, 70, null);
-		// g.drawImage(humanInv, 55, 0, null);
+		g.drawImage(humanInv, 55, 0, null);
 		g.drawImage(moleInv, 650, 0, null);
-		// g.drawImage(intHuman, 0, 0, null);
+		g.drawImage(intHuman, 0, 0, null);
 		g.drawImage(intMole, 740, 0, null);
 	}
 
@@ -169,7 +238,9 @@ class MolePanel extends JPanel {
 
 				counterLabel.setText(ddMinute + ":" + ddSecond);
 				vegcountLabel.setText(15 - (v0.getvegcount() + v1.getvegcount() + v2.getvegcount()) + "");
-
+				bulletLabel.setText(hum.getbcount() + "");
+				lifeLabel.setText(hum.gethumanlife() + "");
+				
 				if (second == -1) {
 					second = 59;
 					minute--;
@@ -178,7 +249,7 @@ class MolePanel extends JPanel {
 					ddMinute = dFormat.format(minute);
 					counterLabel.setText(ddMinute + ":" + ddSecond);
 				}
-				if (minute == 0 && second == 0) {
+				if (minute == 0 && second == 0 || moleCountLabel.getText().equals("0")) {
 					timer.stop();
 					try {
 						try {
@@ -195,7 +266,7 @@ class MolePanel extends JPanel {
 					MainFrame main = new MainFrame();
 					main.setVisible(true);
 				}
-				if (vegcountLabel.getText().equals("0")) {
+				if (vegcountLabel.getText().equals("0") || lifeLabel.getText().equals("0")) {
 					timer.stop();
 					try {
 						try {
@@ -216,172 +287,15 @@ class MolePanel extends JPanel {
 		});
 	}
 
-	class itemBoxThread {
-		private ImageIcon itemB = new ImageIcon("img/itemBox.png");
-		JLabel itemBox = new JLabel(itemB);
-		private int x, y, section;
-		private Timer itemtimer;
-		private int itemsecond;
-		private int itemcount = 0;
-		private boolean timerstop = false;
-
-		public itemBoxThread(int section) {
-			this.section = section;
-			x = ((int) (Math.random() * 260)) + 263 * this.section;
-			y = 235;
-			itemBox.setBounds(x, y, 40, 40);
-			add(itemBox);
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setsecond(int second) {
-			itemsecond = second;
-		}
-
-		public int getsecond() {
-			return itemsecond;
-		}
-
-		public int getcouont() {
-			return itemcount;
-		}
-
-		public int setcount(int count) {
-			return itemcount = count;
-		}
-
-		public void setposition() {
-			x = ((int) (Math.random() * 260)) + 263 * this.section;
-			y = 235;
-			itemBox.setBounds(x, y, 40, 40);
-		}
-
-		public void itemtimer() {
-			timerstop = true;
-			itemtimer = new Timer(1000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					itemsecond++;
-					if (itemsecond == 30) {
-						setposition();
-						itemCreateSound.playSound("sound/itemCreated.mp3");
-						itemBox.setVisible(true);
-						itemtimer.stop();
-						timerstop = false;
-						itemcount++;
-					}
-				}
-			});
-		}
-
-		public void setVisible(boolean b) {
-			if (b == true)
-				itemBox.setVisible(true);
-			else if (b == false)
-				itemBox.setVisible(false);
-		}
-		public Rectangle getBounds() {
-			return new Rectangle( x, y, 32, 32);
-		}
-	}
-
-	class vegetableThread {
-		private ImageIcon vegetables[] = { new ImageIcon("img/vegetableResource/vegetable0.png"),
-				new ImageIcon("img/vegetableResource/vegetable1.png"),
-				new ImageIcon("img/vegetableResource/vegetable2.png"),
-				new ImageIcon("img/vegetableResource/vegetable3.png"),
-				new ImageIcon("img/vegetableResource/vegetable4.png"),
-				new ImageIcon("img/vegetableResource/vegetable5.png"),
-				new ImageIcon("img/vegetableResource/vegetable6.png"),
-				new ImageIcon("img/vegetableResource/vegetable7.png"),
-				new ImageIcon("img/vegetableResource/vegetable8.png"),
-				new ImageIcon("img/vegetableResource/vegetable9.png"), };
-		JLabel vegetable = new JLabel(vegetables[(int)(Math.random()*10)]);
-		private int x, y, section;
-		private Timer vegtimer;
-		private int vegsecond;
-		private int vegcount = 0;
-		private boolean timerstop = false;
-
-		public vegetableThread(int section) {
-			this.section = section;
-			x = ((int) (Math.random() * 260)) + 247 * this.section;
-			y = 235;
-			vegetable.setBounds(x, y, 32, 32);
-			add(vegetable);
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setsecond(int second) {
-			vegsecond = second;
-		}
-
-		public int getsecond() {
-			return vegsecond;
-		}
-
-		public int getvegcount() {
-			return vegcount;
-		}
-
-		public int plusvegcount() {
-			return vegcount++;
-		}
-
-		public void setposition() {
-			x = ((int) (Math.random() * 260)) + 263 * this.section;
-			y = 235;
-			vegetable.setBounds(x, y, 32, 32);
-		}
-
-		public void vegtimer() {
-			timerstop = true;
-			vegtimer = new Timer(1000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					vegsecond++;
-					if (vegsecond == 10) {
-						setposition();
-						itemCreateSound.playSound("sound/itemCreated.mp3");
-						vegetable.setVisible(true);
-						vegtimer.stop();
-						timerstop = false;
-					}
-				}
-			});
-		}
-
-		public void setVisible(boolean b) {
-			if (b == true)
-				vegetable.setVisible(true);
-			else if (b == false)
-				vegetable.setVisible(false);
-		}
-		public Rectangle getBounds() {
-			return new Rectangle( x, y, 32, 32);
-		}
-	}
-
 	class MoleThread extends Thread {
 		private int x, y;
 		private int direction = 0;
 		public int molesecond = 0;
 		private JButton moleButton;
 		private Rectangle champion;
+		private boolean life = true;
+		private MolePanel n;
+		
 		// mole 스프라이트 14장
 		private ImageIcon mole[] = { new ImageIcon("img/moleResource/moleL1.png"),
 				new ImageIcon("img/moleResource/moleL2.png"), new ImageIcon("img/moleResource/moleL3.png"),
@@ -404,19 +318,20 @@ class MolePanel extends JPanel {
 		private double startX, startY;
 		private double runTime;
 
-		private Human human;
+		private boolean enhenceteeth = false;
 
-		public int getX() {
+		public int getx() {
 			return x;
 		}
 
-		public int getY() {
+		public int gety() {
 			return y;
 		}
 
-		public MoleThread(int x, int y) {
+		public MoleThread(int x, int y, MolePanel m) {
 			this.x = x;
 			this.y = y;
+			n = m;
 
 			champion = new Rectangle(x, y, 32, 32);
 
@@ -466,7 +381,7 @@ class MolePanel extends JPanel {
 					});
 				}
 			});
-			timer = new Timer(30, e -> {
+			timer = new Timer(10, e -> {
 				if (eating == false) {
 
 					molesecond++;
@@ -496,7 +411,147 @@ class MolePanel extends JPanel {
 					timer.stop();
 			});
 		}
+		
+		public void moledie() {
+			moleButton.setVisible(false);
+			champion.setBounds(0,0,0,0);
+			life = false;
+		}
+		
+		public boolean getlife() {
+			return life;
+		}
 
+		public void snakeTimer() {
+			snakeTimer = new Timer(1000, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					snakesecond--;
+					System.out.println(snakesecond);
+					if (itembox1.getIcon() == itemsnakepipe) {
+						itembox1.setFont(font1);
+						itembox1.setText(snakesecond + "");
+						itembox1.setVerticalTextPosition(JLabel.CENTER);
+						itembox1.setHorizontalTextPosition(JLabel.CENTER);
+						itembox1.setForeground(Color.cyan);
+					} else {
+						itembox2.setText(snakesecond + "");
+						itembox2.setFont(font1);
+						itembox2.setVerticalTextPosition(JLabel.CENTER);
+						itembox2.setHorizontalTextPosition(JLabel.CENTER);
+						itembox2.setForeground(Color.cyan);
+					}
+					if (snakesecond == 0) {
+						if (itembox1.getIcon() == itemsnakepipe) {
+							itembox1.setIcon(null);
+							itembox1.setText(null);
+							itembox1.setVisible(false);
+						} else {
+							itembox2.setIcon(null);
+							itembox2.setText(null);
+						}
+						snakesecond = 15;
+						itembox1.setVisible(false);
+						snakeTimer.stop();
+					}
+				}
+			});
+		}
+		
+		public void molegetitem() {
+			//int itemnum = 0;
+			int itemnum = ((int)(Math.random()*10));
+			switch (itemnum) {
+			case 0:
+			case 9:
+				System.out.println(itemnum);
+				System.out.println("뱀피리 획득");
+				System.out.println(itembox1.isVisible());
+				snake = new Snake(n);
+				add(snake);
+				if(itembox1.isVisible() == false) {
+					itembox1.setVisible(true);
+					itembox1.setIcon(itemsnakepipe);
+					snakeTimer();
+					snakeTimer.start();
+				} else if (itembox1.getIcon() == itemsnakepipe || itembox2.getIcon() == itemsnakepipe) {
+					snakesecond += 17;
+				} else {
+					snakeTimer();
+					snakeTimer.start();
+					itembox2.setIcon(itemsnakepipe);
+				}
+				break;
+			case 1:
+			case 8:
+				System.out.println(itemnum);
+				System.out.println("사람 정지");
+				if(itembox1.isVisible() == false) {
+					itembox1.setVisible(true);
+					itembox1.setIcon(itemtrap);
+					humstop = true;
+					humstop();
+					humstoptimer.start();
+				}
+				else if (itembox1.getIcon() == itemtrap || itembox2.getIcon() == itemtrap) {
+					humstun+= 3;
+				}
+				else {
+					humstop();
+					humstoptimer.start();
+					itembox2.setIcon(itemtrap);
+				}
+				break;
+			default: 
+				enhenceteeth = true;
+				System.out.println("강철이빨 획득");
+				System.out.println(itembox1.isVisible());
+				if(itembox1.isVisible() == false) {
+					itembox1.setVisible(true);
+					itembox1.setIcon(itemteeth);
+				}
+				else {
+					itembox2.setIcon(itemteeth);
+				}
+				break;
+			}
+		}
+		
+		public void humstop() {
+			humstoptimer = new Timer(1000, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					humstun--;
+					if (itembox1.getIcon() == itemtrap) {
+						itembox1.setFont(font1);
+						itembox1.setText(humstun + "");
+						itembox1.setVerticalTextPosition(JLabel.CENTER);
+						itembox1.setHorizontalTextPosition(JLabel.CENTER);
+						itembox1.setForeground(Color.cyan);
+					} else {
+						itembox2.setText(humstun + "");
+						itembox2.setFont(font1);
+						itembox2.setVerticalTextPosition(JLabel.CENTER);
+						itembox2.setHorizontalTextPosition(JLabel.CENTER);
+						itembox2.setForeground(Color.cyan);
+					}
+					if(humstun == 0) {
+						if(itembox1.getIcon() == itemtrap) {
+							itembox1.setIcon(null);
+							itembox1.setText(null);
+						}
+						else {
+							itembox2.setIcon(null);
+							itembox2.setText(null);
+						}
+						humstop = false;
+						humstun = 3;
+						humstoptimer.stop();
+					}
+				}
+			});
+		}
+		
 		public void eatTimer() {
 			eating = true;
 			eattimer = new Timer(1000, new ActionListener() {
@@ -529,9 +584,14 @@ class MolePanel extends JPanel {
 
 			repaint();
 			
-			if (y >= 270 && x >= 12 && x <= 770) {
-				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
-				champion.setRect(x - 5, y - 5, 10, 10);
+			if (y >= 270) {
+				moleButton.setBounds((int) x - 15, (int) y - 15, 32, 32);
+				champion.setRect(x - 15, y - 15, 32, 32);
+			}
+			
+			if(y < 290 && humtrap == true) {
+				moleButton.setVisible(false);
+				humtrap = false;
 			}
 
 			if (i0.getBounds().intersects(champion) && i0.timerstop == false) {
@@ -539,20 +599,16 @@ class MolePanel extends JPanel {
 				i0.setsecond(0);
 				i0.itemtimer();
 				i0.itemtimer.start();
-				itemGetSound.playSound("sound/itemGet.mp3");
-				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
+				//itemGetSound.playSound("sound/itemGet.mp3");
+				molegetitem();
 
 			} else if (i1.getBounds().intersects(champion) && i1.timerstop == false) {
 				i1.setVisible(false);
 				i1.setsecond(0);
 				i1.itemtimer();
 				i1.itemtimer.start();
-				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
-				itemGetSound.playSound("sound/itemGet.mp3");
+				//itemGetSound.playSound("sound/itemGet.mp3");
+				molegetitem();
 			}
 
 			if (v0.getBounds().intersects(champion) && v0.timerstop == false && eating == false) {
@@ -562,8 +618,20 @@ class MolePanel extends JPanel {
 				v0.vegtimer.start();
 				vegEatSound.playSound("sound/vegEat.wav");
 				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
+				if(enhenceteeth == false) {	
+					eatTimer();
+					eattimer.start();
+					} else {
+						enhenceteeth = false ;
+						if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+							itembox1.setIcon(null);
+							enhenceteeth = true;
+						}
+						else if(itembox1.getIcon() == itemteeth)
+							itembox1.setIcon(null);
+						else 
+							itembox2.setIcon(null);
+					}
 				v0.plusvegcount();
 			} else if (v1.getBounds().intersects(champion) && v1.timerstop == false && eating == false) {
 				vegEatSound.playSound("sound/vegEat.wav");
@@ -572,8 +640,20 @@ class MolePanel extends JPanel {
 				v1.vegtimer();
 				v1.vegtimer.start();
 				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
+				if(enhenceteeth == false) {	
+					eatTimer();
+					eattimer.start();
+					} else {
+						enhenceteeth = false ;
+						if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+							itembox1.setIcon(null);
+							enhenceteeth = true;
+						}
+						else if(itembox1.getIcon() == itemteeth)
+							itembox1.setIcon(null);
+						else 
+							itembox2.setIcon(null);
+						}
 				v1.plusvegcount();
 			} else if (v2.getBounds().intersects(champion) && v2.timerstop == false && eating == false) {
 				vegEatSound.playSound("sound/vegEat.wav");
@@ -582,8 +662,20 @@ class MolePanel extends JPanel {
 				v2.vegtimer();
 				v2.vegtimer.start();
 				eatsecond = 0;
-				eatTimer();
-				eattimer.start();
+				if(enhenceteeth == false) {	
+					eatTimer();
+					eattimer.start();
+					} else {
+						enhenceteeth = false ;
+						if(itembox1.getIcon() == itemteeth && itembox2.getIcon() == itemteeth) {
+							itembox1.setIcon(null);
+							enhenceteeth = true;
+						}
+						else if(itembox1.getIcon() == itemteeth)
+							itembox1.setIcon(null);
+						else 
+							itembox2.setIcon(null);
+					}
 				v2.plusvegcount();
 			}
 		}

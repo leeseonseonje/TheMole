@@ -140,7 +140,15 @@ class MainFrame extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				System.out.println("도움말 클릭");
 				setVisible(false);
-				new QuestionFrame();
+				try {
+					if (playStatus == true) {
+						soundToPlay.pause();
+					}
+					new QuestionFrame();
+
+				} catch (Exception error) {
+					error.printStackTrace();
+				}
 			}
 		});
 		mainBG.add(query);
@@ -163,7 +171,15 @@ class MainFrame extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				System.out.println("리더보드 클릭");
 				setVisible(false);
-				new LeaderBoardFrame();
+				try {
+					if (playStatus == true) {
+						soundToPlay.pause();
+					}
+					new LeaderBoardFrame();
+
+				} catch (Exception error) {
+					error.printStackTrace();
+				}
 			}
 		});
 

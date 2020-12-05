@@ -60,10 +60,6 @@ class MolePanel extends JPanel {
 	Timer timer;
 
 	SoundJLayer soundToPlay = new SoundJLayer("res/ingameBG_Lisport.mp3");
-	EffectSound moleDeadSound = new EffectSound();
-	EffectSound vegEatSound = new EffectSound();
-	EffectSound itemGetSound = new EffectSound();
-	EffectSound itemCreateSound = new EffectSound();
 	
 	MoleThread m1;
 	MoleThread m2;

@@ -93,14 +93,19 @@ public class Human extends JLabel {
 					}
 					setBounds(getX(), y, 50, 64);
 				}
-				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false && pan.humstop == false && bulletcount != 0) {
+				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false && pan.humstop == false && bulletcount != 0 && status == 2) {
 					shooting = true;
-					Bullet a = new Bullet(x, 2, pan);
+					Bullet a = new Bullet(x, 2,status, pan);
 					minusbcount();
 				}
-				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.humstop == false && bulletcount != 0) {
+				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.humstop == false && bulletcount != 0 && status == 1) {
 					shooting = true;
-					Bullet b = new Bullet(x, 1, pan);
+					Bullet b = new Bullet(x, 1,status, pan);
+					minusbcount();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_S && shooting == false && pan.humstop==false && bulletcount != 0) {
+					shooting = true;
+					Bullet a = new Bullet(x, 3, status, pan);
 					minusbcount();
 				}
 				if (pan.i0.getX() > x - 10 && pan.i0.getX() < x + 3 && pan.i0.timerstop == false) {
@@ -137,7 +142,9 @@ public class Human extends JLabel {
 					shooting = false;
 				} else if (e.getKeyCode() == KeyEvent.VK_D) {
 					shooting = false;
-				}
+				} else if (e.getKeyCode() == KeyEvent.VK_S) {
+                    shooting = false;
+                }
 			}
 
 			public void keyTyped(KeyEvent e) {

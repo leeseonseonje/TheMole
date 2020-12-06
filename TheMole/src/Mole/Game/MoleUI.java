@@ -100,15 +100,7 @@ class MolePanel extends JPanel {
 
 			i0 = new itemBoxThread(0);
 			i1 = new itemBoxThread(1);
-			//i2 = new itemBoxThread(2);
-			//i3 = new itemBoxThread(3);
-			
-			//add(v0);
-			//add(v1);
-			//add(v2);
 
-			//v0.setVisible(false);
-			
 			counterLabel = new JLabel("");
 			counterLabel.setBounds(345, 0, 100, 50);
 			counterLabel.setHorizontalAlignment(JLabel.CENTER);

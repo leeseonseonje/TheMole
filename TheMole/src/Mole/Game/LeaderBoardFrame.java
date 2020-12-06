@@ -36,8 +36,8 @@ class LeaderBoardFrame extends JFrame { // 리더보드 버튼을 클릭했을 때 나오는 프
 	private JTextArea boardcontent;
 	private static int num = 1; // 올라감
 
-	ImageIcon back_img = new ImageIcon("img/back.png");
-	ImageIcon back1_img = new ImageIcon("img/back1.png");
+	ImageIcon back_img = new ImageIcon("img/mainResource/back.png");
+	ImageIcon back1_img = new ImageIcon("img/mainResource/back1.png");
 
 	LeaderBoardFrame() {
 		CustomCursor();
@@ -51,7 +51,7 @@ class LeaderBoardFrame extends JFrame { // 리더보드 버튼을 클릭했을 때 나오는 프
 
 		// 아이콘 이미지 설정
 		Toolkit kit = Toolkit.getDefaultToolkit();
-		Image icon = kit.getImage("img/moleicon.png");
+		Image icon = kit.getImage("img/mainResource/moleicon.png");
 		setIconImage(icon);
 
 		back = new JButton(back_img);
@@ -117,7 +117,7 @@ class LeaderBoardFrame extends JFrame { // 리더보드 버튼을 클릭했을 때 나오는 프
 	public void CustomCursor() { // 커스텀 커서(마우스 커서)
 
 		Toolkit tk = Toolkit.getDefaultToolkit();
-		Image cursorimage = tk.getImage("img/cropcursor.png");
+		Image cursorimage = tk.getImage("img/mainResource/cropcursor.png");
 		Point point = new Point(20, 20);
 		Cursor cursor = tk.createCustomCursor(cursorimage, point, "crop");
 		leaderBoardBG.setCursor(cursor);
@@ -129,8 +129,8 @@ class LeaderBoardFrame extends JFrame { // 리더보드 버튼을 클릭했을 때 나오는 프
 		
 		public LeaderBG() {
 			try {
-				backs = ImageIO.read(new File("img/threemoles.png"));
-				crown = ImageIO.read(new File("img/crown.png"));
+				backs = ImageIO.read(new File("img/mainResource/threemoles.png"));
+				crown = ImageIO.read(new File("img/mainResource/crown.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -16,7 +16,7 @@ import Mole.Game.Sound.EffectSound;
 
 public class Human extends JLabel {
 
-	private int x;
+	private double x;
 	private int y;
 	private boolean timerstop = false;
 	private static int status = 0; // 1은 오른쪽, 2는 왼쪽,
@@ -95,17 +95,17 @@ public class Human extends JLabel {
 				}
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false && pan.humstop == false && bulletcount != 0 && status == 2) {
 					shooting = true;
-					Bullet a = new Bullet(x, 2,status, pan);
+					Bullet a = new Bullet((int)x, 2,status, pan);
 					minusbcount();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.humstop == false && bulletcount != 0 && status == 1) {
 					shooting = true;
-					Bullet b = new Bullet(x, 1,status, pan);
+					Bullet b = new Bullet((int)x, 1,status, pan);
 					minusbcount();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_S && shooting == false && pan.humstop==false && bulletcount != 0) {
 					shooting = true;
-					Bullet a = new Bullet(x, 3, status, pan);
+					Bullet a = new Bullet((int)x, 3, status, pan);
 					minusbcount();
 				}
 				if (pan.i0.getX() > x - 10 && pan.i0.getX() < x + 3 && pan.i0.timerstop == false) {
@@ -357,7 +357,7 @@ public class Human extends JLabel {
 		return (int) y;
 	}
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = this.x + x;
 	}
 

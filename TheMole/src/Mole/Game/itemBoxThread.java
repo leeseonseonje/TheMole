@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 
 public class itemBoxThread extends JLabel{
-	private ImageIcon itemB = new ImageIcon("img/itemBox.png");
+	private ImageIcon itemB = new ImageIcon("img/ingameResource/itemBox.png");
 	private int x, y,section;
 	public Timer itemtimer;
 	private int itemsecond;

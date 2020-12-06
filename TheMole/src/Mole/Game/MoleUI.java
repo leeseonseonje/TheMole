@@ -114,8 +114,6 @@ class MolePanel extends JPanel {
 
 	public MolePanel() {
 
-		// this.setFocusable(true); // 키 리스너
-
 		try {
 			setLayout(null);
 			backImage = ImageIO.read(new File("img/ingameResource/backgrounds.png"));

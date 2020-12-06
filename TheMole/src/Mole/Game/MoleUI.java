@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -22,8 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import Mole.Game.Sound.*;
-
+import Mole.Game.Sound.SoundJLayer;
 import javazoom.jl.decoder.JavaLayerException;
 
 public class MoleUI extends JFrame {
@@ -94,13 +95,13 @@ class MolePanel extends JPanel {
 	private Timer humstoptimer;
 	private int humstun = 3;
 	public boolean humstop = false;
-	
+	public boolean musicStatus = true;
 	public boolean isSnake = false;
 
 	int second, minute;
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
-
+	
 	public MolePanel() {
 		
 		// this.setFocusable(true); // 키 리스너
@@ -195,6 +196,42 @@ class MolePanel extends JPanel {
 			
 			soundToPlay.play();
 			
+			//게임플레이 중 'm'키를 누르면 음소거, 다시 누르면 다시 시작
+			addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent e) {
+					if (e.getKeyCode() == KeyEvent.VK_M) {
+						if(musicStatus == true) {
+							try {
+								soundToPlay.pause();
+								musicStatus = false;
+							} catch (JavaLayerException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						else {
+							soundToPlay.play();
+							musicStatus = true;
+						}
+					}
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void keyTyped(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -229,7 +266,7 @@ class MolePanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				
 				second--;
 
 				ddSecond = dFormat.format(second);

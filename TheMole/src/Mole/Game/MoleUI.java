@@ -3,7 +3,9 @@ package Mole.Game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,6 +35,10 @@ public class MoleUI extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// 아이콘 이미지 설정
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Image icon = kit.getImage("img/moleicon.png");
+		setIconImage(icon);
 
 		molePanel = new MolePanel(); // molePanel 생성
 
@@ -43,7 +49,7 @@ public class MoleUI extends JFrame {
 }
 
 class MolePanel extends JPanel {
-	
+
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 
 	private JLabel counterLabel;
@@ -90,15 +96,15 @@ class MolePanel extends JPanel {
 
 	Snake snake;
 	Human hum;
-	
+
 	private boolean humtrap = false;
 	private Timer snakeTimer;
 	private Timer humstoptimer;
 	private int humstun = 3;
 	public boolean humstop = false;
-	
+
 	public boolean isSnake = false;
-	
+
 	int second, minute;
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
@@ -108,7 +114,7 @@ class MolePanel extends JPanel {
 	public MolePanel() {
 		try {
 			setLayout(null);
-			backImage = ImageIO.read(new File("img/Back4.png"));
+			backImage = ImageIO.read(new File("img/backgrounds.png"));
 			humanHud = ImageIO.read(new File("img/humanHud.png"));
 			moleHud = ImageIO.read(new File("img/moleHud.png"));
 			humanInv = ImageIO.read(new File("img/inventory.png"));
@@ -116,7 +122,7 @@ class MolePanel extends JPanel {
 			intHuman = ImageIO.read(new File("img/humanint.png"));
 			intMole = ImageIO.read(new File("img/moleint.png"));
 
-			m1 = new MoleThread(50, 400, this);
+			m1 = new MoleThread(50, 250, this);
 			m2 = new MoleThread(100, 400, this);
 			m3 = new MoleThread(150, 400, this);
 			m4 = new MoleThread(50, 450, this);
@@ -217,13 +223,13 @@ class MolePanel extends JPanel {
 	public boolean gethumtrap() {
 		return humtrap;
 	}
-	
+
 	public void makeSnake() {
 		snake = new Snake(this);
 		add(snake);
 	}
 
-	//인터페이스 그리는 위치 - (+ 드래그로 만드는 사각형 포함)
+	// 인터페이스 그리는 위치 - (+ 드래그로 만드는 사각형 포함)
 	public void paintComponent(Graphics g) { // 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
@@ -391,6 +397,7 @@ class MolePanel extends JPanel {
 		private MolePanel n;
 		private int molecount = 1;
 
+		// 15장의 스프라이트
 		private ImageIcon mole[] = { new ImageIcon("img/moleResource/moleL1.png"),
 				new ImageIcon("img/moleResource/moleL2.png"), new ImageIcon("img/moleResource/moleL3.png"),
 				new ImageIcon("img/moleResource/moleLS1.png"), new ImageIcon("img/moleResource/moleLS2.png"),
@@ -398,7 +405,7 @@ class MolePanel extends JPanel {
 				new ImageIcon("img/moleResource/moleR2.png"), new ImageIcon("img/moleResource/moleR3.png"),
 				new ImageIcon("img/moleResource/moleRS1.png"), new ImageIcon("img/moleResource/moleRS2.png"),
 				new ImageIcon("img/moleResource/moleRS3.png"), new ImageIcon("img/moleResource/moleS.png"),
-				new ImageIcon("img/moleResource/moleSS.png") };
+				new ImageIcon("img/moleResource/moleSS.png"), new ImageIcon("img/moleResource/moleD.png") };
 
 		private Timer timer;
 		private double speed = 0.15;
@@ -407,6 +414,9 @@ class MolePanel extends JPanel {
 		private Timer eattimer;
 		private int eatsecond;
 		private boolean eating = false;
+
+		private Timer deadtime;
+		private int deadsec;
 
 		private double targetX, targetY;
 		private double startX, startY;
@@ -527,15 +537,31 @@ class MolePanel extends JPanel {
 		}
 
 		public void moledie() {
-			moleButton.setVisible(false);
-			champion.setBounds(0, 0, 0, 0);
-			life = false;
-			molecount--;
+			moleDeadTimer();
+			deadtime.start();
+			moleButton.setIcon(mole[14]);
+		}
+
+		public void moleDeadTimer() {
+			deadtime = new Timer(500, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					deadsec++;
+					if (deadsec == 1) {
+						deadtime.stop();
+						moleButton.setVisible(false);
+						champion.setBounds(0, 0, 0, 0);
+						life = false;
+						molecount--;
+					}
+				}
+			});
 		}
 
 		public boolean getlife() {
 			return life;
 		}
+
 		public int getmoleLife() {
 			return molecount;
 		}
@@ -796,7 +822,8 @@ class MolePanel extends JPanel {
 					direction = 2;
 
 				// 피타고라스의 정리
-				double distance = Math.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
+				double distance = Math
+						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
 
 				runTime = distance / (double) speed;
 			}

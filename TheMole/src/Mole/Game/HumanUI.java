@@ -19,14 +19,13 @@ import MoleServer.MoleClientMainHandler;
 import io.netty.channel.ChannelHandlerContext;
 
 public class HumanUI extends JPanel {
-	/*public static void main(String[] args) throws IOException, InterruptedException {
-		new H();
-	}*/
 
 	private BufferedImage backImage;
 	private BufferedImage humanHud;
 	private BufferedImage humanInv;
 	private BufferedImage intHuman;
+	private BufferedImage moleHud;
+	private BufferedImage intMole;
 	private Human human;
 	
 	private vegetableThread v1;
@@ -56,6 +55,12 @@ public class HumanUI extends JPanel {
 	private HumanSnake snake;
 	private Timer snakeTimer;
 	private boolean isSnake = false;
+	private boolean humStop = false;
+	private JLabel bulletLabel;
+	private JLabel lifeLabel;
+	private JLabel vegCountLabel;
+	private JLabel moleCountLabel;
+	private int moleCount = 9;
 	
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		this.ctx = ctx;
@@ -65,6 +70,8 @@ public class HumanUI extends JPanel {
 		humanHud = ImageIO.read(new File("img/humanHud.png"));
 		humanInv = ImageIO.read(new File("img/inventory.png"));
 		intHuman = ImageIO.read(new File("img/humanint.png"));
+		moleHud = ImageIO.read(new File("img/moleHud.png"));
+		intMole = ImageIO.read(new File("img/moleint.png"));
 		human = new Human(this, 200, 225, ctx, name);
 		add(human);
 		
@@ -109,13 +116,39 @@ public class HumanUI extends JPanel {
 		add(counterLabel);
 
 		counterLabel.setText("03:00");
-
 		second = 0;
-		minute = 3;
-		
+		minute = 3;		
 		normalTimer();
 		timer.start();
 		
+		bulletLabel = new JLabel("5");
+		bulletLabel.setBounds(21, 90, 20, 20);
+		bulletLabel.setHorizontalAlignment(JLabel.CENTER);
+		bulletLabel.setFont(font2);
+		
+		lifeLabel = new JLabel("2");
+		lifeLabel.setBounds(21, 70, 20, 20);
+		lifeLabel.setHorizontalAlignment(JLabel.CENTER);
+		lifeLabel.setFont(font2);
+		
+		vegCountLabel = new JLabel("15");
+		vegCountLabel.setBounds(758, 90, 20, 20);
+		vegCountLabel.setHorizontalAlignment(JLabel.CENTER);
+		vegCountLabel.setFont(font2);
+		
+		moleCountLabel = new JLabel(moleCount + "");
+		moleCountLabel.setBounds(758, 70, 20, 20);
+		moleCountLabel.setHorizontalAlignment(JLabel.CENTER);
+		moleCountLabel.setFont(font2);
+		
+		add(bulletLabel);
+		add(lifeLabel);	
+		add(vegCountLabel);
+		add(moleCountLabel);
+		
+	}
+	public JLabel getVegCountLabel() {
+		return vegCountLabel;
 	}
 	public vegetableThread getV1() {
 		return v1;
@@ -184,14 +217,36 @@ public class HumanUI extends JPanel {
 	public void setVegcount(int vegcount) {
 		this.vegcount = vegcount;
 	}
-
-	
+	public boolean getIsSnake() {
+		return isSnake;
+	}
+	public HumanSnake getSnake() {
+		return snake;
+	}
+	public boolean getHumStop() {
+		return humStop;
+	}
+	public void setHumStop(boolean humStop) {
+		this.humStop = humStop;
+	}
+	public int getMoleCount() {
+		return moleCount;
+	}
+	public void setMoleCount(int moleCount) {
+		this.moleCount = moleCount;
+	}
+	public JLabel getMoleCountLabel() {
+		return moleCountLabel;
+	}
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
 		g.drawImage(humanHud, 0, 70, null);
 		g.drawImage(humanInv, 55, 0, null);
 		g.drawImage(intHuman, 0, 0, null);
+		g.drawImage(moleHud, 715, 70, null);
+		g.drawImage(intMole, 740, 0, null);
+		
 		
 	}
 	
@@ -245,7 +300,8 @@ public class HumanUI extends JPanel {
 
 				ddSecond = dFormat.format(second);
 				ddMinute = dFormat.format(minute);
-
+				bulletLabel.setText(human.getBulletCount() + "");
+				lifeLabel.setText(human.getHumanLife() + "");
 				counterLabel.setText(ddMinute + ":" + ddSecond);
 
 				if (second == -1) {

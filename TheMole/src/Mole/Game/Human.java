@@ -20,7 +20,7 @@ public class Human extends JLabel{
 	private int x;
 	private int y;
 	private boolean timerstop = false;
-	private static int status = 0; // 1¿∫ ø¿∏•¬ , 2¥¬ øﬁ¬ ,
+	private int status = 0; // 1¿∫ ø¿∏•¬ , 2¥¬ øﬁ¬ ,
 	public int humsecond = 0;
 	public int shosecond = 15;
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
@@ -33,7 +33,7 @@ public class Human extends JLabel{
 	private int humtrapsecond = 10;
 	private Timer shoesTimer;
 	private boolean moving = false;
-	HumanUI humanUi;
+	private HumanUI humanUi;
 	
 	private JLabel itembox1;
 	private JLabel itembox2;
@@ -46,8 +46,9 @@ public class Human extends JLabel{
 	private String name;
 	private boolean moleKill = true;
 	
-	private int humanlife = 2;
-	
+	private int humanLife = 2;
+	private int bulletCount = 5;
+
 	private ImageIcon human[] = {  new ImageIcon("img/humanResource/human1.png"),
 			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
 			new ImageIcon("img/humanResource/human4.png"), new ImageIcon("img/humanResource/human5.png"),
@@ -76,9 +77,6 @@ public class Human extends JLabel{
 		itembox1.setVisible(false);
 		
 		pan.addKeyListener(new KeyListener() {
-
-			//private int x = this.x;
-			
 			
 			public void keyPressed(KeyEvent e) {
 				
@@ -106,13 +104,23 @@ public class Human extends JLabel{
 					}
 					setBounds(getX(),y,50,64);
 				}
-				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false) {
+				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false  && pan.getHumStop() == false && bulletCount != 0 && status == 2) {
+					ctx.writeAndFlush("[BULLET]," + name + "," + 2 + "," + status + ",");
 					shooting = true;
-					Bullet a = new Bullet(getX(), 2, pan);
+					Bullet a = new Bullet(getX(), 2, status, pan);
+					minusBcount();
 				}
-				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false) {
+				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.getHumStop() == false && bulletCount != 0 && status == 1) {
+					ctx.writeAndFlush("[BULLET]," + name + "," + 1 + "," + status + ",");
 					shooting = true;
-					Bullet b =new Bullet(getX(), 1, pan);
+					Bullet b =new Bullet(getX(), 1, status, pan);
+					minusBcount();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_S && shooting == false  && pan.getHumStop() == false && bulletCount != 0) {
+					ctx.writeAndFlush("[BULLET]," + name + "," + 3 + "," + status + ",");
+					shooting = true;
+					Bullet b =new Bullet(getX(), 3, status, pan);
+					minusBcount();
 				}
 				
 				if (pan.getI1().getX() > getX() - 10 && pan.getI1().getX() < getX() + 3 && pan.getI1().getTimerstop() == false) {
@@ -163,11 +171,11 @@ public class Human extends JLabel{
 	public void setMoleKill(boolean moleKill) {
 		this.moleKill = moleKill;
 	}
-	public int gethumanlife() {
-		return humanlife;
+	public int getHumanLife() {
+		return humanLife;
 	}
 	public void minushumanlife(int a) {
-		humanlife -= 1;
+		humanLife -= 1;
 		System.out.println("πÏ¥Í¿Ω" );
 	}
 	public void shoesTimer() {
@@ -217,9 +225,11 @@ public class Human extends JLabel{
 	public Timer moleTrapTimer() {
 		return moleTrapTimer = new Timer(1000, e-> {
 			System.out.println("∏ÿ√„");
+			humanUi.setHumStop(true);
 			moleTrapCount++;
 			humanspeed = 0;
 			if (moleTrapCount == 3) {
+				humanUi.setHumStop(false);
 				moleTrapTimer.stop();
 				humanspeed = 5;
 				System.out.println("«Æ∏≤");
@@ -302,12 +312,7 @@ public class Human extends JLabel{
 			break;
 		default:
 			System.out.println("√—æÀ »πµÊ");
-			if (itembox1.isVisible() == false) {
-				itembox1.setVisible(true);
-				itembox1.setIcon(bullets);
-			} else {
-				itembox2.setIcon(bullets);
-			}
+			plusBcount();
 			break;
 		}
 
@@ -379,6 +384,16 @@ public class Human extends JLabel{
 	
 	public int getStatus() {
 		return status;
+	}
+	public int getBulletCount() {
+		return bulletCount;
+	}
+	public int minusBcount() {
+		return bulletCount--;
+	}
+	
+	public int plusBcount() {
+		return bulletCount += 2;
 	}
 
 	public Rectangle getBounds() {

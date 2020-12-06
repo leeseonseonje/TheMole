@@ -35,7 +35,10 @@ public class MoleUI extends JPanel {
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
 	public JLabel counterLabel;
 	private JLabel vegcountLabel;
+	private JLabel moleCountLabel;
 	private int vegcount = 15;
+	private int moleCount = 9;
+
 	private Font font1 = new Font("Arial", Font.BOLD, 30);
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
 
@@ -69,7 +72,7 @@ public class MoleUI extends JPanel {
 	public int snakesecond = 15;
 	Snake snake;
 	private Timer snakeTimer;
-	public boolean isSnake = false;
+	private boolean isSnake = false;
 	int second, minute;
 	String ddSecond, ddMinute;
 	DecimalFormat dFormat = new DecimalFormat("00");
@@ -435,7 +438,7 @@ public class MoleUI extends JPanel {
 			i1.setVisible(false);
 			i2.setVisible(false);
 
-			moleInHumanPerformance = new MoleInHumanPerformance(200, 225);
+			moleInHumanPerformance = new MoleInHumanPerformance(200, 225, this);
 			add(moleInHumanPerformance);
 			// add(new MoleInHumanPerformance(200, 225));
 			// i2 = new itemBoxThread(2);
@@ -466,6 +469,13 @@ public class MoleUI extends JPanel {
 			vegcountLabel.setFont(font2);
 
 			add(vegcountLabel);
+			
+			moleCountLabel = new JLabel(moleCount + "");
+			moleCountLabel.setBounds(758, 70, 20, 20);
+			moleCountLabel.setHorizontalAlignment(JLabel.CENTER);
+			moleCountLabel.setFont(font2);
+			
+			add(moleCountLabel);
 
 			itembox1 = new JLabel();
 			itembox2 = new JLabel();
@@ -542,6 +552,22 @@ public class MoleUI extends JPanel {
 	public MoleInHumanPerformance getMoleInHumanPerformance() {
 		return moleInHumanPerformance;
 	}
+	public boolean getIsSnake() {
+		return isSnake;
+	}
+	public Snake getSnake() {
+		return snake;
+	}
+	public JLabel getMoleCountLabel() {
+		return moleCountLabel;
+	}
+	public int getMoleCount() {
+		return moleCount;
+	}
+
+	public void setMoleCount(int moleCount) {
+		this.moleCount = moleCount;
+	}
 	public void makeSnake() {
 		snake = new Snake(this);
 		add(snake);
@@ -595,39 +621,39 @@ public class MoleUI extends JPanel {
 
 	public void moleDie(String m) {
 		if (m.equals("1")) {
-			remove(m1.moleButton);
+			m1.moleButton.setVisible(false);
 			m1.champion.setRect(0, 0, 0, 0);
 			m1.m = false;
 		} else if (m.equals("2")) {
-			remove(m2.moleButton);
+			m2.moleButton.setVisible(false);
 			m2.champion.setRect(0, 0, 0, 0);
 			m2.m = false;
 		} else if (m.equals("3")) {
-			remove(m3.moleButton);
+			m3.moleButton.setVisible(false);
 			m3.champion.setRect(0, 0, 0, 0);
 			m3.m = false;
 		} else if (m.equals("4")) {
-			remove(m4.moleButton);
+			m4.moleButton.setVisible(false);
 			m4.champion.setRect(0, 0, 0, 0);
 			m4.m = false;
 		} else if (m.equals("5")) {
-			remove(m5.moleButton);
+			m5.moleButton.setVisible(false);
 			m5.champion.setRect(0, 0, 0, 0);
 			m5.m = false;
 		} else if (m.equals("6")) {
-			remove(m6.moleButton);
+			m6.moleButton.setVisible(false);
 			m6.champion.setRect(0, 0, 0, 0);
 			m6.m = false;
 		} else if (m.equals("7")) {
-			remove(m7.moleButton);
+			m7.moleButton.setVisible(false);
 			m7.champion.setRect(0, 0, 0, 0);
 			m7.m = false;
 		} else if (m.equals("8")) {
-			remove(m8.moleButton);
+			m8.moleButton.setVisible(false);
 			m8.champion.setRect(0, 0, 0, 0);
 			m8.m = false;
 		} else if (m.equals("9")) {
-			remove(m9.moleButton);
+			m9.moleButton.setVisible(false);
 			m9.champion.setRect(0, 0, 0, 0);
 			m9.m = false;
 		}
@@ -702,12 +728,16 @@ public class MoleUI extends JPanel {
 
 		return new Rectangle(px, py, pw, ph);
 	}
-	class MoleThread extends Thread {
+	public class MoleThread extends Thread {
 		private int x, y;
 		private JButton moleButton;
 		private Rectangle champion;
 		private boolean m = true;
-
+		private boolean life = true;
+		
+		private Timer deadTime;
+		private int deadSec;
+		
 		public Rectangle getChampion() {
 			return champion;
 		}
@@ -731,6 +761,7 @@ public class MoleUI extends JPanel {
 				new ImageIcon("img/moleResource/moleRS1.png"), new ImageIcon("img/moleResource/moleRS2.png"),
 				new ImageIcon("img/moleResource/moleRS3.png"), new ImageIcon("img/moleResource/moleS.png"),
 				new ImageIcon("img/moleResource/moleSS.png") };
+		private ImageIcon moleD =   new ImageIcon("img/moleD.png");
 
 		private Timer timer;
 		private double speed = 0.15;
@@ -771,6 +802,12 @@ public class MoleUI extends JPanel {
 		public int gety() {
 			return y;
 		}
+		public JButton getMoleButton() {
+			return moleButton;
+		}
+		public boolean getLife() {
+			return life;
+		}
 
 		public MoleThread(ChannelHandlerContext ctx, String name, int x, int y, MoleUI panel) {
 			this.panel = panel;
@@ -788,6 +825,7 @@ public class MoleUI extends JPanel {
 			add(moleButton);
 
 			timer = new Timer(30, e -> {
+				if (!moleButton.getIcon().equals(moleD)) {
 				if (eating == false) {
 					
 					molesecond++;
@@ -837,8 +875,31 @@ public class MoleUI extends JPanel {
 					 * if (getBounds().intersects(human.getBounds()))
 					 * this.moleButton.setVisible(false);
 					 */
+				}
 			});
 		}
+		public void moleDie() {
+			timer.stop();
+	        moleDeadTimer();
+	        deadTime.start();
+	        moleButton.setIcon(moleD);
+	        m = false;
+	    }
+		public void moleDeadTimer() {
+	        deadTime = new Timer(500, e -> {
+	                deadSec++;
+	                if(deadSec == 1) {
+	                    deadTime.stop();
+	                	moleButton.setVisible(false);
+	                	moleButton.setBounds(0,0,0,0);
+	                    System.out.println("zz");
+	                    champion.setBounds(0, 0, 0, 0);
+	                    life = false;
+	                    panel.setMoleCount(panel.getMoleCount() - 1);
+	                    panel.getMoleCountLabel().setText(panel.getMoleCount() + "");
+	            }
+	        });
+	    }
 		public void snakeTimer() {
 			snakeTimer = new Timer(1000, new ActionListener() {
 				@Override
@@ -1179,11 +1240,11 @@ public class MoleUI extends JPanel {
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
-		// g.drawImage(humanHud, 0, 70, null);
+		g.drawImage(humanHud, 0, 70, null);
 		g.drawImage(moleHud, 715, 70, null);
 		// g.drawImage(humanInv, 55, 0, null);
 		g.drawImage(moleInv, 650, 0, null);
-		// g.drawImage(intHuman, 0, 0, null);
+		g.drawImage(intHuman, 0, 0, null);
 		g.drawImage(intMole, 740, 0, null);
 		
 		drawPerfectRect(g, sx, sy, ex, ey);

@@ -45,7 +45,7 @@ public class Snake extends JLabel {
 	public int getStatus() {
 		return status;
 	}
-	public boolean getmoving () {
+	public boolean getMoving () {
 		return moving;
 	}
 	
@@ -53,7 +53,7 @@ public class Snake extends JLabel {
 		move();
 		move.start();
 	}
-	public void snakedie() {
+	public void snakeDie() {
 		setVisible(false);
 		move.stop();
 		moving = false;
@@ -82,7 +82,7 @@ public class Snake extends JLabel {
 				}
 				if(molePanel.getMoleInHumanPerformance().getX() == getX()) {
 					molePanel.getMoleInHumanPerformance().minushumanlife(1);
-					snakedie();
+					snakeDie();
 				}
 			}
 		});

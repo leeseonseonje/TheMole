@@ -21,7 +21,7 @@ public class vegetableThread extends JLabel{
 	
 
 	public vegetableThread(int section, int crop)  {
-		setBounds(section, 255, 32, 32);
+		setBounds(section, 240, 32, 32);
 		setIcon(vegetables[crop]);
 	}
 	public ImageIcon[] getVegetables() {

@@ -41,7 +41,7 @@ public class HumanSnake extends JLabel {
 			setIcon(snake[2]); // 오른쪽 스프라이트
 		moveStart();
 	}
-	public boolean getmoving () {
+	public boolean getMoving () {
 		return moving;
 	}
 	
@@ -49,7 +49,7 @@ public class HumanSnake extends JLabel {
 		move();
 		move.start();
 	}
-	public void snakedie() {
+	public void snakeDie() {
 		setVisible(false);
 		move.stop();
 		moving = false;
@@ -78,7 +78,7 @@ public class HumanSnake extends JLabel {
 				}
 				if(humanPanel.getHuman().getX() == getX()) {
 					humanPanel.getHuman().minushumanlife(1);
-					snakedie();
+					snakeDie();
 				}
 			}
 		});

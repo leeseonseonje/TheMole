@@ -27,8 +27,13 @@ public class HumanInMole extends JButton {
 	private ImageIcon mole[] = { new ImageIcon("img/moleResource/moleL1.png"),
 			new ImageIcon("img/moleResource/moleL2.png"), new ImageIcon("img/moleResource/moleL3.png"),
 			new ImageIcon("img/moleResource/moleR1.png"),new ImageIcon("img/moleResource/moleR2.png"),
-			new ImageIcon("img/moleResource/moleR3.png"),new ImageIcon("img/moleResource/moleS.png") };
+			new ImageIcon("img/moleResource/moleR3.png"),new ImageIcon("img/moleResource/moleS.png")};
+	private ImageIcon moleD =   new ImageIcon("img/moleD.png");
 
+	private boolean life = true;
+	
+	private Timer deadTime;
+	private int deadSec;
 	
 	public HumanInMole(HumanUI human, int x, int y) {
 		this.human = human;
@@ -52,10 +57,33 @@ public class HumanInMole extends JButton {
 	public void setMoleDeath(boolean moleDeath) {
 		this.moleDeath = moleDeath;
 	}
-
-	
+	public boolean getLife() {
+		return life;
+	}
+	public void moleDie() {
+		timer.stop();
+        moleDeadTimer();
+        deadTime.start();
+        setIcon(moleD);
+    }
+	public void moleDeadTimer() {
+        deadTime = new Timer(500, e -> {
+                deadSec++;
+                if(deadSec == 1) {
+                    deadTime.stop();
+                	setVisible(false);
+                	setBounds(0,0,0,0);
+                    System.out.println("zz");
+                    champion.setBounds(0, 0, 0, 0);
+                    life = false;
+                    human.setMoleCount(human.getMoleCount() - 1);
+                    human.getMoleCountLabel().setText(human.getMoleCount() + "");
+            }
+        });
+    }
 	public void humanInMoleMove(String message, int x, int y) {
 		timer = new Timer(30, e -> {
+			if (!getIcon().equals(moleD)) {
 			molesecond++;
 			molesecond = molesecond % 4;
 			if (direction == 1) { // 오른쪽방향으로 움직일때 -누름
@@ -80,6 +108,7 @@ public class HumanInMole extends JButton {
 				e1.printStackTrace();
 			}
 			//timer.stop();
+			}
 	});
 		
 			setIcon(mole[5]);

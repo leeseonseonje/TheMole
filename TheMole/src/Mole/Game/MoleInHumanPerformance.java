@@ -8,6 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
+import MoleServer.MoleBullet;
+
 public class MoleInHumanPerformance extends JLabel {
 	private int x;
 	private int y;
@@ -22,7 +24,9 @@ public class MoleInHumanPerformance extends JLabel {
 	private boolean moving = false;
 	
 	private int humanspeed = 5;
-
+	
+	private MoleUI mole;
+	
 	private ImageIcon human[] = { new ImageIcon("img/humanResource/human1.png"),
 			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
 			new ImageIcon("img/humanResource/human4.png"), new ImageIcon("img/humanResource/human5.png"),
@@ -30,7 +34,8 @@ public class MoleInHumanPerformance extends JLabel {
 			new ImageIcon("img/humanResource/human8.png"), new ImageIcon("img/humanResource/human9.png"),
 			new ImageIcon("img/humanResource/human10.png") };
 
-	public MoleInHumanPerformance(int x, int y) {
+	public MoleInHumanPerformance(int x, int y, MoleUI mole) {
+		this.mole = mole;
 		this.x = x;
 		this.y = y;
 		setBounds((int) x, (int) y, 50, 64);
@@ -77,6 +82,9 @@ public class MoleInHumanPerformance extends JLabel {
 	public void timerstart() {
 		mover();
 		mover.start();
+	}
+	public void bullet(int x, int direction, int status) {
+		MoleBullet b = new MoleBullet(x, direction, status, mole);
 	}
 
 	public void mover() {

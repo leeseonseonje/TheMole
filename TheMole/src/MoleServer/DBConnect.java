@@ -47,7 +47,10 @@ public class DBConnect {
 						num++, rs.getString("ID"),rs.getInt("PLAYCOUNT"),rs.getInt("HUMANWIN"),
 						rs.getInt("MOLEWIN"),((rs.getDouble("HUMANWIN")+rs.getInt("MOLEWIN"))/rs.getInt("PLAYCOUNT"))*100,rs.getInt("SCORES"));	
 				}
-			ctx.writeAndFlush("RANKING" + "," + contents);
+			System.out.println(contents);
+			ctx.write("RANKING,");
+			ctx.write(contents + ",");
+			ctx.flush();
 			num = 1;
 			rs.close();
 			pstmt.close();

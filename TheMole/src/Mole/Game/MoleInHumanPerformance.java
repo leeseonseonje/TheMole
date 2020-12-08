@@ -8,8 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-import MoleServer.MoleBullet;
-
 public class MoleInHumanPerformance extends JLabel {
 	private int x;
 	private int y;
@@ -67,16 +65,22 @@ public class MoleInHumanPerformance extends JLabel {
 			setBounds(getX(), y, 50, 64);
 		}
 		
-		else if (m.equals("STOP")) {
+		else if (m.equals("LEFTSTOP")) {
+			moving = false;
+			setIcon(human[5]);
+		}
+		
+
+		else if (m.equals("RIGHTSTOP")) {
 			moving = false;
 			setIcon(human[0]);
 		}
 	}
-	public int gethumanlife() {
+	public int getHumanlife() {
 		return humanlife;
 	}
-	public void minushumanlife(int a) {
-		humanlife -= 1;
+	public void minushumanlife() {
+		humanlife --;
 		System.out.println("πÏ¥Í¿Ω" );
 	}
 	public void timerstart() {

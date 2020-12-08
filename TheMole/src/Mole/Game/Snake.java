@@ -25,11 +25,11 @@ public class Snake extends JLabel {
 			new ImageIcon("img/snakeResource/snakeL2.png"), new ImageIcon("img/snakeResource/snakeR1.png"),
 			new ImageIcon("img/snakeResource/snakeR2.png") };
 
-	public Snake(MoleUI molePanel) {
+	public Snake(MoleUI molePanel, int status) {
 		this.y = 250;
 		this.molePanel = molePanel;
-
-		status = (int) (Math.random() * 2);
+		this.status = status;
+		
 		if (status == 0) // 왼쪽으로 보고 이동하는 뱀
 			this.x = 760;
 		else // 오른쪽으로 보고 이동하는 뱀
@@ -60,33 +60,35 @@ public class Snake extends JLabel {
 	}
 
 	public void move() {
-		move = new Timer(100, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				snakeTempo++;
-				snakeTempo = snakeTempo % 2;
-				if (status == 0) { // 왼쪽 방향으로 움직임
-					moveX(-5);
-					if (snakeTempo == 0)
-						setIcon(snake[0]);
-					if (snakeTempo == 1)
-						setIcon(snake[1]);
-					setBounds(getX(),y,32,32);	
-				} else if (status == 1) { // 왼쪽 방향으로 움직임
-					moveX(5);
-					if (snakeTempo == 0)
-						setIcon(snake[2]);
-					if (snakeTempo == 1)
-						setIcon(snake[3]);
-					setBounds(getX(),y,32,32);	
-				}
-				if(molePanel.getMoleInHumanPerformance().getX() == getX()) {
-					molePanel.getMoleInHumanPerformance().minushumanlife(1);
-					snakeDie();
-				}
-			}
-		});
-	}
+        move = new Timer(20, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                snakeTempo++;
+                snakeTempo = snakeTempo % 2;
+                if (status == 0) { // 왼쪽 방향으로 움직임
+                    moveX(-1);
+                    if (snakeTempo == 0)
+                        setIcon(snake[0]);
+                    if (snakeTempo == 1)
+                        setIcon(snake[1]);
+                    setBounds(getX(),y,32,32);
+                } else if (status == 1) { // 왼쪽 방향으로 움직임
+                    moveX(1);
+                    if (snakeTempo == 0)
+                        setIcon(snake[2]);
+                    if (snakeTempo == 1)
+                        setIcon(snake[3]);
+                    setBounds(getX(),y,32,32);
+                } 
+                if(molePanel.getMoleInHumanPerformance().getX() == getX()) {
+                    molePanel.getMoleInHumanPerformance().minushumanlife();
+                    snakeDie();
+                }
+
+            }
+
+        });
+    }
 //	public void collisionCheck(JLabel human) {
 //		if(this.getBounds().intersects(human.getBounds()))
 //			this.setVisible(false);

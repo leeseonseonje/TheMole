@@ -23,7 +23,7 @@ public class HumanInMole extends JButton {
 	private int direction = 0;
 	private int molesecond = 0;
     private HumanUI human;
-    private boolean moleDeath = true;
+
 	private ImageIcon mole[] = { new ImageIcon("img/moleResource/moleL1.png"),
 			new ImageIcon("img/moleResource/moleL2.png"), new ImageIcon("img/moleResource/moleL3.png"),
 			new ImageIcon("img/moleResource/moleR1.png"),new ImageIcon("img/moleResource/moleR2.png"),
@@ -51,16 +51,11 @@ public class HumanInMole extends JButton {
 		return timer;
 	}
     
-	public boolean getMoleDeath() {
-		return moleDeath;
-	}
-	public void setMoleDeath(boolean moleDeath) {
-		this.moleDeath = moleDeath;
-	}
 	public boolean getLife() {
 		return life;
 	}
 	public void moleDie() {
+		setVisible(true);
 		timer.stop();
         moleDeadTimer();
         deadTime.start();
@@ -138,18 +133,28 @@ public class HumanInMole extends JButton {
 			champion.setRect(x - 5, y - 5, 10, 10);
 		}
 		if (y < 300) {
-			if (moleDeath == true && human.getHuman().getMoleKill() == false) {
-				moleDeath = false;
-				human.moleDieMessage();
-				moleDeath = true;
-				human.remove(this);
-				champion.setRect(0, 0, 0, 0);
+			if (human.getHuman().getMoleKill() == false) {
+				setVisible(true);
+				moleDie();
 				human.getHuman().setMoleKill(true);
 			} else
 				setVisible(true);
 		}
 		else if (y > 300 )
 			setVisible(false);
+		
+		if (human.getV1().getBounds().intersects(champion)) {
+			timer.stop();
+			setIcon(mole[6]);
+		}
+		if (human.getV2().getBounds().intersects(champion)) {
+			timer.stop();
+			setIcon(mole[6]);
+		}
+		if (human.getV3().getBounds().intersects(champion)) {
+			timer.stop();
+			setIcon(mole[6]);
+		}
 	}
 	
 	public void calculateChampionMovement(double x, double y, Rectangle champion) {

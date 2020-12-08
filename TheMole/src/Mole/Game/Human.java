@@ -106,12 +106,14 @@ public class Human extends JLabel{
 				}
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false  && pan.getHumStop() == false && bulletCount != 0 && status == 2) {
 					ctx.writeAndFlush("[BULLET]," + name + "," + 2 + "," + status + ",");
+					setIcon(human[6]);
 					shooting = true;
 					Bullet a = new Bullet(getX(), 2, status, pan);
 					minusBcount();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.getHumStop() == false && bulletCount != 0 && status == 1) {
 					ctx.writeAndFlush("[BULLET]," + name + "," + 1 + "," + status + ",");
+					setIcon(human[1]);
 					shooting = true;
 					Bullet b =new Bullet(getX(), 1, status, pan);
 					minusBcount();
@@ -124,13 +126,13 @@ public class Human extends JLabel{
 				}
 				
 				if (pan.getI1().getX() > getX() - 10 && pan.getI1().getX() < getX() + 3 && pan.getI1().getTimerstop() == false) {
-					ctx.writeAndFlush("[HUMANITEM1EAT]," + name);
+					ctx.writeAndFlush("[HUMANITEM1EAT]," + name + ",");
 					pan.getI1().setTimerstop(true);
 					pan.getI1().setVisible(false);
 					humangetitem();
 				}
 				if (pan.getI2().getX() > getX() - 10 && pan.getI2().getX() < getX() + 10 && pan.getI2().getTimerstop() == false) {
-					ctx.writeAndFlush("[HUMANITEM2EAT]," + name);
+					ctx.writeAndFlush("[HUMANITEM2EAT]," + name + ",");
 					pan.getI2().setTimerstop(true);
 					pan.getI2().setVisible(false);
 					humangetitem();
@@ -144,16 +146,21 @@ public class Human extends JLabel{
 			public void keyReleased(KeyEvent e) {
 				
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // øﬁ¬  πÊ«‚≈∞
-					ctx.writeAndFlush("[STOP]," + name);
+					ctx.writeAndFlush("[LEFTSTOP]," + name + ",");
 					moving = false;
 					setIcon(human[5]);
 				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // ø¿∏•¬  πÊ«‚≈∞
-					ctx.writeAndFlush("[STOP]," + name);
+					ctx.writeAndFlush("[RIGHTSTOP]," + name + ",");
 					moving = false;
 					setIcon(human[0]);
 				} else if (e.getKeyCode() == KeyEvent.VK_A) {
+					setIcon(human[5]);
 					shooting = false;
 				} else if (e.getKeyCode() == KeyEvent.VK_D) {
+					setIcon(human[0]);
+					shooting = false;
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_S) {
 					shooting = false;
 				}
 			}
@@ -174,10 +181,17 @@ public class Human extends JLabel{
 	public int getHumanLife() {
 		return humanLife;
 	}
-	public void minushumanlife(int a) {
-		humanLife -= 1;
+	public void minushumanlife() {
+		humanLife --;
 		System.out.println("πÏ¥Í¿Ω" );
 	}
+	public int getHumanspeed() {
+		return humanspeed;
+	}
+	public void setHumanspeed(int humanspeed) {
+		this.humanspeed = humanspeed;
+	}
+
 	public void shoesTimer() {
 		shoesTimer = new Timer(1000, new ActionListener() {
 			@Override
@@ -187,7 +201,7 @@ public class Human extends JLabel{
 
 				if (itembox1.getIcon() == shoes) {
 					humanspeed = 10;
-					ctx.writeAndFlush("[HUMANSPEEDUP]," + name);
+					ctx.writeAndFlush("[HUMANSPEEDUP]," + name + ",");
 					itembox1.setFont(font1);
 					itembox1.setText(shosecond + "");
 					itembox1.setVerticalTextPosition(JLabel.CENTER);
@@ -195,7 +209,7 @@ public class Human extends JLabel{
 					itembox1.setForeground(Color.cyan);
 				} else {
 					humanspeed = 10;
-					ctx.writeAndFlush("[HUMANSPEEDUP]," + name);
+					ctx.writeAndFlush("[HUMANSPEEDUP]," + name + ",");
 					itembox2.setText(shosecond + "");
 					itembox2.setFont(font1);
 					itembox2.setVerticalTextPosition(JLabel.CENTER);
@@ -204,7 +218,7 @@ public class Human extends JLabel{
 				}
 				if (shosecond == 0) {
 					humanspeed = 5;
-					ctx.writeAndFlush("[HUMANSPEEDDOWN]," + name);
+					ctx.writeAndFlush("[HUMANSPEEDDOWN]," + name + ",");
 					System.out.println("ªÁ∂˜º”µµ «œ«‚");
 					if (itembox1.getIcon() == shoes) {
 						itembox1.setIcon(null);
@@ -219,21 +233,6 @@ public class Human extends JLabel{
 					itembox1.setVisible(false);
 					shoesTimer.stop();
 				}
-			}
-		});
-	}
-	public Timer moleTrapTimer() {
-		return moleTrapTimer = new Timer(1000, e-> {
-			System.out.println("∏ÿ√„");
-			humanUi.setHumStop(true);
-			moleTrapCount++;
-			humanspeed = 0;
-			if (moleTrapCount == 3) {
-				humanUi.setHumStop(false);
-				moleTrapTimer.stop();
-				humanspeed = 5;
-				System.out.println("«Æ∏≤");
-				moleTrapCount = 0;
 			}
 		});
 	}
@@ -263,6 +262,7 @@ public class Human extends JLabel{
 						itembox2.setIcon(null);
 						itembox2.setText(null);
 					}
+					ctx.writeAndFlush("[HUMANTRAPSTOP]," + name + "," );
 					humtrapsecond = 10;
 					humanUi.sethumtrap(false);
 					moleKill = true;
@@ -279,6 +279,7 @@ public class Human extends JLabel{
 		case 0:
 		case 9:
 			if (itembox1.isVisible() == false) {
+				ctx.writeAndFlush("[HUMANTRAP]," + name + ",");
 				itembox1.setVisible(true);
 				itembox1.setIcon(trapM);
 				humtraptimer();
@@ -288,6 +289,7 @@ public class Human extends JLabel{
 				humtrapsecond += 10;
 				moleKill = false;
 			} else {
+				ctx.writeAndFlush("[HUMANTRAP]," + name + ",");
 				humtraptimer();
 				humtraptimer.start();
 				moleKill = false;

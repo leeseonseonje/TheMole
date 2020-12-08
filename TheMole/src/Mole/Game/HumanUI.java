@@ -50,7 +50,6 @@ public class HumanUI extends JPanel {
 	private ChannelHandlerContext ctx;
 	private String name;
 	private int vegcount = 15;
-	private int humanlife = 2;
 	private int snakesecond = 15;
 	private HumanSnake snake;
 	private Timer snakeTimer;
@@ -198,6 +197,7 @@ public class HumanUI extends JPanel {
 	public void makeSnake(int x) {
 		snake = new HumanSnake(this, x);
 		add(snake);
+		isSnake = true;
 	}
 	public void sethumtrap(boolean a) {
         humtrap = a;
@@ -270,26 +270,6 @@ public class HumanUI extends JPanel {
 		else if (message.equals("9"))
 			m9.humanInMoleMove(message, x, y);
 	}
-	public void moleDieMessage() {
-		if (m1.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");
-		else if (m2.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");
-		else if (m3.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");
-		else if (m4.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 4 + ",");
-		else if (m5.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");
-		else if (m6.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");
-		else if (m7.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");
-		else if (m8.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");
-		else if (m9.getMoleDeath() == false)
-			ctx.writeAndFlush("[MOLEDIE]," + name + "," + 9 + ",");
-	}
 	public void normalTimer() {
 		timer = new Timer(1000, new ActionListener() {
 
@@ -315,7 +295,7 @@ public class HumanUI extends JPanel {
 				if (counterLabel.getText().equals("00:00")) {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
-					ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId());
+					ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId() + ",");
 					setVisible(false);
 					if (MoleClientMainHandler.roomTest.testStart.getText().equals("준비취소"))
 						MoleClientMainHandler.roomTest.testStart.setText("준비");
@@ -325,7 +305,27 @@ public class HumanUI extends JPanel {
 				else if (vegcount == 0) {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "두더지는 자유다 두더지 만만세", "Result", JOptionPane.PLAIN_MESSAGE);
-					ctx.writeAndFlush("[HUMANLOSE]," + LoginForm.getId());
+					ctx.writeAndFlush("[HUMANLOSE]," + LoginForm.getId() + ",");
+					setVisible(false);
+					if (MoleClientMainHandler.roomTest.testStart.getText().equals("준비취소"))
+						MoleClientMainHandler.roomTest.testStart.setText("준비");
+					MoleClientMainHandler.roomTest.ready.setText("");
+					MoleClientMainHandler.roomTest.setVisible(true);
+				}
+				else if (moleCount == 0) {
+					timer.stop();
+					JOptionPane.showMessageDialog(null, "인간 승리", "Result", JOptionPane.PLAIN_MESSAGE);
+					ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId() + ",");
+					setVisible(false);
+					if (MoleClientMainHandler.roomTest.testStart.getText().equals("준비취소"))
+						MoleClientMainHandler.roomTest.testStart.setText("준비");
+					MoleClientMainHandler.roomTest.ready.setText("");
+					MoleClientMainHandler.roomTest.setVisible(true);
+				}
+				else if (human.getHumanLife() == 0) {
+					timer.stop();
+					JOptionPane.showMessageDialog(null, "인간 패배", "Result", JOptionPane.PLAIN_MESSAGE);
+					ctx.writeAndFlush("[HUMANLOSE]," + LoginForm.getId() + ",");
 					setVisible(false);
 					if (MoleClientMainHandler.roomTest.testStart.getText().equals("준비취소"))
 						MoleClientMainHandler.roomTest.testStart.setText("준비");

@@ -1,4 +1,4 @@
-package MoleServer;
+package Mole.Game;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -7,9 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
-
-import Mole.Game.MoleInHumanPerformance;
-import Mole.Game.MoleUI;
 
 public class MoleBullet extends JLabel {
 	

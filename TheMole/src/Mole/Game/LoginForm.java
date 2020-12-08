@@ -155,7 +155,7 @@ public class LoginForm extends JFrame {
 		signupButton.setBackground(Color.LIGHT_GRAY);
 		signupButton.setBounds(487, 302, 97, 23);
 		loginPanel.add(signupButton);
-
+		
 		JLabel lblNewLabel = new JLabel("Login");
 		lblNewLabel.setForeground(Color.BLUE);
 		lblNewLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 54));

@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import Mole.Game.HomePanel;
-import Mole.Game.HumanUI;
 import Mole.Game.LeaderBoardFrame;
 import Mole.Game.LoginForm;
 import Mole.Game.MainFrame;

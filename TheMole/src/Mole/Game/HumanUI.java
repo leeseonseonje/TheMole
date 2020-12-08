@@ -347,6 +347,13 @@ public class HumanUI extends JPanel {
 						MoleClientMainHandler.roomTest.testStart.setText("준비");
 					MoleClientMainHandler.roomTest.ready.setText("");
 					MoleClientMainHandler.roomTest.setVisible(true);
+					if (musicStatus == true)
+						try {
+							soundToPlay.pause();
+							MoleClientMainHandler.homePanel.getSoundToPlay().play();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 				}
 				else if (vegcount == 0) {
 					timer.stop();
@@ -357,6 +364,13 @@ public class HumanUI extends JPanel {
 						MoleClientMainHandler.roomTest.testStart.setText("준비");
 					MoleClientMainHandler.roomTest.ready.setText("");
 					MoleClientMainHandler.roomTest.setVisible(true);
+					if (musicStatus == true)
+						try {
+							soundToPlay.pause();
+							MoleClientMainHandler.homePanel.getSoundToPlay().play();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 				}
 				else if (moleCount == 0) {
 					timer.stop();
@@ -367,6 +381,13 @@ public class HumanUI extends JPanel {
 						MoleClientMainHandler.roomTest.testStart.setText("준비");
 					MoleClientMainHandler.roomTest.ready.setText("");
 					MoleClientMainHandler.roomTest.setVisible(true);
+					if (musicStatus == true)
+						try {
+							soundToPlay.pause();
+							MoleClientMainHandler.homePanel.getSoundToPlay().play();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 				}
 				else if (human.getHumanLife() == 0) {
 					timer.stop();
@@ -377,6 +398,13 @@ public class HumanUI extends JPanel {
 						MoleClientMainHandler.roomTest.testStart.setText("준비");
 					MoleClientMainHandler.roomTest.ready.setText("");
 					MoleClientMainHandler.roomTest.setVisible(true);
+					if (musicStatus == true)
+						try {
+							soundToPlay.pause();
+							MoleClientMainHandler.homePanel.getSoundToPlay().play();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 				}
 			}
 		});

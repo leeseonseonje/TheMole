@@ -224,6 +224,9 @@ public class HomePanel extends JPanel {
 	public SoundJLayer getSoundToPlay() {
 		return soundToPlay;
 	}
+	public boolean getPlayStatus() {
+		return playStatus;
+	}
 	public void CustomCursor() { // 커스텀 커서(마우스 커서)
 
 		Toolkit tk = Toolkit.getDefaultToolkit();

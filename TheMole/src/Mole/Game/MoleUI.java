@@ -1,9 +1,13 @@
 package Mole.Game;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -87,6 +91,7 @@ public class MoleUI extends JPanel {
 
 	public MoleUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1,
 			int crop2, int crop3) {
+		CustomCursor();
 		this.ctx = ctx;
 		try {
 			setLayout(null);
@@ -1342,5 +1347,13 @@ public class MoleUI extends JPanel {
 		g.drawImage(intMole, 740, 0, null);
 
 		drawPerfectRect(g, sx, sy, ex, ey);
+	}
+	public void CustomCursor() { // 커스텀 커서(마우스 커서)
+
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Image cursorimage = tk.getImage("img/cropcursor.png");
+		Point point = new Point(20, 20);
+		Cursor cursor = tk.createCustomCursor(cursorimage, point, "crop");
+		setCursor(cursor);
 	}
 }

@@ -1,7 +1,11 @@
 package Mole.Game;
 
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -67,6 +71,7 @@ public class HumanUI extends JPanel {
 	private SoundJLayer soundToPlay = new SoundJLayer("sound/ingameBG_Lisport.mp3");
 	private boolean musicStatus = true;
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
+		CustomCursor();
 		this.ctx = ctx;
 		this.name = name;
 		setLayout(null);
@@ -375,6 +380,14 @@ public class HumanUI extends JPanel {
 				}
 			}
 		});
+	}
+	public void CustomCursor() { // 커스텀 커서(마우스 커서)
+
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Image cursorimage = tk.getImage("img/cropcursor.png");
+		Point point = new Point(20, 20);
+		Cursor cursor = tk.createCustomCursor(cursorimage, point, "crop");
+		setCursor(cursor);
 	}
 }
 

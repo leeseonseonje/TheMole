@@ -1,7 +1,11 @@
 package Mole.Game;
 
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -45,6 +49,7 @@ public class HomePanel extends JPanel {
 	private SoundJLayer soundToPlay = new SoundJLayer("sound/mainframeBG_Ereve.mp3");
 
 	public HomePanel(ChannelHandlerContext ctx) {
+		CustomCursor();
 		try {
 			background = ImageIO.read(new File("img/mole.jpg"));
 			setLayout(null);
@@ -110,10 +115,15 @@ public class HomePanel extends JPanel {
 				}
 
 				public void mousePressed(MouseEvent e) {
-					QuestionFrame question = new QuestionFrame(MoleClientMainHandler.homePanel);
-					MoleClientMainHandler.mainFrame.add(question);
-					MoleClientMainHandler.homePanel.setVisible(false);
-					question.setVisible(true);
+					QuestionFrame question;
+					try {
+						question = new QuestionFrame(MoleClientMainHandler.homePanel);
+						MoleClientMainHandler.mainFrame.add(question);
+						MoleClientMainHandler.homePanel.setVisible(false);
+						question.setVisible(true);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
 			});
 			add(query);
@@ -214,5 +224,12 @@ public class HomePanel extends JPanel {
 	public SoundJLayer getSoundToPlay() {
 		return soundToPlay;
 	}
+	public void CustomCursor() { // 커스텀 커서(마우스 커서)
 
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Image cursorimage = tk.getImage("img/cropcursor.png");
+		Point point = new Point(20, 20);
+		Cursor cursor = tk.createCustomCursor(cursorimage, point, "crop");
+		setCursor(cursor);
+	}
 }

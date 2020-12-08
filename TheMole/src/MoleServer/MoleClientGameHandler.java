@@ -133,7 +133,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			else if (s[i].equals("HUMANITEM2EAT"))
 				moleUI.getI2().setVisible(false);
 			else if (s[i].equals("HUMANSPEEDUP"))
-				moleUI.getMoleInHumanPerformance().setHumanspeed(10);
+				moleUI.getMoleInHumanPerformance().setHumanspeed(7);
 			else if (s[i].equals("HUMANSPEEDDOWN"))
 				moleUI.getMoleInHumanPerformance().setHumanspeed(5);
 			else if (s[i].equals("MOLEMOVE")) {

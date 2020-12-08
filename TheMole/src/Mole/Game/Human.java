@@ -200,7 +200,7 @@ public class Human extends JLabel{
 				System.out.println(shosecond);
 
 				if (itembox1.getIcon() == shoes) {
-					humanspeed = 10;
+					humanspeed = 7;
 					ctx.writeAndFlush("[HUMANSPEEDUP]," + name + ",");
 					itembox1.setFont(font1);
 					itembox1.setText(shosecond + "");
@@ -208,7 +208,7 @@ public class Human extends JLabel{
 					itembox1.setHorizontalTextPosition(JLabel.CENTER);
 					itembox1.setForeground(Color.cyan);
 				} else {
-					humanspeed = 10;
+					humanspeed = 7;
 					ctx.writeAndFlush("[HUMANSPEEDUP]," + name + ",");
 					itembox2.setText(shosecond + "");
 					itembox2.setFont(font1);

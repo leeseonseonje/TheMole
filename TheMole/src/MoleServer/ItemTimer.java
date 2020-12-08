@@ -13,8 +13,8 @@ public class ItemTimer {
 		itemTimer = new Timer(1000, e -> {
 		++itemCount;
 			if (itemCount % 10 == 0) {
-				int a = ((int) (Math.random() * 380)) + (400 * 0) + 20;
-				int b = ((int) (Math.random() * 380)) + (400 * 1) + 20;
+				int a = ((int) (Math.random() * 350)) + (400 * 0) + 50;
+				int b = ((int) (Math.random() * 350)) + (400 * 1);
 				for (Channel channel : Room.roomManager.get(name)) {
 					if (channel == host)
 						host.writeAndFlush(hostRole + "," + a + "," + b);

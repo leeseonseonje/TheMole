@@ -1206,16 +1206,22 @@ public class MoleUI extends JPanel {
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
 						v1.setVisible(false);
 						v1.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
 						v1.setVisible(false);
 						v1.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
 						v1.setVisible(false);
 						v1.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					}
 				}
 
@@ -1237,16 +1243,22 @@ public class MoleUI extends JPanel {
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
 						v2.setVisible(false);
 						v2.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
 						v2.setVisible(false);
 						v2.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
 						v2.setVisible(false);
 						v2.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					}
 				}
 				v2.plusvegcount();
@@ -1268,16 +1280,22 @@ public class MoleUI extends JPanel {
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
 						v3.setVisible(false);
 						v3.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
 						v3.setVisible(false);
 						v3.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
 						v3.setVisible(false);
 						v3.setBounds(0, 0, 0, 0);
+						vegcount--;
+						vegcountLabel.setText(vegcount + "");
 					}
 				}
 				v3.plusvegcount();

@@ -25,6 +25,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			gameStart.humanPlayer.setText(s[4]);
 			MoleClientMainHandler.mainFrame.add(gameStart);
 			gameStart.setVisible(true);
+			MoleClientMainHandler.homePanel.getSoundToPlay().pause();	
 			moleUI = new MoleUI(ctx, s[1], Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]),
 					Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
 			MoleClientMainHandler.mainFrame.add(moleUI);
@@ -43,6 +44,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			gameStart.molePlayer.setText(s[4]);
 			MoleClientMainHandler.mainFrame.add(gameStart);
 			gameStart.setVisible(true);
+			MoleClientMainHandler.homePanel.getSoundToPlay().pause();
 			humanUI = new HumanUI(ctx, s[1], Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7]),
 					Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]));
 			MoleClientMainHandler.mainFrame.add(humanUI);

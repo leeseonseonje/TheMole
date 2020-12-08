@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -16,15 +18,14 @@ import java.text.DecimalFormat;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import MoleServer.MoleClientGameHandler;
 import MoleServer.MoleClientMainHandler;
 import io.netty.channel.ChannelHandlerContext;
+import javazoom.jl.decoder.JavaLayerException;
 
 public class MoleUI extends JPanel {
 	/*
@@ -80,6 +81,9 @@ public class MoleUI extends JPanel {
 	private MoleInHumanPerformance moleInHumanPerformance;
 	private ChannelHandlerContext ctx;
 	private int sx, sy, ex, ey;
+	
+	private SoundJLayer soundToPlay = new SoundJLayer("sound/ingameBG_Lisport.mp3");
+	private boolean musicStatus = true;
 
 	public MoleUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1,
 			int crop2, int crop3) {
@@ -94,6 +98,8 @@ public class MoleUI extends JPanel {
 			intHuman = ImageIO.read(new File("img/humanint.png"));
 			intMole = ImageIO.read(new File("img/moleint.png"));
 
+			soundToPlay.play();
+			
 			m1 = new MoleThread(ctx, name, 50, 400, this);
 			m1.moleButton.addActionListener(e -> {
 				if (e.getSource() == m1.moleButton && m1.eating == false) {
@@ -437,6 +443,40 @@ public class MoleUI extends JPanel {
 						}
 						ctx.flush();
 					}
+				}
+			});
+			
+			addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent e) {
+					if (e.getKeyCode() == KeyEvent.VK_M) {
+						if (musicStatus == true) {
+							try {
+								soundToPlay.pause();
+								musicStatus = false;
+							} catch (JavaLayerException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						} else {
+							soundToPlay.play();
+							musicStatus = true;
+						}
+					}
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void keyTyped(KeyEvent e) {
+					// TODO Auto-generated method stub
+
 				}
 			});
 

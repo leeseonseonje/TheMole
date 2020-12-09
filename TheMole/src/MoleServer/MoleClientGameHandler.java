@@ -74,6 +74,8 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 							MoleClientMainHandler.inRoom.testStart.setText("준비");
 						MoleClientMainHandler.inRoom.ready.setText("");
 						MoleClientMainHandler.inRoom.setVisible(true);
+						humanUI.setSecond(0);
+						humanUI.setMinute(3);
 						if (humanUI.getMusicStatus() == true)
 							try {
 								humanUI.getSoundToPlay().pause();
@@ -104,6 +106,8 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 							MoleClientMainHandler.inRoom.testStart.setText("준비");
 						MoleClientMainHandler.inRoom.ready.setText("");
 						MoleClientMainHandler.inRoom.setVisible(true);
+						moleUI.setSecond(0);
+						moleUI.setMinute(3);
 						if (moleUI.getMusicStatus() == true)
 							try {
 								moleUI.getSoundToPlay().pause();
@@ -143,6 +147,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					moleUI.getMoleInHumanPerformance().moleInHumanMove(s[i]);
 			} else if (s[i].equals("v1EAT")) {
 				if (moleUI == null) {
+					humanUI.getV1().setBounds(0, 0, 0, 0);
 					humanUI.getV1().setVisible(false);
 					humanUI.setVegcount(humanUI.getVegcount() - 1);
 					humanUI.getVegCountLabel().setText(humanUI.getVegcount() + "");
@@ -165,8 +170,8 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					}
 
 				} else {
-					moleUI.getV1().setVisible(false);
 					moleUI.getV1().setBounds(0, 0, 0, 0);
+					moleUI.getV1().setVisible(false);
 					moleUI.setVegcount(moleUI.getVegcount() - 1);
 					moleUI.getVegcountLabel().setText(moleUI.getVegcount() + "");
 					if (moleUI.getVegcount() == 0) {
@@ -201,8 +206,8 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				}
 			} else if (s[i].equals("v2EAT")) {
 				if (moleUI == null) {
-					humanUI.getV2().setVisible(false);
 					humanUI.getV2().setBounds(0, 0, 0, 0);
+					humanUI.getV2().setVisible(false);
 					humanUI.setVegcount(humanUI.getVegcount() - 1);
 					humanUI.getVegCountLabel().setText(humanUI.getVegcount() + "");
 					if (humanUI.getVegcount() == 0) {
@@ -223,8 +228,8 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 							}
 					}
 				} else {
-					moleUI.getV2().setVisible(false);
 					moleUI.getV2().setBounds(0, 0, 0, 0);
+					moleUI.getV2().setVisible(false);
 					moleUI.setVegcount(moleUI.getVegcount() - 1);
 					moleUI.getVegcountLabel().setText(moleUI.getVegcount() + "");
 					//moleUI.getV1().setVisible(false);
@@ -263,8 +268,8 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				}
 			} else if (s[i].equals("v3EAT")) {
 				if (moleUI == null) {
-					humanUI.getV3().setVisible(false);
 					humanUI.getV3().setBounds(0, 0, 0, 0);
+					humanUI.getV3().setVisible(false);
 					humanUI.setVegcount(humanUI.getVegcount() - 1);
 					humanUI.getVegCountLabel().setText(humanUI.getVegcount() + "");
 					if (humanUI.getVegcount() == 0) {
@@ -285,8 +290,8 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 							}
 					}
 				} else {
-					moleUI.getV3().setVisible(false);
 					moleUI.getV3().setBounds(0, 0, 0, 0);
+					moleUI.getV3().setVisible(false);
 					moleUI.setVegcount(moleUI.getVegcount() - 1);
 					moleUI.getVegcountLabel().setText(moleUI.getVegcount() + "");
 				//	moleUI.getV1().setVisible(false);
@@ -392,10 +397,20 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				else
 					moleUI.makeSnake(status);
 			} else if (s[i].equals("SNAKEDIE")) {
-				if (moleUI == null)
+				if (moleUI == null) {
 					humanUI.getSnake().snakeDie();
-				else
+					if (humanUI.getHuman().getB() != null) {
+						humanUI.getHuman().getB().setVisible(false);
+						humanUI.remove(humanUI.getHuman().getB());
+					}
+				}
+				else {
 					moleUI.getSnake().snakeDie();
+					if (moleUI.getMoleInHumanPerformance().getB() != null) {
+						moleUI.getMoleInHumanPerformance().getB().setVisible(false);
+						moleUI.remove(moleUI.getMoleInHumanPerformance().getB());
+					}
+				}
 			} else if (s[i].equals("BULLET")) {
 				int direction = Integer.parseInt(s[i + 1]);
 				int status = Integer.parseInt(s[i + 2]);
@@ -409,8 +424,6 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			} else if (s[i].equals("MOLEDIE")) {
 				if (moleUI == null) {
 					humanUI.moleDie(s[i + 1]);
-					humanUI.setMoleCount(humanUI.getMoleCount() - 1);
-	                humanUI.getMoleCountLabel().setText(humanUI.getMoleCount() + "");
 					if (humanUI.getHuman().getB() != null) {
 						humanUI.getHuman().getB().setVisible(false);
 						humanUI.remove(humanUI.getHuman().getB());
@@ -433,8 +446,6 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					}
 				} else {
 					moleUI.moleDie(s[i + 1]);
-                    moleUI.setMoleCount(moleUI.getMoleCount() - 1);
-                    moleUI.getMoleCountLabel().setText(moleUI.getMoleCount() + "");
 					if (moleUI.getMoleInHumanPerformance().getB() != null) {
 						moleUI.getMoleInHumanPerformance().getB().setVisible(false);
 						moleUI.remove(moleUI.getMoleInHumanPerformance().getB());
@@ -458,9 +469,10 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				}
 			} else if (s[i].equals("MINUSLIFE")) {
 				if (moleUI == null) {
-					humanUI.getHuman().minushumanlife();
 					humanUI.getSnake().snakeDie();
-
+					humanUI.getHuman().setHumanLife(humanUI.getHuman().getHumanLife()-1);
+					humanUI.getLifeLabel().setText(humanUI.getHuman().getHumanLife() + "");
+						
 					if (humanUI.getHuman().getHumanLife() == 0) {
 						JOptionPane.showMessageDialog(null, "인간 패배", "Result", JOptionPane.PLAIN_MESSAGE);
 						ctx.writeAndFlush("[HUMANLOSE]," + LoginForm.getId() + ",");
@@ -479,8 +491,9 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					}
 				}
 			 else {
-				moleUI.getMoleInHumanPerformance().minushumanlife();
 				moleUI.getSnake().snakeDie();
+				moleUI.getMoleInHumanPerformance().setHumanlife(moleUI.getMoleInHumanPerformance().getHumanlife()-1);
+				moleUI.getLifeLabel().setText(moleUI.getMoleInHumanPerformance().getHumanlife() + "");
 				if (moleUI.getMoleInHumanPerformance().getHumanlife() == 0) {
 					JOptionPane.showMessageDialog(null, "인간 패배", "Result", JOptionPane.PLAIN_MESSAGE);
 					ctx.writeAndFlush("[MOLEWIN]," + LoginForm.getId() + ",");

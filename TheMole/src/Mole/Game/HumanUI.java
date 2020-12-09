@@ -203,6 +203,12 @@ public class HumanUI extends JPanel {
 		});
 		
 	}
+	public JLabel getLifeLabel() {
+		return lifeLabel;
+	}
+	public void setLifeLabel(JLabel lifeLabel) {
+		this.lifeLabel = lifeLabel;
+	}
 	public int getSecond() {
 		return second;
 	}

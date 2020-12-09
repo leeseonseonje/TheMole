@@ -60,6 +60,8 @@ public class HumanInMole extends JButton {
         moleDeadTimer();
         deadTime.start();
         setIcon(moleD);
+		human.setMoleCount(human.getMoleCount() - 1);
+        human.getMoleCountLabel().setText(human.getMoleCount() + "");
     }
 	public void moleDeadTimer() {
         deadTime = new Timer(500, e -> {

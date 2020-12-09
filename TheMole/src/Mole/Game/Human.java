@@ -47,6 +47,7 @@ public class Human extends JLabel{
 	private boolean moleKill = true;
 	
 	private int humanLife = 2;
+
 	private int bulletCount = 5;
 	
 	private Bullet b;
@@ -435,7 +436,9 @@ public class Human extends JLabel{
 	public int plusBcount() {
 		return bulletCount += 2;
 	}
-
+	public void setHumanLife(int humanLife) {
+		this.humanLife = humanLife;
+	}
 	public Rectangle getBounds() {
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}

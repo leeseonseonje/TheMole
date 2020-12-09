@@ -69,7 +69,9 @@ public class MoleUI extends JPanel {
 	private ImageIcon itemsnakepipe = new ImageIcon("img/Snakepipe.png");
 	private JLabel itembox1;
 	private JLabel itembox2;
-
+	
+	private JLabel lifeLabel;
+	
 	private itemBoxThread i1;
 	private itemBoxThread i2;
 	Human hum;
@@ -546,6 +548,13 @@ public class MoleUI extends JPanel {
 
 			add(moleCountLabel);
 
+			lifeLabel = new JLabel("2");
+			lifeLabel.setBounds(21, 70, 20, 20);
+			lifeLabel.setHorizontalAlignment(JLabel.CENTER);
+			lifeLabel.setFont(font2);
+			
+			add(lifeLabel);
+			
 			itembox1 = new JLabel();
 			itembox2 = new JLabel();
 			itembox1.setBounds(655, 6, 36, 36);
@@ -562,6 +571,12 @@ public class MoleUI extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public JLabel getLifeLabel() {
+		return lifeLabel;
+	}
+	public void setLifeLabel(JLabel lifeLabel) {
+		this.lifeLabel = lifeLabel;
 	}
 	public void moleDie (String moleNumber) {
 		if (moleNumber.equals("1"))
@@ -1047,6 +1062,8 @@ public class MoleUI extends JPanel {
 			deadTime.start();
 			moleButton.setIcon(moleD);
 			m = false;
+			moleCount = moleCount - 1;
+            moleCountLabel.setText(moleCount + "");
 		}
 
 		public void moleDeadTimer() {

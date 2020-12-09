@@ -79,6 +79,7 @@ public class Snake extends JLabel {
                     if (snakeTempo == 1)
                         setIcon(snake[3]);
                     setBounds(getX(),y,32,32);
+
                 } 
 
             }

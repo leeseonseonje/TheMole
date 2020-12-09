@@ -56,7 +56,7 @@ public class HumanInMole extends JButton {
 	}
 	public void moleDie() {
 		setVisible(true);
-		timer.stop();
+		//timer.stop();
         moleDeadTimer();
         deadTime.start();
         setIcon(moleD);

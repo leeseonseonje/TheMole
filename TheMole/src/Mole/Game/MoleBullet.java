@@ -117,6 +117,7 @@ public class MoleBullet extends JLabel {
 					}*/
 				}if (dshootsec == 30) {
 					setVisible(false);
+					mainpanel.remove(mainpanel.getMoleInHumanPerformance().getB());
 					dshoottimer.stop();
 				}
 			}
@@ -133,6 +134,7 @@ public class MoleBullet extends JLabel {
 						setBounds(((int) bul.getX()), (int) y, 16, 16);
 						if (shootsec == 30) {
 							bul.setVisible(false);
+							mainpanel.remove(bul);
 							shoottimer.stop();
 						}
 					} else if (direction == 2) { 
@@ -140,6 +142,7 @@ public class MoleBullet extends JLabel {
 						setBounds(((int) bul.getX()), (int) y, 16, 16);
 						if (shootsec == 30) {
 							bul.setVisible(false);
+							mainpanel.remove(bul);
 							shoottimer.stop();
 						}
 					}

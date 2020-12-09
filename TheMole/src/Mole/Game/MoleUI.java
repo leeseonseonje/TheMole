@@ -89,6 +89,18 @@ public class MoleUI extends JPanel {
 	private SoundJLayer soundToPlay = new SoundJLayer("sound/ingameBG_Lisport.mp3");
 	private boolean musicStatus = true;
 
+	public SoundJLayer getSoundToPlay() {
+		return soundToPlay;
+	}
+	public void setSoundToPlay(SoundJLayer soundToPlay) {
+		this.soundToPlay = soundToPlay;
+	}
+	public boolean getMusicStatus() {
+		return musicStatus;
+	}
+	public void setMusicStatus(boolean musicStatus) {
+		this.musicStatus = musicStatus;
+	}
 	public MoleUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1,
 			int crop2, int crop3) {
 		CustomCursor();
@@ -1198,8 +1210,8 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-						//v1.setBounds(0, 0, 0, 0);
-						//v1.setVisible(false);
+					//	v1.setBounds(0, 0, 0, 0);
+					//	v1.setVisible(false);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 						moleButton.setIcon(mole[13]);
@@ -1219,7 +1231,7 @@ public class MoleUI extends JPanel {
 						eating = false;
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
 						//v2.setBounds(0, 0, 0, 0);
-						//v2.setVisible(false);
+					//	v2.setVisible(false);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 						moleButton.setIcon(mole[13]);
@@ -1238,7 +1250,7 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-						//v3.setBounds(0, 0, 0, 0);
+					//	v3.setBounds(0, 0, 0, 0);
 						//v3.setVisible(false);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
@@ -1311,15 +1323,15 @@ public class MoleUI extends JPanel {
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-						//v1.setVisible(false);
-						//v1.setBounds(0, 0, 0, 0);
+					//	v1.setVisible(false);
+					//	v1.setBounds(0, 0, 0, 0);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-						//v1.setVisible(false);
-						//v1.setBounds(0, 0, 0, 0);
+					//	v1.setVisible(false);
+					//	v1.setBounds(0, 0, 0, 0);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 					}
@@ -1349,14 +1361,14 @@ public class MoleUI extends JPanel {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
 					//	v2.setVisible(false);
-						//v2.setBounds(0, 0, 0, 0);
+					//	v2.setBounds(0, 0, 0, 0);
 					//	vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
 					//	v2.setVisible(false);
-						//v2.setBounds(0, 0, 0, 0);
+					//	v2.setBounds(0, 0, 0, 0);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 					}
@@ -1378,22 +1390,22 @@ public class MoleUI extends JPanel {
 						itembox1.setIcon(null);
 						enhenceteeth = true;
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-						//v3.setVisible(false);
+					//	v3.setVisible(false);
 						//v3.setBounds(0, 0, 0, 0);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-						//v3.setVisible(false);
-						//v3.setBounds(0, 0, 0, 0);
+					//	v3.setVisible(false);
+					//	v3.setBounds(0, 0, 0, 0);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-						//v3.setVisible(false);
-						//v3.setBounds(0, 0, 0, 0);
+					//	v3.setVisible(false);
+					//	v3.setBounds(0, 0, 0, 0);
 						//vegcount--;
 						//vegcountLabel.setText(vegcount + "");
 					}

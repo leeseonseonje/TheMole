@@ -69,7 +69,19 @@ public class HumanUI extends JPanel {
 	private int moleCount = 9;
 	
 	private SoundJLayer soundToPlay = new SoundJLayer("sound/ingameBG_Lisport.mp3");
+	public SoundJLayer getSoundToPlay() {
+		return soundToPlay;
+	}
+	public void setSoundToPlay(SoundJLayer soundToPlay) {
+		this.soundToPlay = soundToPlay;
+	}
 	private boolean musicStatus = true;
+	public boolean getMusicStatus() {
+		return musicStatus;
+	}
+	public void setMusicStatus(boolean musicStatus) {
+		this.musicStatus = musicStatus;
+	}
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
 		CustomCursor();
 		this.ctx = ctx;
@@ -319,6 +331,12 @@ public class HumanUI extends JPanel {
 	}
 	public void setdFormat(DecimalFormat dFormat) {
 		this.dFormat = dFormat;
+	}
+	public JLabel getBulletLabel() {
+		return bulletLabel;
+	}
+	public void setBulletLabel(JLabel bulletLabel) {
+		this.bulletLabel = bulletLabel;
 	}
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);

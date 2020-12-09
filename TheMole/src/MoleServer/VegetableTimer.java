@@ -16,7 +16,7 @@ public class VegetableTimer {
 				int n = ((int) (Math.random() * 230)) + (230 * section) + 20;
 				int x = ((int) (Math.random() * 10));
 				for (Channel channel : Room.roomManager.get(name)) {
-					channel.writeAndFlush(vegetableNumber + "," + n + "," + x);
+					channel.writeAndFlush(vegetableNumber + "," + n + "," + x + ",");
 				}
 				vegTimer.stop();
 			}

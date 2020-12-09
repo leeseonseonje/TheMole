@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
+	private GameTimer gameTimer;
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String) msg;
@@ -62,12 +63,10 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 
 			else if (s[i].equals("[HUMANITEM1EAT]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
-					if (channel != myChannel)
 						channel.writeAndFlush("HUMANITEM1EAT,");
 				}
 			} else if (s[i].equals("[HUMANITEM2EAT]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
-					if (channel != myChannel)
 						channel.writeAndFlush("HUMANITEM2EAT,");
 				}
 			} else if (s[i].equals("[HUMANSPEEDUP]")) {
@@ -127,13 +126,21 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				}
 			}
 		}
-		if (s[0].equals("[HUMANWIN]"))
+		if (s[0].equals("[HUMANWIN]")) {
 			DBConnect.humanWin(s[1]);
-		else if (s[0].equals("[MOLELOSE]"))
+			gameTimer.getGameTimer().stop();
+		}
+		else if (s[0].equals("[MOLELOSE]")) {
 			DBConnect.gameLose(s[1]);
-		else if (s[0].equals("[MOLEWIN]"))
+			gameTimer.getGameTimer().stop();
+		}
+		else if (s[0].equals("[MOLEWIN]")) {
 			DBConnect.moleWin(s[1]);
-		else if (s[0].equals("[HUMANLOSE]"))
+			gameTimer.getGameTimer().stop();
+		}
+		else if (s[0].equals("[HUMANLOSE]")) {
 			DBConnect.gameLose(s[1]);
+			gameTimer.getGameTimer().stop();
+		}
 	}
 }

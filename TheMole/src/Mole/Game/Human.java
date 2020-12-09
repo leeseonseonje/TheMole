@@ -111,20 +111,20 @@ public class Human extends JLabel{
 					setIcon(human[6]);
 					shooting = true;
 					//Bullet a = new Bullet(getX(), 2, status, pan);
-					minusBcount();
+				//	minusBcount();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.getHumStop() == false && bulletCount != 0 && status == 1) {
 					ctx.writeAndFlush("[BULLET]," + name + "," + 1 + "," + status + ",");
 					setIcon(human[1]);
 					shooting = true;
 				//	Bullet b =new Bullet(getX(), 1, status, pan);
-					minusBcount();
+				//	minusBcount();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_S && shooting == false  && pan.getHumStop() == false && bulletCount != 0) {
 					ctx.writeAndFlush("[BULLET]," + name + "," + 3 + "," + status + ",");
 					shooting = true;
 				//	Bullet b =new Bullet(getX(), 3, status, pan);
-					minusBcount();
+				//	minusBcount();
 				}
 				
 				if (pan.getI1().getX() > getX() - 10 && pan.getI1().getX() < getX() + 3 && pan.getI1().getTimerstop() == false) {
@@ -352,7 +352,8 @@ public class Human extends JLabel{
 			break;
 		default:
 			System.out.println("ÃÑ¾Ë È¹µæ");
-			plusBcount();
+			bulletCount += 2;
+			humanUi.getBulletLabel().setText(bulletCount + "");
 			break;
 		}
 
@@ -428,10 +429,9 @@ public class Human extends JLabel{
 	public int getBulletCount() {
 		return bulletCount;
 	}
-	public int minusBcount() {
-		return bulletCount--;
+	public void setBulletCount(int bulletCount) {
+		this.bulletCount = bulletCount;
 	}
-	
 	public int plusBcount() {
 		return bulletCount += 2;
 	}

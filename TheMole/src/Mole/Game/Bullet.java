@@ -104,7 +104,7 @@ public class Bullet extends JLabel {
 							&& mainpanel.getM5().getY() == y && mainpanel.getM5().getLife() == true) {
 						//mainpanel.getM5().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");
-						//setVisible(false);
+					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM6().getX() >= getX() - 20 && mainpanel.getM6().getX() <= getX() + 20
 							&& mainpanel.getM6().getY() == y && mainpanel.getM6().getLife() == true) {
@@ -133,6 +133,7 @@ public class Bullet extends JLabel {
 					}
 				}if (dshootsec == 30) {
 					setVisible(false);
+					mainpanel.remove(mainpanel.getHuman().getB());
 					dshoottimer.stop();
 				}
 			}
@@ -151,6 +152,7 @@ public class Bullet extends JLabel {
 						setBounds(((int) bul.getX()), (int) y, 16, 16);
 						if (shootsec == 30) {
 							bul.setVisible(false);
+							mainpanel.remove(bul);
 							shoottimer.stop();
 						}
 					} else if (direction == 2) { 
@@ -158,6 +160,7 @@ public class Bullet extends JLabel {
 						setBounds(((int) bul.getX()), (int) y, 16, 16);
 						if (shootsec == 30) {
 							bul.setVisible(false);
+							mainpanel.remove(bul);
 							shoottimer.stop();
 						}
 					}

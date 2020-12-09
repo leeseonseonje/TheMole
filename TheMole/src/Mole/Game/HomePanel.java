@@ -224,6 +224,10 @@ public class HomePanel extends JPanel {
 	public SoundJLayer getSoundToPlay() {
 		return soundToPlay;
 	}
+	public void setPlayStatus(boolean playStatus) {
+		this.playStatus = playStatus;
+	}
+
 	public boolean getPlayStatus() {
 		return playStatus;
 	}

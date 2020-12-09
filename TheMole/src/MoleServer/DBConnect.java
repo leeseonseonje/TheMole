@@ -43,7 +43,7 @@ public class DBConnect {
 			String contents = "";
 			String l = "";
 			while(rs.next()) {
-					contents +=  String.format(" %3d \t %s \t %3d \t %3d \t %3d \t %.1f \t %4d \n", 
+					contents +=  String.format(" %3d \t %s \t %3d \t %3d \t %3d \t %.1f \t %4d \n\n", 
 						num++, rs.getString("ID"),rs.getInt("PLAYCOUNT"),rs.getInt("HUMANWIN"),
 						rs.getInt("MOLEWIN"),((rs.getDouble("HUMANWIN")+rs.getInt("MOLEWIN"))/rs.getInt("PLAYCOUNT"))*100,rs.getInt("SCORES"));	
 				}

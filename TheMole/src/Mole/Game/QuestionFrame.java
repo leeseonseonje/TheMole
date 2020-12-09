@@ -90,6 +90,8 @@ class QuestionFrame extends JPanel { // 도움말 버튼을 클릭했을 때 나오는 프레임
 		}
 		
 		JTextArea p4 = new JTextArea(); // 패널 4 - etc(여유분)
+		p4.setEditable(false);
+        p4.setFont(wr);
 		try {
 			in = new DataInputStream(new BufferedInputStream(new FileInputStream("lib/etc.bin")));
 			p4.append(in.readUTF());

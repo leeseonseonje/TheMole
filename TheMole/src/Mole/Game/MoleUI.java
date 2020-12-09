@@ -88,6 +88,9 @@ public class MoleUI extends JPanel {
 	
 	private SoundJLayer soundToPlay = new SoundJLayer("sound/ingameBG_Lisport.mp3");
 	private boolean musicStatus = true;
+	
+	private JButton music;
+    ImageIcon music_img = new ImageIcon("img/music.png");
 
 	public SoundJLayer getSoundToPlay() {
 		return soundToPlay;
@@ -103,7 +106,6 @@ public class MoleUI extends JPanel {
 	}
 	public MoleUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1,
 			int crop2, int crop3) {
-		CustomCursor();
 		this.ctx = ctx;
 		try {
 			setLayout(null);
@@ -463,39 +465,33 @@ public class MoleUI extends JPanel {
 				}
 			});
 			
-			addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent e) {
-					if (e.getKeyCode() == KeyEvent.VK_M) {
-						if (musicStatus == true) {
-							try {
-								soundToPlay.pause();
-								musicStatus = false;
-							} catch (JavaLayerException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (InterruptedException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						} else {
-							soundToPlay.play();
-							musicStatus = true;
-						}
-					}
-				}
+			music = new JButton(music_img);
+            music.setBorderPainted(false);
+            music.setFocusPainted(false);
+            music.setContentAreaFilled(false);
+            music.setBounds(580, 0, 50, 50);
+            music.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
 
-				@Override
-				public void keyReleased(KeyEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void keyTyped(KeyEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-			});
+                    try {
+                        if (musicStatus == true) {
+                            try {
+                                soundToPlay.pause();
+                            } catch (InterruptedException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
+                            musicStatus = false;
+                        } else {
+                            soundToPlay.play();
+                            musicStatus = true;
+                        }
+                    } catch (JavaLayerException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            });
+            add(music);
 
 			v1 = new vegetableThread(v1Location, crop1);
 			v2 = new vegetableThread(v2Location, crop2);
@@ -1467,13 +1463,5 @@ public class MoleUI extends JPanel {
 		g.drawImage(intMole, 740, 0, null);
 
 		drawPerfectRect(g, sx, sy, ex, ey);
-	}
-	public void CustomCursor() { // 커스텀 커서(마우스 커서)
-
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		Image cursorimage = tk.getImage("img/cropcursor.png");
-		Point point = new Point(20, 20);
-		Cursor cursor = tk.createCustomCursor(cursorimage, point, "crop");
-		setCursor(cursor);
 	}
 }

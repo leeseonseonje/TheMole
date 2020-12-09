@@ -32,7 +32,7 @@ public class InRoom extends JPanel {
 	JButton host;
 	JButton guest;
 	JTextField chatField;
-	public static JTextArea chatArea;
+	private JTextArea chatArea;
 	JScrollPane scroll;
 	public static JLabel ready;
 	public InRoom(ChannelHandlerContext ctx, String hostName, String guestName) {
@@ -97,7 +97,6 @@ public class InRoom extends JPanel {
 					}
 				}
 			}
-			
 		});
 		chatArea = new JTextArea(10, 30);
 		chatArea.setEditable(false);
@@ -113,5 +112,14 @@ public class InRoom extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(background, 0, 0, null);
+	}
+	public JTextArea getChatArea() {
+		return chatArea;
+	}
+	public void setChatArea(JTextArea chatArea) {
+		this.chatArea = chatArea;
+	}
+	public JScrollPane getScroll() {
+		return scroll;
 	}
 }

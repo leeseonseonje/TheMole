@@ -85,7 +85,8 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			inRoom.setVisible(true);
 		}
 		else if (s[0].equals("SENDMESSAGE")) {
-			inRoom.chatArea.append(s[1] + "\n");
+			inRoom.getChatArea().append(s[1] + "\n");
+			inRoom.getScroll().getVerticalScrollBar().setValue(inRoom.getScroll().getVerticalScrollBar().getMaximum());
 		}
 		else if (readMessage.equals("FULL"))
 			JOptionPane.showMessageDialog(mainFrame, "Ç®¹æ");

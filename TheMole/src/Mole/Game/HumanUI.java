@@ -83,7 +83,6 @@ public class HumanUI extends JPanel {
 		this.musicStatus = musicStatus;
 	}
 	public HumanUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1, int crop2, int crop3) throws IOException {
-		CustomCursor();
 		this.ctx = ctx;
 		this.name = name;
 		setLayout(null);
@@ -482,14 +481,6 @@ public class HumanUI extends JPanel {
 			m8.moleDie();
 		else if (moleNumber.equals("9"))
 			m9.moleDie();
-	}
-	public void CustomCursor() { // 커스텀 커서(마우스 커서)
-
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		Image cursorimage = tk.getImage("img/cropcursor.png");
-		Point point = new Point(20, 20);
-		Cursor cursor = tk.createCustomCursor(cursorimage, point, "crop");
-		setCursor(cursor);
 	}
 }
 

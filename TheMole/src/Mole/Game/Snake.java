@@ -80,10 +80,6 @@ public class Snake extends JLabel {
                         setIcon(snake[3]);
                     setBounds(getX(),y,32,32);
                 } 
-                if(molePanel.getMoleInHumanPerformance().getX() == getX()) {
-                    molePanel.getMoleInHumanPerformance().minushumanlife();
-                    snakeDie();
-                }
 
             }
 

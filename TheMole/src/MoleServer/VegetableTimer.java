@@ -10,17 +10,13 @@ public class VegetableTimer {
 	private int vegetableCount = 0;
 
 	public VegetableTimer(ChannelHandlerContext ctx, String vegetableNumber, String name, int section) {
-		Channel mole = ctx.channel();
 		vegTimer = new Timer(1000, e -> {
 			vegetableCount++;
 			if (vegetableCount == 10) {
-				int n = ((int) (Math.random() * 250)) + (250 * section) + 20;
+				int n = ((int) (Math.random() * 230)) + (230 * section) + 20;
 				int x = ((int) (Math.random() * 10));
 				for (Channel channel : Room.roomManager.get(name)) {
-					if (channel == mole)
-						mole.writeAndFlush("MOLE" + vegetableNumber + "," + n + "," + x);
-					else
-						channel.writeAndFlush("HUMAN" + vegetableNumber + "," + n + "," + x);
+					channel.writeAndFlush(vegetableNumber + "," + n + "," + x);
 				}
 				vegTimer.stop();
 			}

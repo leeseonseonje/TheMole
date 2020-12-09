@@ -38,7 +38,7 @@ public class MoleUI extends JPanel {
 	 */
 
 	private BufferedImage backImage, humanHud, moleHud, humanInv, moleInv, intHuman, intMole;
-	public JLabel counterLabel;
+	private JLabel counterLabel;
 	private JLabel vegcountLabel;
 	private JLabel moleCountLabel;
 	private int vegcount = 15;
@@ -521,8 +521,8 @@ public class MoleUI extends JPanel {
 			second = 0;
 			minute = 3;
 
-			normalTimer();
-			timer.start();
+		//	normalTimer();
+		//	timer.start();
 
 			vegcountLabel = new JLabel(vegcount + "");
 			vegcountLabel.setBounds(758, 90, 20, 20);
@@ -554,6 +554,73 @@ public class MoleUI extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void moleDie (String moleNumber) {
+		if (moleNumber.equals("1"))
+			m1.moleDie();
+		else if (moleNumber.equals("2"))
+			m2.moleDie();
+		else if (moleNumber.equals("3"))
+			m3.moleDie();
+		else if (moleNumber.equals("4"))
+			m4.moleDie();
+		else if (moleNumber.equals("5"))
+			m5.moleDie();
+		else if (moleNumber.equals("6"))
+			m6.moleDie();
+		else if (moleNumber.equals("7"))
+			m7.moleDie();
+		else if (moleNumber.equals("8"))
+			m8.moleDie();
+		else if (moleNumber.equals("9"))
+			m9.moleDie();
+	}
+	public JLabel getCounterLabel() {
+		return counterLabel;
+	}
+
+	public void setCounterLabel(JLabel counterLabel) {
+		this.counterLabel = counterLabel;
+	}
+
+	public int getSecond() {
+		return second;
+	}
+
+	public void setSecond(int second) {
+		this.second = second;
+	}
+
+	public int getMinute() {
+		return minute;
+	}
+
+	public void setMinute(int minute) {
+		this.minute = minute;
+	}
+
+	public String getDdSecond() {
+		return ddSecond;
+	}
+
+	public void setDdSecond(String ddSecond) {
+		this.ddSecond = ddSecond;
+	}
+
+	public String getDdMinute() {
+		return ddMinute;
+	}
+
+	public void setDdMinute(String ddMinute) {
+		this.ddMinute = ddMinute;
+	}
+
+	public DecimalFormat getdFormat() {
+		return dFormat;
+	}
+
+	public void setdFormat(DecimalFormat dFormat) {
+		this.dFormat = dFormat;
 	}
 
 	public vegetableThread getV1() {
@@ -650,7 +717,7 @@ public class MoleUI extends JPanel {
 		isSnake = true;
 	}
 
-	public void normalTimer() {
+	/*public void normalTimer() {
 		timer = new Timer(1000, new ActionListener() {
 
 			@Override
@@ -678,8 +745,8 @@ public class MoleUI extends JPanel {
 					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
 					ctx.writeAndFlush("[MOLELOSE]," + LoginForm.getId() + ",");
 					setVisible(false);
-					if (MoleClientMainHandler.roomTest.testStart.getText().equals("준비취소"))
-						MoleClientMainHandler.roomTest.testStart.setText("준비");
+					if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
+						MoleClientMainHandler.inRoom.testStart.setText("준비");
 					MoleClientMainHandler.roomTest.ready.setText("");
 					MoleClientMainHandler.roomTest.setVisible(true);
 					if (musicStatus == true)
@@ -740,7 +807,7 @@ public class MoleUI extends JPanel {
 				}
 			}
 		});
-	}
+	}*/
 
 	class Drager extends MouseAdapter {
 		private int status;
@@ -1131,10 +1198,10 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-						v1.setBounds(0, 0, 0, 0);
-						v1.setVisible(false);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v1.setBounds(0, 0, 0, 0);
+						//v1.setVisible(false);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 						moleButton.setIcon(mole[13]);
 					}
 				}
@@ -1151,10 +1218,10 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
-						v2.setBounds(0, 0, 0, 0);
-						v2.setVisible(false);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v2.setBounds(0, 0, 0, 0);
+						//v2.setVisible(false);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 						moleButton.setIcon(mole[13]);
 					}
 				}
@@ -1171,10 +1238,10 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-						v3.setBounds(0, 0, 0, 0);
-						v3.setVisible(false);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v3.setBounds(0, 0, 0, 0);
+						//v3.setVisible(false);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 						moleButton.setIcon(mole[13]);
 					}
 				}
@@ -1214,14 +1281,14 @@ public class MoleUI extends JPanel {
 
 			if (i1.getBounds().intersects(champion) && i1.getTimerstop() == false && eating == false) {
 				ctx.writeAndFlush("[MOLEITEM1EAT]," + name + ",");
-				i1.setBounds(0, 0, 0, 0);
-				i1.setVisible(false);
+				/*i1.setBounds(0, 0, 0, 0);
+				i1.setVisible(false);*/
 				molegetitem();
 
 			} else if (i2.getBounds().intersects(champion) && i2.getTimerstop() == false && eating == false) {
 				ctx.writeAndFlush("[MOLEITEM2EAT]," + name + ",");
-				i2.setBounds(0, 0, 0, 0);
-				i2.setVisible(false);
+				/*i2.setBounds(0, 0, 0, 0);
+				i2.setVisible(false);*/
 				molegetitem();
 			}
 
@@ -1237,24 +1304,24 @@ public class MoleUI extends JPanel {
 						itembox1.setIcon(null);
 						enhenceteeth = true;
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-						v1.setVisible(false);
-						v1.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v1.setVisible(false);
+						//v1.setBounds(0, 0, 0, 0);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-						v1.setVisible(false);
-						v1.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v1.setVisible(false);
+						//v1.setBounds(0, 0, 0, 0);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-						v1.setVisible(false);
-						v1.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v1.setVisible(false);
+						//v1.setBounds(0, 0, 0, 0);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					}
 				}
 
@@ -1274,24 +1341,24 @@ public class MoleUI extends JPanel {
 						itembox1.setIcon(null);
 						enhenceteeth = true;
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
-						v2.setVisible(false);
-						v2.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+					//	v2.setVisible(false);
+					//	v2.setBounds(0, 0, 0, 0);
+					//	vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
-						v2.setVisible(false);
-						v2.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+					//	v2.setVisible(false);
+						//v2.setBounds(0, 0, 0, 0);
+					//	vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
-						v2.setVisible(false);
-						v2.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+					//	v2.setVisible(false);
+						//v2.setBounds(0, 0, 0, 0);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					}
 				}
 				v2.plusvegcount();
@@ -1311,24 +1378,24 @@ public class MoleUI extends JPanel {
 						itembox1.setIcon(null);
 						enhenceteeth = true;
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-						v3.setVisible(false);
-						v3.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v3.setVisible(false);
+						//v3.setBounds(0, 0, 0, 0);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-						v3.setVisible(false);
-						v3.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v3.setVisible(false);
+						//v3.setBounds(0, 0, 0, 0);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-						v3.setVisible(false);
-						v3.setBounds(0, 0, 0, 0);
-						vegcount--;
-						vegcountLabel.setText(vegcount + "");
+						//v3.setVisible(false);
+						//v3.setBounds(0, 0, 0, 0);
+						//vegcount--;
+						//vegcountLabel.setText(vegcount + "");
 					}
 				}
 				v3.plusvegcount();
@@ -1364,6 +1431,18 @@ public class MoleUI extends JPanel {
 		}
 	}
 
+	public JLabel getVegcountLabel() {
+		return vegcountLabel;
+	}
+	public void setVegcountLabel(JLabel vegcountLabel) {
+		this.vegcountLabel = vegcountLabel;
+	}
+	public int getVegcount() {
+		return vegcount;
+	}
+	public void setVegcount(int vegcount) {
+		this.vegcount = vegcount;
+	}
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);

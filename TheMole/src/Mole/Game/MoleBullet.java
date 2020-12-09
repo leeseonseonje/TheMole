@@ -69,7 +69,7 @@ public class MoleBullet extends JLabel {
 				for (int i = 0; i < 5; i++) {
 					bulMoveD(1);
 					setBounds(x,y, 16, 16);
-					if (mainpanel.getM1().getMoleButton().getX() >= getX() - 20 && mainpanel.getM1().getMoleButton().getX() <= getX() + 20
+					/*if (mainpanel.getM1().getMoleButton().getX() >= getX() - 20 && mainpanel.getM1().getMoleButton().getX() <= getX() + 20
 							&& mainpanel.getM1().getMoleButton().getY() == y && mainpanel.getM1().getLife() == true) {
 						mainpanel.getM1().moleDie();
 						setVisible(false);
@@ -114,7 +114,7 @@ public class MoleBullet extends JLabel {
 						mainpanel.getM9().moleDie();
 						setVisible(false);
 						dshoottimer.stop();
-					}
+					}*/
 				}if (dshootsec == 30) {
 					setVisible(false);
 					dshoottimer.stop();
@@ -122,8 +122,6 @@ public class MoleBullet extends JLabel {
 			}
 		});
 	}
-	
-	
 	public void shooting(JLabel bul) {
 		shoottimer = new Timer(10, new ActionListener() {
 			@Override
@@ -145,7 +143,7 @@ public class MoleBullet extends JLabel {
 							shoottimer.stop();
 						}
 					}
-					if (mainpanel.getM1().getMoleButton().getX() == bul.getX() && mainpanel.getM1().getMoleButton().getY() <= 275
+				/*	if (mainpanel.getM1().getMoleButton().getX() == bul.getX() && mainpanel.getM1().getMoleButton().getY() <= 275
 							&& mainpanel.getM1().getLife() == true) {
 						bul.setVisible(false);
 						shoottimer.stop();
@@ -196,7 +194,7 @@ public class MoleBullet extends JLabel {
 							bul.setVisible(false);
 							shoottimer.stop();
 						}
-					}
+					}*/
 				}
 			}
 

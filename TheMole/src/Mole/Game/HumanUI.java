@@ -47,7 +47,7 @@ public class HumanUI extends JPanel {
 	private boolean humtrap = false;
 	private boolean timerstop = false;
 	
-	public JLabel counterLabel;
+	private JLabel counterLabel;
 	private String ddSecond, ddMinute;
 	private DecimalFormat dFormat = new DecimalFormat("00");
 	private int second, minute;
@@ -129,8 +129,8 @@ public class HumanUI extends JPanel {
 		counterLabel.setText("03:00");
 		second = 0;
 		minute = 3;		
-		normalTimer();
-		timer.start();
+	//	normalTimer();
+		//timer.start();
 		
 		bulletLabel = new JLabel("5");
 		bulletLabel.setBounds(21, 90, 20, 20);
@@ -192,6 +192,18 @@ public class HumanUI extends JPanel {
 		});
 		
 	}
+	public int getSecond() {
+		return second;
+	}
+	public void setSecond(int second) {
+		this.second = second;
+	}
+	public int getMinute() {
+		return minute;
+	}
+	public void setMinute(int minute) {
+		this.minute = minute;
+	}
 	public JLabel getVegCountLabel() {
 		return vegCountLabel;
 	}
@@ -240,8 +252,26 @@ public class HumanUI extends JPanel {
 	public HumanInMole getM9() {
 		return m9;
 	}
+	public JLabel getCounterLabel() {
+		return counterLabel;
+	}
+	public void setCounterLabel(JLabel counterLabel) {
+		this.counterLabel = counterLabel;
+	}
+	public String getDdSecond() {
+		return ddSecond;
+	}
+	public void setDdSecond(String ddSecond) {
+		this.ddSecond = ddSecond;
+	}
+	public String getDdMinute() {
+		return ddMinute;
+	}
+	public void setDdMinute(String ddMinute) {
+		this.ddMinute = ddMinute;
+	}
 	public void makeSnake(int x) {
-		snake = new HumanSnake(this, x);
+		snake = new HumanSnake(ctx, name, this, x);
 		add(snake);
 		isSnake = true;
 	}
@@ -284,6 +314,12 @@ public class HumanUI extends JPanel {
 	public JLabel getMoleCountLabel() {
 		return moleCountLabel;
 	}
+	public DecimalFormat getdFormat() {
+		return dFormat;
+	}
+	public void setdFormat(DecimalFormat dFormat) {
+		this.dFormat = dFormat;
+	}
 	public void paintComponent(Graphics g) {// 그리는 함수
 		super.paintComponent(g);
 		g.drawImage(backImage, 0, 0, null);
@@ -316,7 +352,7 @@ public class HumanUI extends JPanel {
 		else if (message.equals("9"))
 			m9.humanInMoleMove(message, x, y);
 	}
-	public void normalTimer() {
+	/*public void normalTimer() {
 		timer = new Timer(1000, new ActionListener() {
 
 			@Override
@@ -330,15 +366,15 @@ public class HumanUI extends JPanel {
 				lifeLabel.setText(human.getHumanLife() + "");
 				counterLabel.setText(ddMinute + ":" + ddSecond);
 
-				if (second == -1) {
+				/*if (second == -1) {
 					second = 59;
 					minute--;
 
 					ddSecond = dFormat.format(second);
 					ddMinute = dFormat.format(minute);
 					counterLabel.setText(ddMinute + ":" + ddSecond);
-				}
-				if (counterLabel.getText().equals("00:00")) {
+				}*/
+		/*		if (counterLabel.getText().equals("00:00")) {
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
 					ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId() + ",");
@@ -408,6 +444,26 @@ public class HumanUI extends JPanel {
 				}
 			}
 		});
+	}*/
+	public void moleDie (String moleNumber) {
+		if (moleNumber.equals("1"))
+			m1.moleDie();
+		else if (moleNumber.equals("2"))
+			m2.moleDie();
+		else if (moleNumber.equals("3"))
+			m3.moleDie();
+		else if (moleNumber.equals("4"))
+			m4.moleDie();
+		else if (moleNumber.equals("5"))
+			m5.moleDie();
+		else if (moleNumber.equals("6"))
+			m6.moleDie();
+		else if (moleNumber.equals("7"))
+			m7.moleDie();
+		else if (moleNumber.equals("8"))
+			m8.moleDie();
+		else if (moleNumber.equals("9"))
+			m9.moleDie();
 	}
 	public void CustomCursor() { // 커스텀 커서(마우스 커서)
 

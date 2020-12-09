@@ -24,7 +24,8 @@ public class MoleInHumanPerformance extends JLabel {
 	private int humanspeed = 5;
 	
 	private MoleUI mole;
-	
+	private MoleBullet b;
+
 	private ImageIcon human[] = { new ImageIcon("img/humanResource/human1.png"),
 			new ImageIcon("img/humanResource/human2.png"), new ImageIcon("img/humanResource/human3.png"),
 			new ImageIcon("img/humanResource/human4.png"), new ImageIcon("img/humanResource/human5.png"),
@@ -88,7 +89,10 @@ public class MoleInHumanPerformance extends JLabel {
 		mover.start();
 	}
 	public void bullet(int x, int direction, int status) {
-		MoleBullet b = new MoleBullet(x, direction, status, mole);
+		b = new MoleBullet(x, direction, status, mole);
+	}
+	public MoleBullet getB() {
+		return b;
 	}
 
 	public void mover() {

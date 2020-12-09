@@ -126,14 +126,14 @@ public class Room {
 			if (r == 0 && channel != host) {
 				host.writeAndFlush("MOLESTART," + hostName + "," + guestName + "," + hostName + "," + guestName + "," + v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5 + "," + v6);
 				channel.writeAndFlush("HUMANSTART,"  + hostName + "," + guestName + "," + guestName + "," + hostName + "," + v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5 + "," + v6);
-				ItemTimer itemTimer = new ItemTimer(ctx, host, hostName, "MOLEITEM", "HUMANITEM");
-				itemTimer.getItemTimer().start();
+			//	ItemTimer itemTimer = new ItemTimer(ctx, host, hostName, "MOLEITEM", "HUMANITEM");
+			//	itemTimer.getItemTimer().start();
 			} 
 			else if (r == 1 && channel != host) {
 				host.writeAndFlush("HUMANSTART,"  + hostName + ","  + guestName + "," + hostName + "," + guestName + "," + v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5 + "," + v6);
 				channel.writeAndFlush("MOLESTART,"  + hostName + "," + guestName + "," + guestName + "," + hostName + "," + v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5 + "," + v6);
-				ItemTimer itemTimer = new ItemTimer(ctx, host, hostName, "HUMANITEM", "MOLEITEM");
-				itemTimer.getItemTimer().start();
+			//	ItemTimer itemTimer = new ItemTimer(ctx, host, hostName, "HUMANITEM", "MOLEITEM");
+			//	itemTimer.getItemTimer().start();
 			}
 		}
 	}

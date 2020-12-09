@@ -1,8 +1,16 @@
 package Mole.Game;
 
+import java.awt.Color;
+import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -10,11 +18,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 import MoleServer.MoleClientMainHandler;
 import io.netty.channel.ChannelHandlerContext;
 
-public class RoomTest extends JPanel {
+public class InRoom extends JPanel {
+	private BufferedImage background;
+	
 	public static JButton testStart;
 	JButton testOut;
 	JButton host;
@@ -23,15 +35,30 @@ public class RoomTest extends JPanel {
 	public static JTextArea chatArea;
 	JScrollPane scroll;
 	public static JLabel ready;
-	public RoomTest(ChannelHandlerContext ctx, String hostName, String guestName) {
+	public InRoom(ChannelHandlerContext ctx, String hostName, String guestName) {
+		try {
+		background = ImageIO.read(new File("img/moleroommade.jpg"));
+		//setLayout(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		testStart = new JButton("시작");
+		testStart.setBackground(Color.DARK_GRAY);
+		testStart.setForeground(Color.WHITE);
 		testOut = new JButton("나가기");
+		testOut.setBackground(Color.DARK_GRAY);
+		testOut.setForeground(Color.WHITE);
+		//testOut.setBounds(680, 20, 100, 25);
 		host = new JButton(hostName);
+		host.setBackground(Color.DARK_GRAY);
+		host.setForeground(Color.RED);
 		host.addActionListener(e -> {
 			ctx.writeAndFlush("[INFORMATION]" + "," + hostName);
 		});
 		guest = new JButton(guestName);
+		guest.setBackground(Color.DARK_GRAY);
+		guest.setForeground(Color.RED);
 		guest.addActionListener(e -> {
 			ctx.writeAndFlush("[INFORMATION]" + "," + guestName);
 		});
@@ -82,5 +109,9 @@ public class RoomTest extends JPanel {
 		add(testOut);
 		add(chatField);
 		add(scroll);
+	}
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(background, 0, 0, null);
 	}
 }

@@ -8,6 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
+import io.netty.channel.ChannelHandlerContext;
+
 public class HumanSnake extends JLabel {
 
 	private int x;
@@ -18,13 +20,16 @@ public class HumanSnake extends JLabel {
 	private Timer move;
 	private int snakeTempo = 0;
 	private boolean moving = true;
-
+	private ChannelHandlerContext ctx; 
+	private String name;
 	// 4개의 스프라이트 이미지를 가짐
 	private ImageIcon snake[] = { new ImageIcon("img/snakeResource/snakeL1.png"),
 			new ImageIcon("img/snakeResource/snakeL2.png"), new ImageIcon("img/snakeResource/snakeR1.png"),
 			new ImageIcon("img/snakeResource/snakeR2.png") };
 
-	public HumanSnake(HumanUI humanPanel, int status) {
+	public HumanSnake(ChannelHandlerContext ctx, String name, HumanUI humanPanel, int status) {
+		this.ctx = ctx;
+		this.name = name;
 		this.status = status;
 		this.y = 250;
 		this.humanPanel = humanPanel;
@@ -76,8 +81,7 @@ public class HumanSnake extends JLabel {
                     setBounds(getX(),y,32,32);
                 } 
                 if(humanPanel.getHuman().getX() == getX()) {
-                    humanPanel.getHuman().minushumanlife();
-                    snakeDie();
+                	ctx.writeAndFlush("[MINUSLIFE]," + name + ",");
                 }
 
             }

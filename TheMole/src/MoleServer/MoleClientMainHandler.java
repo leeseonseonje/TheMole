@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import Mole.Game.HomePanel;
+import Mole.Game.InRoom;
 import Mole.Game.LeaderBoardFrame;
+import Mole.Game.Lobby;
 import Mole.Game.LoginForm;
 import Mole.Game.MainFrame;
 import Mole.Game.RoomTest;
@@ -17,8 +19,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 	public static MainFrame mainFrame;
 	public static HomePanel homePanel;
-	public static TestRoom testRoom;
-	public static RoomTest roomTest;
+	public static Lobby lobby;
+	public static InRoom inRoom;
 	private LinkedList<String> room = new LinkedList<String>();
 	
 	@Override
@@ -47,42 +49,42 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			for (int i = 1; i < s.length; i ++ )
 				room.add(s[i]);
 			System.out.println(room);
-			testRoom = new TestRoom(ctx, room);
-			mainFrame.add(testRoom);
+			lobby = new Lobby(ctx, room);
+			mainFrame.add(lobby);
 			homePanel.setVisible(false);
-			testRoom.setVisible(true);
+			lobby.setVisible(true);
 			room.clear();
 		}
 		else if (s[0].equals("REFRESH")) {
 			for (int i = 1; i < s.length; i ++ )
 				room.add(s[i]);
 			System.out.println(room);
-			testRoom = new TestRoom(ctx, room);
-			mainFrame.add(testRoom);
-			testRoom.setVisible(false);
-			testRoom.setVisible(true);
+			lobby = new Lobby(ctx, room);
+			mainFrame.add(lobby);
+			lobby.setVisible(false);
+			lobby.setVisible(true);
 			room.clear();
 			System.out.println("ok");
 		}
 		else if (s[0].equals("CREAT")) {
-			roomTest = new RoomTest(ctx, LoginForm.getId(), "");
-			mainFrame.add(roomTest);
-			testRoom.setVisible(false);
-			roomTest.setVisible(true);
+			inRoom = new InRoom(ctx, LoginForm.getId(), "");
+			mainFrame.add(inRoom);
+			lobby.setVisible(false);
+			inRoom.setVisible(true);
 		}
 		else if (s[0].equals("JOIN")) {
-			roomTest = new RoomTest(ctx, s[1], s[2]);
-			roomTest.testStart.setText("준비");
-			mainFrame.add(roomTest);
-			testRoom.setVisible(false);
-			roomTest.setVisible(true);
+			inRoom = new InRoom(ctx, s[1], s[2]);
+			inRoom.testStart.setText("준비");
+			mainFrame.add(inRoom);
+			lobby.setVisible(false);
+			inRoom.setVisible(true);
 		}
 		else if (s[0].equals("GUEST")) {
-			roomTest.setVisible(false);
-			roomTest = new RoomTest(ctx, s[1], s[2]);
-			mainFrame.add(roomTest);
-			roomTest.setVisible(false);
-			roomTest.setVisible(true);
+			inRoom.setVisible(false);
+			inRoom = new InRoom(ctx, s[1], s[2]);
+			mainFrame.add(inRoom);
+			inRoom.setVisible(false);
+			inRoom.setVisible(true);
 		}
 		else if (s[0].equals("SENDMESSAGE")) {
 			RoomTest.chatArea.append(s[1] + "\n");
@@ -93,33 +95,33 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 		else if (s[0].equals("BOOM")) {
 			for (int i = 1; i < s.length; i ++ )
 				room.add(s[i]);
-			roomTest.setVisible(false);
-			testRoom = new TestRoom(ctx, room);
-			mainFrame.add(testRoom);
-			testRoom.setVisible(false);
-			testRoom.setVisible(true);
+			inRoom.setVisible(false);
+			lobby = new Lobby(ctx, room);
+			mainFrame.add(lobby);
+			lobby.setVisible(false);
+			lobby.setVisible(true);
 			room.clear();
 		}
 		else if (s[0].equals("GUESTOUT")) {
-			roomTest.setVisible(false);
-			roomTest = new RoomTest(ctx, s[1], "");
-			mainFrame.add(roomTest);
-			roomTest.setVisible(false);
-			roomTest.setVisible(true);
+			inRoom.setVisible(false);
+			inRoom = new InRoom(ctx, s[1], "");
+			mainFrame.add(inRoom);
+			inRoom.setVisible(false);
+			inRoom.setVisible(true);
 		}
 		else if (s[0].equals("EXITROOM")) {
-			roomTest.setVisible(false);
-			roomTest = new RoomTest(ctx, LoginForm.getId(), "");
+			inRoom.setVisible(false);
+			inRoom = new InRoom(ctx, LoginForm.getId(), "");
 			int index = Collections.binarySearch(room, s[1]);
 			room.set(index, LoginForm.getId());
-			mainFrame.add(roomTest);
-			roomTest.setVisible(false);
-			roomTest.setVisible(true);
+			mainFrame.add(inRoom);
+			inRoom.setVisible(false);
+			inRoom.setVisible(true);
 		}
 		else if (readMessage.equals("READY"))
-			RoomTest.ready.setText("준비완료");
+			inRoom.ready.setText("준비완료");
 		else if (readMessage.equals("CANSLE"))
-			RoomTest.ready.setText("");
+			inRoom.ready.setText("");
 		else 
 			ctx.fireChannelRead(readMessage);
 	}

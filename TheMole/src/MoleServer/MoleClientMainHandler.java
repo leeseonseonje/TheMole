@@ -11,8 +11,6 @@ import Mole.Game.LeaderBoardFrame;
 import Mole.Game.Lobby;
 import Mole.Game.LoginForm;
 import Mole.Game.MainFrame;
-import Mole.Game.RoomTest;
-import Mole.Game.TestRoom;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -87,7 +85,7 @@ public class MoleClientMainHandler extends ChannelInboundHandlerAdapter {
 			inRoom.setVisible(true);
 		}
 		else if (s[0].equals("SENDMESSAGE")) {
-			RoomTest.chatArea.append(s[1] + "\n");
+			inRoom.chatArea.append(s[1] + "\n");
 		}
 		else if (readMessage.equals("FULL"))
 			JOptionPane.showMessageDialog(mainFrame, "Ç®¹æ");

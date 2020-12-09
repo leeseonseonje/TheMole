@@ -410,11 +410,13 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			} else if (s[i].equals("MOLEDIE")) {
 				if (moleUI == null) {
 					humanUI.moleDie(s[i + 1]);
+					humanUI.setMoleCount(humanUI.getMoleCount() - 1);
+	                humanUI.getMoleCountLabel().setText(humanUI.getMoleCount() + "");
 					if (humanUI.getHuman().getB() != null) {
 						humanUI.getHuman().getB().setVisible(false);
 						humanUI.remove(humanUI.getHuman().getB());
 					}
-					if (humanUI.getMoleCount() == 1) {
+					if (humanUI.getMoleCount() == 0) {
 						JOptionPane.showMessageDialog(null, "ÀÎ°£ ½Â¸®", "Result", JOptionPane.PLAIN_MESSAGE);
 						ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId() + ",");
 						humanUI.setVisible(false);
@@ -432,11 +434,13 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					}
 				} else {
 					moleUI.moleDie(s[i + 1]);
+                    moleUI.setMoleCount(moleUI.getMoleCount() - 1);
+                    moleUI.getMoleCountLabel().setText(moleUI.getMoleCount() + "");
 					if (moleUI.getMoleInHumanPerformance().getB() != null) {
 						moleUI.getMoleInHumanPerformance().getB().setVisible(false);
 						moleUI.remove(moleUI.getMoleInHumanPerformance().getB());
 					}
-					if (moleUI.getMoleCount() == 1) {
+					if (moleUI.getMoleCount() == 0) {
 						JOptionPane.showMessageDialog(null, "ÀÎ°£ ½Â¸®", "Result", JOptionPane.PLAIN_MESSAGE);
 						ctx.writeAndFlush("[MOLELOSE]," + LoginForm.getId() + ",");
 						moleUI.setVisible(false);

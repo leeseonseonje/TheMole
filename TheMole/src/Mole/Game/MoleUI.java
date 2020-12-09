@@ -1063,8 +1063,6 @@ public class MoleUI extends JPanel {
 					System.out.println("zz");
 					champion.setBounds(0, 0, 0, 0);
 					life = false;
-					panel.setMoleCount(panel.getMoleCount() - 1);
-					panel.getMoleCountLabel().setText(panel.getMoleCount() + "");
 				}
 			});
 		}

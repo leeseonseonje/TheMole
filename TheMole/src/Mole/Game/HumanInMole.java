@@ -71,8 +71,6 @@ public class HumanInMole extends JButton {
                     System.out.println("zz");
                     champion.setBounds(0, 0, 0, 0);
                     life = false;
-                    human.setMoleCount(human.getMoleCount() - 1);
-                    human.getMoleCountLabel().setText(human.getMoleCount() + "");
             }
         });
     }

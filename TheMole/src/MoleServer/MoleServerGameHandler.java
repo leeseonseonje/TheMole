@@ -13,7 +13,7 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		Channel myChannel = ctx.channel();
 		 if (s[0].equals("[START]")) {
 				Room.startGame(ctx, s[1], s[2]);
-				GameTimer gameTimer = new GameTimer(ctx, ctx.channel(), s[1]);
+				gameTimer = new GameTimer(ctx, ctx.channel(), s[1]);
 				gameTimer.getGameTimer().start();
 			}
 		for (int i = 0; i < s.length; i++) {
@@ -128,19 +128,30 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		}
 		if (s[0].equals("[HUMANWIN]")) {
 			DBConnect.humanWin(s[1]);
-			gameTimer.getGameTimer().stop();
+			if (gameTimer.getGameTimer() != null)
+				gameTimer.getGameTimer().stop();
 		}
 		else if (s[0].equals("[MOLELOSE]")) {
 			DBConnect.gameLose(s[1]);
-			gameTimer.getGameTimer().stop();
+			if (gameTimer.getGameTimer() != null)
+				gameTimer.getGameTimer().stop();
 		}
 		else if (s[0].equals("[MOLEWIN]")) {
 			DBConnect.moleWin(s[1]);
-			gameTimer.getGameTimer().stop();
+			if (gameTimer.getGameTimer() != null)
+				gameTimer.getGameTimer().stop();
 		}
 		else if (s[0].equals("[HUMANLOSE]")) {
 			DBConnect.gameLose(s[1]);
-			gameTimer.getGameTimer().stop();
+			if (gameTimer.getGameTimer() != null)
+				gameTimer.getGameTimer().stop();
 		}
+	}
+	
+	@Override
+	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+		if (gameTimer.getGameTimer() != null)
+			gameTimer.getGameTimer().stop();
+		System.out.println("abcd");
 	}
 }

@@ -54,5 +54,7 @@ public class MoleServerMainHandler extends ChannelInboundHandlerAdapter {
 		}
 		Room.roomChannel.remove(ctx.channel());//테스트중에만 잠시	
 		onlineId.remove(logoutUser);
+		
+		ctx.fireChannelUnregistered();
 	}
 }

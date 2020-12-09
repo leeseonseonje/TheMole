@@ -10,6 +10,7 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class MoleServerHandler extends ChannelInboundHandlerAdapter{
+
 	private boolean loginId = true;
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("ÇÏ¿°");
@@ -42,5 +43,10 @@ public class MoleServerHandler extends ChannelInboundHandlerAdapter{
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 		ctx.flush();
+	}
+	
+	@Override
+	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+		ctx.fireChannelUnregistered();
 	}
 }

@@ -63,10 +63,25 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			if (s[i].equals("GAMECOUNT")) {
 				if (moleUI == null) {
 					humanUI.setSecond(humanUI.getSecond() - 1);
-					System.out.println(humanUI.getSecond());
 					humanUI.setDdSecond(humanUI.getdFormat().format(humanUI.getSecond()));
 					humanUI.setDdMinute(humanUI.getdFormat().format(humanUI.getMinute()));
 					humanUI.getCounterLabel().setText(humanUI.getDdMinute() + ":" + humanUI.getDdSecond());
+					if (humanUI.getSecond() == 0 && humanUI.getMinute() == 0) {
+						JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
+						ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId() + ",");
+						humanUI.setVisible(false);
+						if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
+							MoleClientMainHandler.inRoom.testStart.setText("준비");
+						MoleClientMainHandler.inRoom.ready.setText("");
+						MoleClientMainHandler.inRoom.setVisible(true);
+						if (humanUI.getMusicStatus() == true)
+							try {
+								humanUI.getSoundToPlay().pause();
+								MoleClientMainHandler.homePanel.getSoundToPlay().play();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+					}
 					if (humanUI.getSecond() == -1) {
 						humanUI.setSecond(59);
 						humanUI.setMinute(humanUI.getMinute() - 1);
@@ -74,22 +89,6 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 						humanUI.setDdSecond(humanUI.getdFormat().format(humanUI.getSecond()));
 						humanUI.setDdMinute(humanUI.getdFormat().format(humanUI.getMinute()));
 						humanUI.getCounterLabel().setText(humanUI.getDdMinute() + ":" + humanUI.getDdSecond());
-						if (humanUI.getCounterLabel().equals("00:00")) {
-							JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
-							ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId() + ",");
-							humanUI.setVisible(false);
-							if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
-								MoleClientMainHandler.inRoom.testStart.setText("준비");
-							MoleClientMainHandler.inRoom.ready.setText("");
-							MoleClientMainHandler.inRoom.setVisible(true);
-							if (humanUI.getMusicStatus() == true)
-								try {
-									humanUI.getSoundToPlay().pause();
-									MoleClientMainHandler.homePanel.getSoundToPlay().play();
-								} catch (Exception e1) {
-									e1.printStackTrace();
-								}
-						}
 					}
 				} else {
 					moleUI.setSecond(moleUI.getSecond() - 1);
@@ -97,6 +96,22 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					moleUI.setDdSecond(moleUI.getdFormat().format(moleUI.getSecond()));
 					moleUI.setDdMinute(moleUI.getdFormat().format(moleUI.getMinute()));
 					moleUI.getCounterLabel().setText(moleUI.getDdMinute() + ":" + moleUI.getDdSecond());
+					if (moleUI.getSecond() == 0 && moleUI.getMinute() == 0) {
+						JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
+						ctx.writeAndFlush("[MOLELOSE]," + LoginForm.getId() + ",");
+						moleUI.setVisible(false);
+						if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
+							MoleClientMainHandler.inRoom.testStart.setText("준비");
+						MoleClientMainHandler.inRoom.ready.setText("");
+						MoleClientMainHandler.inRoom.setVisible(true);
+						if (moleUI.getMusicStatus() == true)
+							try {
+								moleUI.getSoundToPlay().pause();
+								MoleClientMainHandler.homePanel.getSoundToPlay().play();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+					}
 					if (moleUI.getSecond() == -1) {
 						moleUI.setSecond(59);
 						moleUI.setMinute(moleUI.getMinute() - 1);
@@ -104,22 +119,6 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 						moleUI.setDdSecond(moleUI.getdFormat().format(moleUI.getSecond()));
 						moleUI.setDdMinute(moleUI.getdFormat().format(moleUI.getMinute()));
 						moleUI.getCounterLabel().setText(moleUI.getDdMinute() + ":" + moleUI.getDdSecond());
-						if (moleUI.getCounterLabel().equals("00:00")) {
-							JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
-							ctx.writeAndFlush("[MOLELOSE]," + LoginForm.getId() + ",");
-							moleUI.setVisible(false);
-							if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
-								MoleClientMainHandler.inRoom.testStart.setText("준비");
-							MoleClientMainHandler.inRoom.ready.setText("");
-							MoleClientMainHandler.inRoom.setVisible(true);
-							if (moleUI.getMusicStatus() == true)
-								try {
-									moleUI.getSoundToPlay().pause();
-									MoleClientMainHandler.homePanel.getSoundToPlay().play();
-								} catch (Exception e1) {
-									e1.printStackTrace();
-								}
-						}
 					}
 				}
 			} else if (s[i].equals("RIGHT")) {

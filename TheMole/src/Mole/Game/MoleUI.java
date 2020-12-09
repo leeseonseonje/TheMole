@@ -1147,6 +1147,8 @@ public class MoleUI extends JPanel {
 			switch (itemnum) {
 			case 0:
 			case 9:
+			case 3:
+			case 6:
 				System.out.println(itemnum);
 				System.out.println("¹ìÇÇ¸® È¹µæ");
 				System.out.println(itembox1.isVisible());
@@ -1165,6 +1167,7 @@ public class MoleUI extends JPanel {
 				}
 				break;
 			case 1:
+			case 5:
 			case 8:
 				System.out.println(itemnum);
 				System.out.println("»ç¶÷ Á¤Áö");

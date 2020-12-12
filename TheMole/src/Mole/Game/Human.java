@@ -314,6 +314,11 @@ public class Human extends JLabel{
 		int itemnum = ((int)(Math.random()*10));
 		switch (itemnum) {
 		case 0:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
 		case 9:
 			if (itembox1.isVisible() == false) {
 				ctx.writeAndFlush("[HUMANTRAP]," + name + ",");
@@ -323,6 +328,7 @@ public class Human extends JLabel{
 				humtraptimer.start();
 				moleKill = false;
 			} else if (itembox1.getIcon() == trapM || itembox2.getIcon() == trapM) {
+				ctx.writeAndFlush("[HUMANTRAP]," + name + ",");
 				humtrapsecond += 10;
 				moleKill = false;
 			} else {
@@ -334,7 +340,7 @@ public class Human extends JLabel{
 			}
 			break;
 		case 1:
-		case 8:
+		//case 8:
 			System.out.println("½Å¹ß");
 			if (itembox1.isVisible() == false) {
 				itembox1.setVisible(true);

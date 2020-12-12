@@ -1297,31 +1297,40 @@ public class MoleUI extends JPanel {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
-			if (m1.moleButton.getY() < 300 && moleKill == false) {
+			if (m1.moleButton.getY() < 300 && moleKill == false && m1.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");
 				moleKill = true;
-			} else if (m2.moleButton.getY() < 300 && moleKill == false) {
+			}else if (m2.moleButton.getY() < 300 && moleKill == false && m2.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");
 				moleKill = true;
-			}else if (m3.moleButton.getY() < 300 && moleKill == false) {
+			}else if (m3.moleButton.getY() < 300 && moleKill == false && m3.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");
 				moleKill = true;
-			}else if (m4.moleButton.getY() < 300 && moleKill == false) {
+			}else if (m4.moleButton.getY() < 300 && moleKill == false && m4.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 4 + ",");
 				moleKill = true;
-			}else if (m5.moleButton.getY() < 300 && moleKill == false) {
+			}else if (m5.moleButton.getY() < 300 && moleKill == false && m5.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");
 				moleKill = true;
-			}else if (m6.moleButton.getY() < 300 && moleKill == false) {
+			}else if (m6.moleButton.getY() < 300 && moleKill == false && m6.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");
 				moleKill = true;
-			}else if (m7.moleButton.getY() < 300 && moleKill == false) {
+			}else if (m7.moleButton.getY() < 300 && moleKill == false && m7.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");
 				moleKill = true;
-			}else if (m8.moleButton.getY() < 300 && moleKill == false) {
+			}else if (m8.moleButton.getY() < 300 && moleKill == false && m8.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");
 				moleKill = true;
-			}else if (m9.moleButton.getY() < 300 && moleKill == false) {
+			}else if (m9.moleButton.getY() < 300 && moleKill == false && m9.moleButton.isVisible()) {
+				System.out.println("받음");
 				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 9 + ",");
 				moleKill = true;
 			}

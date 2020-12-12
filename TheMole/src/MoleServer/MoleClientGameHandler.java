@@ -404,8 +404,8 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			}
 			else if (s[i].equals("HUMANTRAP"))
 				moleUI.setMoleKill(false);
-			else if (s[i].equals("HUMANTRAPSTOP"))
-				moleUI.setMoleKill(true);
+		//	else if (s[i].equals("HUMANTRAPSTOP"))
+			//	moleUI.setMoleKill(true);
 			else if (s[i].equals("SNAKE")) {
 				int status = Integer.parseInt(s[i + 1]);
 				if (moleUI == null)

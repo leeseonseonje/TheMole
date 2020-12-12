@@ -71,12 +71,10 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				}
 			} else if (s[i].equals("[HUMANSPEEDUP]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
-					if (channel != myChannel)
 						channel.writeAndFlush("HUMANSPEEDUP,");
 				}
 			} else if (s[i].equals("[HUMANSPEEDDOWN]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
-					if (channel != myChannel)
 						channel.writeAndFlush("HUMANSPEEDDOWN,");
 				}
 			} else if (s[i].equals("[MOLEMOVE]")) {
@@ -86,12 +84,10 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				}
 			} else if (s[i].equals("[MOLETRAP]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
-					if (channel != myChannel)
 						channel.writeAndFlush("MOLETRAP,");
 				}
 			} else if (s[i].equals("[MOLETRAPSTOP]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
-					if (channel != myChannel)
 						channel.writeAndFlush("MOLETRAPSTOP,");
 				}
 			} else if (s[i].equals("[HUMANTRAP]")) {

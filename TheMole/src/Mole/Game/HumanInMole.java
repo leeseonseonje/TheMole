@@ -137,14 +137,14 @@ public class HumanInMole extends JButton {
 		double y = (int) (startY + ((targetY - startY) * progress));
 
 		repaint();
-		if (y >= 270 && x >= 12 && x <= 770) {
+		if (y >= 270 && x >= 12 && x <= 800) {
 			setBounds((int) x - 15, (int) y - 15, 30, 30);
 			champion.setRect(x - 5, y - 5, 10, 10);
 		}
-		if (y < 300) {
+		if (y < 320) {
 			setVisible(true);
 		}
-		else if (y > 300)
+		else if (y > 320)
 			setVisible(false);
 		
 		if (human.getV1().getBounds().intersects(champion)) {

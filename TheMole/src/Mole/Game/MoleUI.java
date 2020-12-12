@@ -67,18 +67,9 @@ public class MoleUI extends JPanel {
 	private ImageIcon itemteeth = new ImageIcon("img/strongteeth.png");
 	private ImageIcon itemtrap = new ImageIcon("img/trapM.png");
 	private ImageIcon itemsnakepipe = new ImageIcon("img/Snakepipe.png");
-	public ImageIcon getItemsnakepipe() {
-		return itemsnakepipe;
-	}
+
 	private JLabel itembox1;
-	public JLabel getItembox1() {
-		return itembox1;
-	}
 	private JLabel itembox2;
-	
-	public JLabel getItembox2() {
-		return itembox2;
-	}
 	private JLabel lifeLabel;
 	
 	private itemBoxThread i1;
@@ -1172,13 +1163,6 @@ public class MoleUI extends JPanel {
 				System.out.println("¹ìÇÇ¸® È¹µæ");
 				System.out.println(itembox1.isVisible());
 				ctx.writeAndFlush("[SNAKE]," + name + ",");
-				if (itembox1.isVisible() == false) {
-					itembox1.setVisible(true);
-					itembox1.setIcon(itemsnakepipe);
-				} else if (itembox2.isVisible() == false) {
-					itembox2.setVisible(true);
-					itembox2.setIcon(itemsnakepipe);
-				}
 				break;
 				
 			case 1:
@@ -1187,13 +1171,13 @@ public class MoleUI extends JPanel {
 				System.out.println(itemnum);
 				System.out.println("»ç¶÷ Á¤Áö");
 				System.out.println(itembox1.isVisible());
-				if (itembox1.isVisible() == false || itembox1.getIcon() == itemsnakepipe) {
+				if (itembox1.isVisible() == false) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemtrap);
 					ctx.writeAndFlush("[MOLETRAP]," + name + ",");
 					humanTrapTimer();
 					humanTrapTimer.start();
-				} else if  (itembox2.isVisible() == false || itembox2.getIcon() == itemsnakepipe) { 
+				} else { 
 					itembox2.setIcon(itemtrap);
 					System.out.println("2");
 					ctx.writeAndFlush("[MOLETRAP]," + name + ",");
@@ -1205,10 +1189,10 @@ public class MoleUI extends JPanel {
 				enhenceteeth = true;
 				System.out.println("°­Ã¶ÀÌ»¡ È¹µæ");
 				System.out.println(itembox1.isVisible());
-				if (itembox1.isVisible() == false  || itembox1.getIcon() == itemsnakepipe) {
+				if (itembox1.isVisible() == false) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemteeth);
-				} else if  (itembox2.isVisible() == false || itembox2.getIcon() == itemsnakepipe) {
+				} else {
 					itembox2.setIcon(itemteeth);
 					System.out.println("2");
 				}
@@ -1298,7 +1282,7 @@ public class MoleUI extends JPanel {
 			double y = (int) (startY + ((targetY - startY) * progress));
 
 			repaint();
-			if (y >= 270 && x >= 12 && x <= 770) {
+			if (y >= 270 && x >= 12 && x <= 800) {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}

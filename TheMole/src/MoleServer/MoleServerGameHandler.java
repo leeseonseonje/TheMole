@@ -124,29 +124,29 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		}
 		if (s[0].equals("[HUMANWIN]")) {
 			DBConnect.humanWin(s[1]);
-			if (gameTimer.getGameTimer() != null)
+			if (gameTimer.getGameTimer().isRunning())
 				gameTimer.getGameTimer().stop();
 		}
 		else if (s[0].equals("[MOLELOSE]")) {
 			DBConnect.gameLose(s[1]);
-			if (gameTimer.getGameTimer() != null)
+			if (gameTimer.getGameTimer().isRunning())
 				gameTimer.getGameTimer().stop();
 		}
 		else if (s[0].equals("[MOLEWIN]")) {
 			DBConnect.moleWin(s[1]);
-			if (gameTimer.getGameTimer() != null)
+			if (gameTimer.getGameTimer().isRunning())
 				gameTimer.getGameTimer().stop();
 		}
 		else if (s[0].equals("[HUMANLOSE]")) {
 			DBConnect.gameLose(s[1]);
-			if (gameTimer.getGameTimer() != null)
+			if (gameTimer.getGameTimer().isRunning())
 				gameTimer.getGameTimer().stop();
 		}
 	}
 	
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-		if (gameTimer.getGameTimer() != null)
+		if (gameTimer.getGameTimer().isRunning())
 			gameTimer.getGameTimer().stop();
 	}
 }

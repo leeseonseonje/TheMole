@@ -23,6 +23,15 @@ public class HumanInMole extends JButton {
 	private int direction = 0;
 	private int molesecond = 0;
     private HumanUI human;
+    
+    private boolean moleKill = true;
+    
+	public boolean getMoleKill() {
+		return moleKill;
+	}
+	public void setMoleKill(boolean moleKill) {
+		this.moleKill = moleKill;
+	}
 
 	private ImageIcon mole[] = { new ImageIcon("img/moleResource/moleL1.png"),
 			new ImageIcon("img/moleResource/moleL2.png"), new ImageIcon("img/moleResource/moleL3.png"),
@@ -135,7 +144,7 @@ public class HumanInMole extends JButton {
 		if (y < 300) {
 			setVisible(true);
 		}
-		else if (y > 300 )
+		else if (y > 300)
 			setVisible(false);
 		
 		if (human.getV1().getBounds().intersects(champion)) {

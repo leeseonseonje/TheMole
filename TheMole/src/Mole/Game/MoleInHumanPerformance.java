@@ -15,7 +15,7 @@ public class MoleInHumanPerformance extends JLabel {
 	private static int status = 0; // 1은 오른쪽, 2는 왼쪽,
 	public int humsecond = 0;
 	private int humanlife = 2;
-
+	
 
 	private boolean shooting = false;
 

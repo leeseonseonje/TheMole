@@ -1175,29 +1175,25 @@ public class MoleUI extends JPanel {
 				if (itembox1.isVisible() == false) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemsnakepipe);
-					//snakeTimer();
-					//snakeTimer.start();
-				} else if (itembox1.getIcon() == itemsnakepipe || itembox2.getIcon() == itemsnakepipe)
-					snakesecond += 17;
-				else {
-				//	snakeTimer();
-					//snakeTimer.start();
+				} else if (itembox2.isVisible() == false) {
+					itembox2.setVisible(true);
 					itembox2.setIcon(itemsnakepipe);
 				}
 				break;
+				
 			case 1:
 			case 5:
 			case 8:
 				System.out.println(itemnum);
 				System.out.println("»ç¶÷ Á¤Áö");
 				System.out.println(itembox1.isVisible());
-				if (itembox1.isVisible() == false) {
+				if (itembox1.isVisible() == false || itembox1.getIcon() == itemsnakepipe) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemtrap);
 					ctx.writeAndFlush("[MOLETRAP]," + name + ",");
 					humanTrapTimer();
 					humanTrapTimer.start();
-				} else {
+				} else if  (itembox2.isVisible() == false || itembox2.getIcon() == itemsnakepipe) { 
 					itembox2.setIcon(itemtrap);
 					System.out.println("2");
 					ctx.writeAndFlush("[MOLETRAP]," + name + ",");
@@ -1209,10 +1205,10 @@ public class MoleUI extends JPanel {
 				enhenceteeth = true;
 				System.out.println("°­Ã¶ÀÌ»¡ È¹µæ");
 				System.out.println(itembox1.isVisible());
-				if (itembox1.isVisible() == false) {
+				if (itembox1.isVisible() == false  || itembox1.getIcon() == itemsnakepipe) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemteeth);
-				} else {
+				} else if  (itembox2.isVisible() == false || itembox2.getIcon() == itemsnakepipe) {
 					itembox2.setIcon(itemteeth);
 					System.out.println("2");
 				}

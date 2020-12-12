@@ -405,32 +405,41 @@ public class Human extends JLabel{
 					timerstop = false;
 				}
 				
-				if(humanUi.getM1().getX() >= x - 5 && humanUi.getM1().getX() <= x + 5 && humanUi.getM1().getY()<= 275) {
-					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");				
+				if(humanUi.getM1().getX() >= x - 5 && humanUi.getM1().getX() <= x + 5 && humanUi.getM1().getY()<= 275 && humanUi.getM1().getMoleKill() == true) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");			
+					humanUi.getM1().setMoleKill(false);
 				} 
-				else if(humanUi.getM2().getX() >= getX() - 5 && humanUi.getM2().getX() <= getX() + 5&& humanUi.getM2().getY()<= 275) {
-					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");		
+				else if(humanUi.getM2().getX() >= getX() - 5 && humanUi.getM2().getX() <= getX() + 5&& humanUi.getM2().getY()<= 275 && humanUi.getM2().getMoleKill() == true) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");	
+					humanUi.getM2().setMoleKill(false);
 				} 
-				else if(humanUi.getM3().getX() >= getX() - 5 && humanUi.getM3().getX() <= getX() + 5 && humanUi.getM3().getY()<= 275) {
-					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");		
+				else if(humanUi.getM3().getX() >= getX() - 5 && humanUi.getM3().getX() <= getX() + 5 && humanUi.getM3().getY()<= 275 && humanUi.getM3().getMoleKill() == true) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");
+					humanUi.getM3().setMoleKill(false);
 				}
-				else if(humanUi.getM4().getX() >= getX() - 5 && humanUi.getM4().getX() <= getX() + 5 && humanUi.getM4().getY()<= 275) {
+				else if(humanUi.getM4().getX() >= getX() - 5 && humanUi.getM4().getX() <= getX() + 5 && humanUi.getM4().getY()<= 275 && humanUi.getM4().getMoleKill() == true) {
 					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 4 + ",");		
+					humanUi.getM4().setMoleKill(false);
 				}
-				else if(humanUi.getM5().getX() >= getX() - 5 && humanUi.getM5().getX() <= getX() + 5 && humanUi.getM5().getY()<= 275) {
-					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");		
+				else if(humanUi.getM5().getX() >= getX() - 5 && humanUi.getM5().getX() <= getX() + 5 && humanUi.getM5().getY()<= 275 && humanUi.getM5().getMoleKill() == true) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");	
+					humanUi.getM5().setMoleKill(false);
 				}
-				else if(humanUi.getM6().getX() >= getX() - 5 && humanUi.getM6().getX() <= getX() + 5 && humanUi.getM6().getY()<= 275) {
-					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");		
+				else if(humanUi.getM6().getX() >= getX() - 5 && humanUi.getM6().getX() <= getX() + 5 && humanUi.getM6().getY()<= 275 && humanUi.getM6().getMoleKill() == true) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");	
+					humanUi.getM6().setMoleKill(false);
 				}
-				else if(humanUi.getM7().getX() >= getX() - 5 && humanUi.getM7().getX() <= getX() + 5 && humanUi.getM7().getY()<= 275) {
-					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");		
+				else if(humanUi.getM7().getX() >= getX() - 5 && humanUi.getM7().getX() <= getX() + 5 && humanUi.getM7().getY()<= 275 && humanUi.getM7().getMoleKill() == true) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");	
+					humanUi.getM7().setMoleKill(false);
 				}
-				else if(humanUi.getM8().getX() >= getX() - 5 && humanUi.getM8().getX() <= getX() + 5 && humanUi.getM8().getY()<= 275) {
-					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");		
+				else if(humanUi.getM8().getX() >= getX() - 5 && humanUi.getM8().getX() <= getX() + 5 && humanUi.getM8().getY()<= 275 && humanUi.getM8().getMoleKill() == true) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");	
+					humanUi.getM8().setMoleKill(false);
 				}
-				else if(humanUi.getM9().getX() >= getX() - 5 && humanUi.getM9().getX() <= getX() + 5 && humanUi.getM9().getY()<= 275) {
+				else if(humanUi.getM9().getX() >= getX() - 5 && humanUi.getM9().getX() <= getX() + 5 && humanUi.getM9().getY()<= 275 && humanUi.getM9().getMoleKill() == true) {
 					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 9 + ",");		
+					humanUi.getM9().setMoleKill(false);
 				}
 			}
 		});

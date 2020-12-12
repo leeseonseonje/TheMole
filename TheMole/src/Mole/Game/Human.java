@@ -37,7 +37,7 @@ public class Human extends JLabel{
 	
 	private JLabel itembox1;
 	private JLabel itembox2;
-	private int humanspeed = 4;
+	private int humanspeed = 5;
 	
 	private ImageIcon shoes = new ImageIcon("img/shoes.png");
 	private ImageIcon bullets = new ImageIcon("img/bullet.png");
@@ -45,7 +45,14 @@ public class Human extends JLabel{
 	private ChannelHandlerContext ctx;
 	private String name;
 	private boolean moleKill = true;
+	private boolean humanItem = true;
 	
+	public boolean getHumanItem() {
+		return humanItem;
+	}
+	public void setHumanItem(boolean humanItem) {
+		this.humanItem = humanItem;
+	}
 	private int humanLife = 2;
 
 	private int bulletCount = 5;
@@ -128,13 +135,15 @@ public class Human extends JLabel{
 				//	minusBcount();
 				}
 				
-				if (pan.getI1().getX() > getX() - 10 && pan.getI1().getX() < getX() + 3 && pan.getI1().getTimerstop() == false) {
+				if (pan.getI1().getX() > getX() - 10 && pan.getI1().getX() < getX() + 3 && pan.getI1().getTimerstop() == false && humanItem == true) {
+					humanItem = false;
 					ctx.writeAndFlush("[HUMANITEM1EAT]," + name + ",");
 				//	pan.getI1().setTimerstop(true);
 				//	pan.getI1().setVisible(false);
 					humangetitem();
 				}
-				if (pan.getI2().getX() > getX() - 10 && pan.getI2().getX() < getX() + 10 && pan.getI2().getTimerstop() == false) {
+				if (pan.getI2().getX() > getX() - 10 && pan.getI2().getX() < getX() + 10 && pan.getI2().getTimerstop() == false && humanItem == true) {
+					humanItem = false;
 					ctx.writeAndFlush("[HUMANITEM2EAT]," + name + ",");
 				//	pan.getI2().setTimerstop(true);
 				//	pan.getI2().setVisible(false);

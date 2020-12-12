@@ -362,6 +362,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				if (moleUI == null) {
 					humanUI.getI1().setTimerstop(true);
 					humanUI.getI1().setVisible(false);
+					humanUI.getHuman().setHumanItem(true);
 				} else {
 					moleUI.getI1().setVisible(false);
 					moleUI.getI1().setBounds(0, 0, 0, 0);
@@ -370,6 +371,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				if (moleUI == null) {
 					humanUI.getI2().setTimerstop(true);
 					humanUI.getI2().setVisible(false);
+					humanUI.getHuman().setHumanItem(true);
 				} else {
 					moleUI.getI2().setVisible(false);
 					moleUI.getI2().setBounds(0, 0, 0, 0);

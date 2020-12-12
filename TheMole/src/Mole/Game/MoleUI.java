@@ -1198,6 +1198,7 @@ public class MoleUI extends JPanel {
 				}
 				break;
 			}
+			eating = false;
 		}
 
 		public void v1EatTimer() {
@@ -1325,12 +1326,14 @@ public class MoleUI extends JPanel {
 			}
 
 			if (i1.getBounds().intersects(champion) && i1.getTimerstop() == false && eating == false) {
+				eating = true;
 				ctx.writeAndFlush("[MOLEITEM1EAT]," + name + ",");
 				/*i1.setBounds(0, 0, 0, 0);
 				i1.setVisible(false);*/
 				molegetitem();
 
 			} else if (i2.getBounds().intersects(champion) && i2.getTimerstop() == false && eating == false) {
+				eating = true;
 				ctx.writeAndFlush("[MOLEITEM2EAT]," + name + ",");
 				/*i2.setBounds(0, 0, 0, 0);
 				i2.setVisible(false);*/
@@ -1445,6 +1448,14 @@ public class MoleUI extends JPanel {
 				}
 				v3.plusvegcount();
 			}
+		}
+
+		public boolean getEating() {
+			return eating;
+		}
+
+		public void setEating(boolean eating) {
+			this.eating = eating;
 		}
 
 		public void calculateChampionMovement(double x, double y, Rectangle champion) {

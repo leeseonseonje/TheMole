@@ -44,23 +44,23 @@ public class HumanSnake extends JLabel {
 			setIcon(snake[0]);
 		else
 			setIcon(snake[2]); // 오른쪽 스프라이트
-		//moveStart();
+		moveStart();
 	}
 	public boolean getMoving () {
 		return moving;
 	}
 	
-/*	public void moveStart() {
+	public void moveStart() {
 		move();
 		move.start();
-	}*/
+	}
 	public void snakeDie() {
 		setVisible(false);
 		move.stop();
 		moving = false;
 	}
 	public void move() {
-		move = new Timer(100, new ActionListener() {
+		move = new Timer(20, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				snakeTempo++;
@@ -82,7 +82,7 @@ public class HumanSnake extends JLabel {
 				}
 	              if(humanPanel.getHuman().getX() - getX() <= 5 && humanPanel.getHuman().getX() - getX() >= -5) {
 	                	ctx.writeAndFlush("[MINUSLIFE]," + name + ",");
-	               }
+	            }
 			}
 		});
 	}

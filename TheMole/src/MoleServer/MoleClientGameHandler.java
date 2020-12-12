@@ -374,18 +374,34 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					moleUI.getI2().setVisible(false);
 					moleUI.getI2().setBounds(0, 0, 0, 0);
 				}
-			} else if (s[i].equals("HUMANSPEEDUP"))
-				moleUI.getMoleInHumanPerformance().setHumanspeed(7);
-			else if (s[i].equals("HUMANSPEEDDOWN"))
-				moleUI.getMoleInHumanPerformance().setHumanspeed(5);
+			} else if (s[i].equals("HUMANSPEEDUP")) {
+				if (moleUI == null)
+					humanUI.getHuman().setHumanspeed(7);
+				else
+					moleUI.getMoleInHumanPerformance().setHumanspeed(7);
+			}
+			else if (s[i].equals("HUMANSPEEDDOWN")) {
+				if (moleUI == null)
+					humanUI.getHuman().setHumanspeed(5);
+				else
+					moleUI.getMoleInHumanPerformance().setHumanspeed(5);
+			}
 			else if (s[i].equals("MOLEMOVE")) {
 				int x = Integer.parseInt(s[i + 1]);
 				int y = Integer.parseInt(s[i + 2]);
 				humanUI.moleMessage(s[i + 3], x, y);
-			} else if (s[i].equals("MOLETRAP"))
-				humanUI.getHuman().setHumanspeed(0);
-			else if (s[i].equals("MOLETRAPSTOP"))
-				humanUI.getHuman().setHumanspeed(5);
+			} else if (s[i].equals("MOLETRAP")) {
+				if (moleUI == null)
+					humanUI.getHuman().setHumanspeed(0);
+				else
+					moleUI.getMoleInHumanPerformance().setHumanspeed(0);
+			}
+			else if (s[i].equals("MOLETRAPSTOP")) {
+				if (moleUI == null)
+					humanUI.getHuman().setHumanspeed(5);
+				else
+					moleUI.getMoleInHumanPerformance().setHumanspeed(5);
+			}
 			else if (s[i].equals("HUMANTRAP"))
 				moleUI.setMoleKill(false);
 			else if (s[i].equals("HUMANTRAPSTOP"))

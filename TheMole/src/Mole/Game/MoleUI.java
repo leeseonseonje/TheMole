@@ -1128,14 +1128,12 @@ public class MoleUI extends JPanel {
 					itembox1.setVerticalTextPosition(JLabel.CENTER);
 					itembox1.setHorizontalTextPosition(JLabel.CENTER);
 					itembox1.setForeground(Color.cyan);
-					moleInHumanPerformance.setHumanspeed(0);
 				} else {
 					itembox2.setText(trapCount + "");
 					itembox2.setFont(font1);
 					itembox2.setVerticalTextPosition(JLabel.CENTER);
 					itembox2.setHorizontalTextPosition(JLabel.CENTER);
 					itembox2.setForeground(Color.cyan);
-					moleInHumanPerformance.setHumanspeed(0);
 				}
 				if (trapCount == 0) {
 					if (itembox1.getIcon() == itemsnakepipe) {
@@ -1147,7 +1145,6 @@ public class MoleUI extends JPanel {
 						itembox2.setText(null);
 					}
 					ctx.writeAndFlush("[MOLETRAPSTOP]," + name + ",");
-					moleInHumanPerformance.setHumanspeed(5);
 					trapCount = 3;
 					itembox1.setVisible(false);
 					humanTrapTimer.stop();
@@ -1300,8 +1297,32 @@ public class MoleUI extends JPanel {
 				moleButton.setBounds((int) x - 15, (int) y - 15, 30, 30);
 				champion.setRect(x - 5, y - 5, 10, 10);
 			}
-			if (y < 300 && moleKill == false) {
-				moleDie();
+			if (m1.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");
+				moleKill = true;
+			} else if (m2.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");
+				moleKill = true;
+			}else if (m3.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");
+				moleKill = true;
+			}else if (m4.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 4 + ",");
+				moleKill = true;
+			}else if (m5.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");
+				moleKill = true;
+			}else if (m6.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");
+				moleKill = true;
+			}else if (m7.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");
+				moleKill = true;
+			}else if (m8.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");
+				moleKill = true;
+			}else if (m9.moleButton.getY() < 300 && moleKill == false) {
+				ctx.writeAndFlush("[MOLEDIE]," + name + "," + 9 + ",");
 				moleKill = true;
 			}
 

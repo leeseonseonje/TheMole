@@ -133,12 +133,7 @@ public class HumanInMole extends JButton {
 			champion.setRect(x - 5, y - 5, 10, 10);
 		}
 		if (y < 300) {
-			if (human.getHuman().getMoleKill() == false) {
-				setVisible(true);
-				moleDie();
-				human.getHuman().setMoleKill(true);
-			} else
-				setVisible(true);
+			setVisible(true);
 		}
 		else if (y > 300 )
 			setVisible(false);

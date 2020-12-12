@@ -239,14 +239,14 @@ public class Human extends JLabel{
 				System.out.println(shosecond);
 
 				if (itembox1.getIcon() == shoes) {
-					humanspeed = 7;
+					//humanspeed = 7;
 					itembox1.setFont(font1);
 					itembox1.setText(shosecond + "");
 					itembox1.setVerticalTextPosition(JLabel.CENTER);
 					itembox1.setHorizontalTextPosition(JLabel.CENTER);
 					itembox1.setForeground(Color.cyan);
 				} else {
-					humanspeed = 7;
+					//humanspeed = 7;
 					itembox2.setText(shosecond + "");
 					itembox2.setFont(font1);
 					itembox2.setVerticalTextPosition(JLabel.CENTER);
@@ -254,7 +254,7 @@ public class Human extends JLabel{
 					itembox2.setForeground(Color.cyan);
 				}
 				if (shosecond == 0) {
-					humanspeed = 5;
+					//humanspeed = 5;
 					ctx.writeAndFlush("[HUMANSPEEDDOWN]," + name + ",");
 					System.out.println("사람속도 하향");
 					if (itembox1.getIcon() == shoes) {

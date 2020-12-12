@@ -22,7 +22,7 @@ public class MoleInHumanPerformance extends JLabel {
 	private Timer mover;
 	private boolean moving = false;
 	
-	private int humanspeed = 4;
+	private int humanspeed = 5;
 	
 	private MoleUI mole;
 	private MoleBullet b;

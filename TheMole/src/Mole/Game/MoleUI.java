@@ -67,9 +67,18 @@ public class MoleUI extends JPanel {
 	private ImageIcon itemteeth = new ImageIcon("img/strongteeth.png");
 	private ImageIcon itemtrap = new ImageIcon("img/trapM.png");
 	private ImageIcon itemsnakepipe = new ImageIcon("img/Snakepipe.png");
+	public ImageIcon getItemsnakepipe() {
+		return itemsnakepipe;
+	}
 	private JLabel itembox1;
+	public JLabel getItembox1() {
+		return itembox1;
+	}
 	private JLabel itembox2;
 	
+	public JLabel getItembox2() {
+		return itembox2;
+	}
 	private JLabel lifeLabel;
 	
 	private itemBoxThread i1;

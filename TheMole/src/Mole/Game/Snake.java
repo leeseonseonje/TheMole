@@ -57,6 +57,10 @@ public class Snake extends JLabel {
 		setVisible(false);
 		move.stop();
 		moving = false;
+		if (molePanel.getItembox1().getIcon() == molePanel.getItemsnakepipe())
+			molePanel.getItembox1().setIcon(null);
+		else if (molePanel.getItembox2().getIcon() == molePanel.getItemsnakepipe())
+			molePanel.getItembox2().setIcon(null);
 	}
 
 	public void move() {

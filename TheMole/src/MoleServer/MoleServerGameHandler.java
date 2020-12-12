@@ -148,6 +148,5 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		if (gameTimer.getGameTimer() != null)
 			gameTimer.getGameTimer().stop();
-		System.out.println("abcd");
 	}
 }

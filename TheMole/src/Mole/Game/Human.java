@@ -37,7 +37,7 @@ public class Human extends JLabel{
 	
 	private JLabel itembox1;
 	private JLabel itembox2;
-	private int humanspeed = 3;
+	private int humanspeed = 4;
 	
 	private ImageIcon shoes = new ImageIcon("img/shoes.png");
 	private ImageIcon bullets = new ImageIcon("img/bullet.png");

@@ -13,7 +13,7 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		Channel myChannel = ctx.channel();
 		 if (s[0].equals("[START]")) {
 				Room.startGame(ctx, s[1], s[2]);
-				gameTimer = new GameTimer(ctx, ctx.channel(), s[1]);
+				gameTimer = new GameTimer(s[1]);
 				gameTimer.getGameTimer().start();
 			}
 		for (int i = 0; i < s.length; i++) {
@@ -105,6 +105,7 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 						channel.writeAndFlush("SNAKE," + status + ",");
 				}
+				gameTimer.snakeTimer().start();
 			} else if (s[i].equals("[BULLET]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 						channel.writeAndFlush("BULLET," + s[i + 2] + "," + s[i + 3] + ",");
@@ -116,6 +117,7 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 					channel.writeAndFlush("SNAKEDIE,");
 				}
+				gameTimer.snakeTimer().stop();
 			} else if (s[i].equals("[MINUSLIFE]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 					channel.writeAndFlush("MINUSLIFE,");

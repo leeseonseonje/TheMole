@@ -367,7 +367,6 @@ public class Human extends JLabel{
 			humanUi.getBulletLabel().setText(bulletCount + "");
 			break;
 		}
-
 	}
 
 

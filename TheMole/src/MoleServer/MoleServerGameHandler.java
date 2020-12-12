@@ -6,6 +6,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 	private GameTimer gameTimer;
+	//private SnakeTimer snakeTimer;
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String) msg;
@@ -105,7 +106,8 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 						channel.writeAndFlush("SNAKE," + status + ",");
 				}
-				gameTimer.snakeTimer().start();
+			//	snakeTimer = new SnakeTimer(s[i+1]);
+			//	snakeTimer.getSnakeTimer().start();
 			} else if (s[i].equals("[BULLET]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 						channel.writeAndFlush("BULLET," + s[i + 2] + "," + s[i + 3] + ",");
@@ -117,11 +119,12 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 					channel.writeAndFlush("SNAKEDIE,");
 				}
-				gameTimer.snakeTimer().stop();
+				//snakeTimer.getSnakeTimer().stop();
 			} else if (s[i].equals("[MINUSLIFE]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 					channel.writeAndFlush("MINUSLIFE,");
 				}
+				//snakeTimer.getSnakeTimer().stop();
 			}
 		}
 		if (s[0].equals("[HUMANWIN]")) {

@@ -382,9 +382,9 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			}
 			else if (s[i].equals("HUMANSPEEDDOWN")) {
 				if (moleUI == null)
-					humanUI.getHuman().setHumanspeed(5);
+					humanUI.getHuman().setHumanspeed(3);
 				else
-					moleUI.getMoleInHumanPerformance().setHumanspeed(5);
+					moleUI.getMoleInHumanPerformance().setHumanspeed(7);
 			}
 			else if (s[i].equals("MOLEMOVE")) {
 				int x = Integer.parseInt(s[i + 1]);
@@ -398,9 +398,9 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			}
 			else if (s[i].equals("MOLETRAPSTOP")) {
 				if (moleUI == null)
-					humanUI.getHuman().setHumanspeed(5);
+					humanUI.getHuman().setHumanspeed(3);
 				else
-					moleUI.getMoleInHumanPerformance().setHumanspeed(5);
+					moleUI.getMoleInHumanPerformance().setHumanspeed(3);
 			}
 			else if (s[i].equals("HUMANTRAP"))
 				moleUI.setMoleKill(false);

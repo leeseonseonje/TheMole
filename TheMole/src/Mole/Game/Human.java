@@ -37,7 +37,7 @@ public class Human extends JLabel{
 	
 	private JLabel itembox1;
 	private JLabel itembox2;
-	private int humanspeed = 5;
+	private int humanspeed = 3;
 	
 	private ImageIcon shoes = new ImageIcon("img/shoes.png");
 	private ImageIcon bullets = new ImageIcon("img/bullet.png");
@@ -314,11 +314,6 @@ public class Human extends JLabel{
 		int itemnum = ((int)(Math.random()*10));
 		switch (itemnum) {
 		case 0:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
 		case 9:
 			if (itembox1.isVisible() == false) {
 				ctx.writeAndFlush("[HUMANTRAP]," + name + ",");
@@ -340,7 +335,7 @@ public class Human extends JLabel{
 			}
 			break;
 		case 1:
-		//case 8:
+		case 8:
 			System.out.println("½Å¹ß");
 			if (itembox1.isVisible() == false) {
 				itembox1.setVisible(true);
@@ -408,6 +403,34 @@ public class Human extends JLabel{
 				if (moving == false) {
 					mover.stop();
 					timerstop = false;
+				}
+				
+				if(humanUi.getM1().getX() >= x - 5 && humanUi.getM1().getX() <= x + 5 && humanUi.getM1().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");				
+				} 
+				else if(humanUi.getM2().getX() >= getX() - 5 && humanUi.getM2().getX() <= getX() + 5&& humanUi.getM2().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");		
+				} 
+				else if(humanUi.getM3().getX() >= getX() - 5 && humanUi.getM3().getX() <= getX() + 5 && humanUi.getM3().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");		
+				}
+				else if(humanUi.getM4().getX() >= getX() - 5 && humanUi.getM4().getX() <= getX() + 5 && humanUi.getM4().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 4 + ",");		
+				}
+				else if(humanUi.getM5().getX() >= getX() - 5 && humanUi.getM5().getX() <= getX() + 5 && humanUi.getM5().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");		
+				}
+				else if(humanUi.getM6().getX() >= getX() - 5 && humanUi.getM6().getX() <= getX() + 5 && humanUi.getM6().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");		
+				}
+				else if(humanUi.getM7().getX() >= getX() - 5 && humanUi.getM7().getX() <= getX() + 5 && humanUi.getM7().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");		
+				}
+				else if(humanUi.getM8().getX() >= getX() - 5 && humanUi.getM8().getX() <= getX() + 5 && humanUi.getM8().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");		
+				}
+				else if(humanUi.getM9().getX() >= getX() - 5 && humanUi.getM9().getX() <= getX() + 5 && humanUi.getM9().getY()<= 275) {
+					ctx.writeAndFlush("[MOLEDIE]," + name + "," + 9 + ",");		
 				}
 			}
 		});

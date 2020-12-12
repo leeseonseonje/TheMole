@@ -1080,7 +1080,7 @@ public class MoleUI extends JPanel {
 			});
 		}
 
-		public void snakeTimer() {
+	/*	public void snakeTimer() {
 			snakeTimer = new Timer(1000, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -1114,7 +1114,7 @@ public class MoleUI extends JPanel {
 					}
 				}
 			});
-		}
+		}*/
 
 		private Timer humanTrapTimer;
 		private int trapCount = 3;
@@ -1166,13 +1166,13 @@ public class MoleUI extends JPanel {
 				if (itembox1.isVisible() == false) {
 					itembox1.setVisible(true);
 					itembox1.setIcon(itemsnakepipe);
-					snakeTimer();
-					snakeTimer.start();
+					//snakeTimer();
+					//snakeTimer.start();
 				} else if (itembox1.getIcon() == itemsnakepipe || itembox2.getIcon() == itemsnakepipe)
 					snakesecond += 17;
 				else {
-					snakeTimer();
-					snakeTimer.start();
+				//	snakeTimer();
+					//snakeTimer.start();
 					itembox2.setIcon(itemsnakepipe);
 				}
 				break;

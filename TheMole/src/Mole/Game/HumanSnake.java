@@ -44,48 +44,48 @@ public class HumanSnake extends JLabel {
 			setIcon(snake[0]);
 		else
 			setIcon(snake[2]); // 오른쪽 스프라이트
-		moveStart();
+		//moveStart();
 	}
 	public boolean getMoving () {
 		return moving;
 	}
 	
-	public void moveStart() {
+	/*public void moveStart() {
 		move();
 		move.start();
-	}
+	}*/
 	public void snakeDie() {
 		setVisible(false);
-		move.stop();
+	//	move.stop();
 		moving = false;
 	}
-	public void move() {
-		move = new Timer(20, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				snakeTempo++;
-				snakeTempo = snakeTempo % 2;
-				if (status == 0) { // 왼쪽 방향으로 움직임
-					moveX(-5);
-					if (snakeTempo == 0)
-						setIcon(snake[0]);
-					if (snakeTempo == 1)
-						setIcon(snake[1]);
-					setBounds(getX(),y,32,32);	
-				} else if (status == 1) { // 왼쪽 방향으로 움직임
-					moveX(5);
-					if (snakeTempo == 0)
-						setIcon(snake[2]);
-					if (snakeTempo == 1)
-						setIcon(snake[3]);
-					setBounds(getX(),y,32,32);	
-				}
+	public void move(int moveCount) {
+//		move = new Timer(20, new ActionListener() {
+				//@Override
+				//public void actionPerformed(ActionEvent e) {
+					//snakeTempo++;
+					//snakeTempo = snakeTempo % 2;
+					if (status == 0) { // 왼쪽 방향으로 움직임
+						moveX(-1);
+						if (moveCount % 2 == 0)
+							setIcon(snake[0]);
+						if (moveCount % 2 == 1)
+							setIcon(snake[1]);
+						setBounds(getX(),y,32,32);	
+					} else if (status == 1) { // 왼쪽 방향으로 움직임
+						moveX(1);
+						if (moveCount % 2 == 0)
+							setIcon(snake[2]);
+						if (moveCount % 2 == 1)
+							setIcon(snake[3]);
+						setBounds(getX(),y,32,32);	
+					}
 	              if(humanPanel.getHuman().getX() - getX() <= 5 && humanPanel.getHuman().getX() - getX() >= -5) {
 	                	ctx.writeAndFlush("[MINUSLIFE]," + name + ",");
 	            }
 			}
-		});
-	}
+		//});
+	//}
 
        // });
  //   }

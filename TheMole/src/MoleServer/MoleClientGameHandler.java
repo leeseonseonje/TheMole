@@ -414,13 +414,13 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					humanUI.makeSnake(status);
 				else
 					moleUI.makeSnake(status);
-			}/*else if (s[i].equals("SNAKEMOVE")) {
+			}else if (s[i].equals("SNAKEMOVE")) {
 				int moveCount = Integer.parseInt(s[i + 1]);
 				if (moleUI == null)
 					humanUI.getSnake().move(moveCount);
 				else
 					moleUI.getSnake().move(moveCount);
-			}*/ else if (s[i].equals("SNAKEDIE")) {
+			} else if (s[i].equals("SNAKEDIE")) {
 				if (moleUI == null) {
 					humanUI.getSnake().snakeDie();
 					if (humanUI.getHuman().getB() != null) {

@@ -13,7 +13,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class Room {
 	public static final HashMap<String, ChannelGroup> roomManager = new HashMap<String, ChannelGroup>();
-	public static final HashMap<Channel, ChannelGroup> roomChannel = new HashMap<Channel, ChannelGroup>();
+	//public static final HashMap<Channel, ChannelGroup> roomChannel = new HashMap<Channel, ChannelGroup>();
 	
 	public static void roomCreat(ChannelHandlerContext ctx, String roomHost) {
 		Channel host = ctx.channel();
@@ -114,7 +114,7 @@ public class Room {
 	
 	public static void startGame(ChannelHandlerContext ctx, String hostName, String guestName) {
 		Channel host = ctx.channel();
-		roomChannel.put(ctx.channel(), roomManager.get(hostName));
+		//roomChannel.put(ctx.channel(), roomManager.get(hostName));
 		int r = (int)(Math.random()*2);
 		int v1 = ((int) (Math.random() * 260)) + 263 * 0;
 		int v2 = ((int) (Math.random() * 260)) + 263 * 1;

@@ -5,8 +5,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
-	private GameTimer gameTimer;
-	//private SnakeTimer snakeTimer;
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String readMessage = (String) msg;
@@ -14,8 +12,9 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 		Channel myChannel = ctx.channel();
 		 if (s[0].equals("[START]")) {
 				Room.startGame(ctx, s[1], s[2]);
-				gameTimer = new GameTimer(s[1]);
-				gameTimer.getGameTimer().start();
+				ServerTimer serverTimer = new ServerTimer(s[1]);
+				ServerTimer.gameTimer.put(s[1], serverTimer);
+				ServerTimer.gameTimer.get(s[1]).getPlayTimer().start();
 			}
 		for (int i = 0; i < s.length; i++) {
 			if (s[i].equals("[LEFT]")) {
@@ -106,8 +105,7 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 						channel.writeAndFlush("SNAKE," + status + ",");
 				}
-			//	snakeTimer = new SnakeTimer(s[i+1]);
-			//	snakeTimer.getSnakeTimer().start();
+				ServerTimer.gameTimer.get(s[1]).getSnakeTimer().start();
 			} else if (s[i].equals("[BULLET]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 						channel.writeAndFlush("BULLET," + s[i + 2] + "," + s[i + 3] + ",");
@@ -119,39 +117,33 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 					channel.writeAndFlush("SNAKEDIE,");
 				}
-				//snakeTimer.getSnakeTimer().stop();
+				ServerTimer.gameTimer.get(s[1]).getSnakeTimer().stop();
 			} else if (s[i].equals("[MINUSLIFE]")) {
 				for (Channel channel : Room.roomManager.get(s[i + 1])) {
 					channel.writeAndFlush("MINUSLIFE,");
 				}
-				//snakeTimer.getSnakeTimer().stop();
+				ServerTimer.gameTimer.get(s[1]).getSnakeTimer().stop();
 			}
 		}
 		if (s[0].equals("[HUMANWIN]")) {
 			DBConnect.humanWin(s[1]);
-			if (gameTimer.getGameTimer().isRunning())
-				gameTimer.getGameTimer().stop();
+			ServerTimer.gameTimer.get(s[1]).getPlayTimer().stop();
+			ServerTimer.gameTimer.remove(s[1]);
 		}
 		else if (s[0].equals("[MOLELOSE]")) {
 			DBConnect.gameLose(s[1]);
-			//if (gameTimer.getGameTimer().isRunning())
-				//gameTimer.getGameTimer().stop();
 		}
 		else if (s[0].equals("[MOLEWIN]")) {
 			DBConnect.moleWin(s[1]);
-			if (gameTimer.getGameTimer().isRunning())
-				gameTimer.getGameTimer().stop();
+			ServerTimer.gameTimer.get(s[1]).getPlayTimer().stop();
+			ServerTimer.gameTimer.remove(s[1]);
 		}
 		else if (s[0].equals("[HUMANLOSE]")) {
 			DBConnect.gameLose(s[1]);
-			//if (gameTimer.getGameTimer().isRunning())
-				//gameTimer.getGameTimer().stop();
 		}
 	}
 	
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-		if (gameTimer.getGameTimer().isRunning())
-			gameTimer.getGameTimer().stop();
 	}
 }

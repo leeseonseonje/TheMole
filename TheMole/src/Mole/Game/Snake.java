@@ -66,14 +66,14 @@ public class Snake extends JLabel {
 				//snakeTempo++;
 				//snakeTempo = snakeTempo % 2;
 				if (status == 0) { // 왼쪽 방향으로 움직임
-					moveX(-1);
+					moveX(-3);
 					if (moveCount % 2 == 0)
 						setIcon(snake[0]);
 					if (moveCount % 2 == 1)
 						setIcon(snake[1]);
 					setBounds(getX(),y,32,32);	
 				} else if (status == 1) { // 왼쪽 방향으로 움직임
-					moveX(1);
+					moveX(3);
 					if (moveCount % 2 == 0)
 						setIcon(snake[2]);
 					if (moveCount % 2 == 1)

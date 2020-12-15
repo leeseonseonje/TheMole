@@ -710,6 +710,9 @@ public class MoleUI extends JPanel {
 		return isSnake;
 	}
 
+	public void setIsSnake(boolean isSnake) {
+		this.isSnake = isSnake;
+	}
 	public Snake getSnake() {
 		return snake;
 	}
@@ -1162,9 +1165,9 @@ public class MoleUI extends JPanel {
 				System.out.println(itemnum);
 				System.out.println("πÏ««∏Æ »πµÊ");
 				System.out.println(itembox1.isVisible());
-				ctx.writeAndFlush("[SNAKE]," + name + ",");
-				break;
-				
+				if (isSnake == false)
+					ctx.writeAndFlush("[SNAKE]," + name + ",");
+				break;			
 			case 1:
 			case 5:
 			case 8:

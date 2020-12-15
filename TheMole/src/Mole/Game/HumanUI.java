@@ -313,6 +313,9 @@ public class HumanUI extends JPanel {
 	public boolean getIsSnake() {
 		return isSnake;
 	}
+	public void setIsSnake(boolean isSnake) {
+		this.isSnake = isSnake;
+	}
 	public HumanSnake getSnake() {
 		return snake;
 	}

@@ -29,7 +29,7 @@ public class ServerTimer {
 			}
 		});
 		
-		snakeTimer = new Timer(50, e -> {
+		snakeTimer = new Timer(100, e -> {
 			moveCount++;
 			for (Channel channel : Room.roomManager.get(name)) {
 				channel.writeAndFlush("SNAKEMOVE," + moveCount + ",");

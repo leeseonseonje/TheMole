@@ -423,6 +423,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			} else if (s[i].equals("SNAKEDIE")) {
 				if (moleUI == null) {
 					humanUI.getSnake().snakeDie();
+					humanUI.setIsSnake(false);
 					if (humanUI.getHuman().getB() != null) {
 						humanUI.getHuman().getB().setVisible(false);
 						humanUI.remove(humanUI.getHuman().getB());
@@ -430,6 +431,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				}
 				else {
 					moleUI.getSnake().snakeDie();
+					moleUI.setIsSnake(false);
 					if (moleUI.getMoleInHumanPerformance().getB() != null) {
 						moleUI.getMoleInHumanPerformance().getB().setVisible(false);
 						moleUI.remove(moleUI.getMoleInHumanPerformance().getB());
@@ -494,6 +496,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 			} else if (s[i].equals("MINUSLIFE")) {
 				if (moleUI == null) {
 					humanUI.getSnake().snakeDie();
+					humanUI.setIsSnake(false);
 					humanUI.getHuman().setHumanLife(humanUI.getHuman().getHumanLife()-1);
 					humanUI.getLifeLabel().setText(humanUI.getHuman().getHumanLife() + "");
 						
@@ -516,6 +519,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				}
 			 else {
 				moleUI.getSnake().snakeDie();
+				moleUI.setIsSnake(false);
 				moleUI.getMoleInHumanPerformance().setHumanlife(moleUI.getMoleInHumanPerformance().getHumanlife()-1);
 				moleUI.getLifeLabel().setText(moleUI.getMoleInHumanPerformance().getHumanlife() + "");
 				if (moleUI.getMoleInHumanPerformance().getHumanlife() == 0) {

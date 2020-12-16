@@ -56,6 +56,12 @@ public class HumanUI extends JPanel {
 	private Font font2 = new Font("Arial", Font.BOLD, 15);
 	private ChannelHandlerContext ctx;
 	private String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	private int vegcount = 15;
 	private int snakesecond = 15;
 	private HumanSnake snake;

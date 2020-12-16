@@ -126,7 +126,7 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 			}
 		}
 		if (s[0].equals("[HUMANWIN]")) {
-			DBConnect.humanWin(s[1]);
+			DBConnect.humanWin(s[2]);
 			ServerTimer.gameTimer.get(s[1]).getPlayTimer().stop();
 			ServerTimer.gameTimer.remove(s[1]);
 		}
@@ -134,7 +134,7 @@ public class MoleServerGameHandler extends ChannelInboundHandlerAdapter {
 			DBConnect.gameLose(s[1]);
 		}
 		else if (s[0].equals("[MOLEWIN]")) {
-			DBConnect.moleWin(s[1]);
+			DBConnect.moleWin(s[2]);
 			ServerTimer.gameTimer.get(s[1]).getPlayTimer().stop();
 			ServerTimer.gameTimer.remove(s[1]);
 		}

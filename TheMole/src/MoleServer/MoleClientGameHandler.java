@@ -68,7 +68,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					humanUI.getCounterLabel().setText(humanUI.getDdMinute() + ":" + humanUI.getDdSecond());
 					if (humanUI.getSecond() == 0 && humanUI.getMinute() == 0) {
 						JOptionPane.showMessageDialog(null, "인간 승리!!", "Result", JOptionPane.PLAIN_MESSAGE);
-						ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId() + ",");
+						ctx.writeAndFlush("[HUMANWIN]," + humanUI.getName() + "," + LoginForm.getId() + ",");
 						humanUI.setVisible(false);
 						if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
 							MoleClientMainHandler.inRoom.testStart.setText("준비");
@@ -176,7 +176,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					moleUI.getVegcountLabel().setText(moleUI.getVegcount() + "");
 					if (moleUI.getVegcount() == 0) {
 						JOptionPane.showMessageDialog(null, "두더지 승리", "Result", JOptionPane.PLAIN_MESSAGE);
-						ctx.writeAndFlush("[MOLEWIN]," + LoginForm.getId() + ",");
+						ctx.writeAndFlush("[MOLEWIN]," + moleUI.getName() + "," + LoginForm.getId() + ",");
 						moleUI.setVisible(false);
 						if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
 							MoleClientMainHandler.inRoom.testStart.setText("준비");
@@ -238,7 +238,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				//	moleUI.getVegcountLabel().setText(moleUI.getVegcount() + "");
 					if (moleUI.getVegcount() == 0) {
 						JOptionPane.showMessageDialog(null, "두더지 승리", "Result", JOptionPane.PLAIN_MESSAGE);
-						ctx.writeAndFlush("[MOLEWIN]," + LoginForm.getId() + ",");
+						ctx.writeAndFlush("[MOLEWIN]," +  moleUI.getName() + "," + LoginForm.getId() + ",");
 						moleUI.setVisible(false);
 						if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
 							MoleClientMainHandler.inRoom.testStart.setText("준비");
@@ -300,7 +300,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				//	moleUI.getVegcountLabel().setText(moleUI.getVegcount() + "");
 					if (moleUI.getVegcount() == 0) {
 						JOptionPane.showMessageDialog(null, "두더지 승리", "Result", JOptionPane.PLAIN_MESSAGE);
-						ctx.writeAndFlush("[MOLEWIN]," + LoginForm.getId() + ",");
+						ctx.writeAndFlush("[MOLEWIN]," + moleUI.getName() + "," + LoginForm.getId() + ",");
 						moleUI.setVisible(false);
 						if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
 							MoleClientMainHandler.inRoom.testStart.setText("준비");
@@ -456,7 +456,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 					}
 					if (humanUI.getMoleCount() == 0) {
 						JOptionPane.showMessageDialog(null, "인간 승리", "Result", JOptionPane.PLAIN_MESSAGE);
-						ctx.writeAndFlush("[HUMANWIN]," + LoginForm.getId() + ",");
+						ctx.writeAndFlush("[HUMANWIN]," + humanUI.getName() + "," + LoginForm.getId() + ",");
 						humanUI.setVisible(false);
 						if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
 							MoleClientMainHandler.inRoom.testStart.setText("준비");
@@ -524,7 +524,7 @@ public class MoleClientGameHandler extends ChannelInboundHandlerAdapter {
 				moleUI.getLifeLabel().setText(moleUI.getMoleInHumanPerformance().getHumanlife() + "");
 				if (moleUI.getMoleInHumanPerformance().getHumanlife() == 0) {
 					JOptionPane.showMessageDialog(null, "인간 패배", "Result", JOptionPane.PLAIN_MESSAGE);
-					ctx.writeAndFlush("[MOLEWIN]," + LoginForm.getId() + ",");
+					ctx.writeAndFlush("[MOLEWIN]," + moleUI.getName() + "," + LoginForm.getId() + ",");
 					moleUI.setVisible(false);
 					if (MoleClientMainHandler.inRoom.testStart.getText().equals("준비취소"))
 						MoleClientMainHandler.inRoom.testStart.setText("준비");

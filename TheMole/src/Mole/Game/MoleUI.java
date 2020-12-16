@@ -106,8 +106,16 @@ public class MoleUI extends JPanel {
 	public void setMusicStatus(boolean musicStatus) {
 		this.musicStatus = musicStatus;
 	}
+	private String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public MoleUI(ChannelHandlerContext ctx, String name, int v1Location, int v2Location, int v3Location, int crop1,
 			int crop2, int crop3) {
+		this.name = name;
 		this.ctx = ctx;
 		try {
 			setLayout(null);

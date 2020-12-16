@@ -140,8 +140,6 @@ public class HumanUI extends JPanel {
 		counterLabel.setText("03:00");
 		second = 0;
 		minute = 3;		
-	//	normalTimer();
-		//timer.start();
 		
 		bulletLabel = new JLabel("5");
 		bulletLabel.setBounds(21, 90, 20, 20);

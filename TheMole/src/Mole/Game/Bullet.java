@@ -78,57 +78,39 @@ public class Bullet extends JLabel {
 					setBounds(x,y, 16, 16);
 					if (mainpanel.getM1().getX() >= getX() - 20 && mainpanel.getM1().getX() <= getX() + 20
 							&& mainpanel.getM1().getY() == y && mainpanel.getM1().getLife() == true) {
-					//	mainpanel.getM1().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM2().getX() >= getX() - 20 && mainpanel.getM2().getX() <= getX() + 20
 							&& mainpanel.getM2().getY() == y && mainpanel.getM2().getLife() == true) {
-					//	mainpanel.getM2().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM3().getX() >= getX() - 20 && mainpanel.getM3().getX() <= getX() + 20
 							&& mainpanel.getM3().getY() == y && mainpanel.getM3().getLife() == true) {
-					//	mainpanel.getM3().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM4().getX() >= getX() - 20 && mainpanel.getM4().getX() <= getX() + 20
 							&& mainpanel.getM4().getY() == y && mainpanel.getM4().getLife() == true) {
-						//mainpanel.getM4().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 4 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM5().getX() >= getX() - 20 && mainpanel.getM5().getX() <= getX() + 20
 							&& mainpanel.getM5().getY() == y && mainpanel.getM5().getLife() == true) {
-						//mainpanel.getM5().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM6().getX() >= getX() - 20 && mainpanel.getM6().getX() <= getX() + 20
 							&& mainpanel.getM6().getY() == y && mainpanel.getM6().getLife() == true) {
-						//mainpanel.getM6().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM7().getX() >= getX() - 20 && mainpanel.getM7().getX() <= getX() + 20
 							&& mainpanel.getM7().getY() == y && mainpanel.getM7().getLife() == true) {
-						//mainpanel.getM7().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM8().getX() >= getX() - 20 && mainpanel.getM8().getX() <= getX() + 20
 							&& mainpanel.getM8().getY() == y && mainpanel.getM8().getLife() == true) {
-						//mainpanel.getM8().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					} else if (mainpanel.getM9().getX() >= getX() - 20 && mainpanel.getM9().getX() <= getX() + 20
 							&& mainpanel.getM9().getY() == y && mainpanel.getM9().getLife() == true) {
-						//mainpanel.getM9().moleDie();
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 9 + ",");
-					//	setVisible(false);
 						dshoottimer.stop();
 					}
 				}if (dshootsec == 30) {
@@ -167,70 +149,50 @@ public class Bullet extends JLabel {
 					if (mainpanel.getM1().getX() == bul.getX() && mainpanel.getM1().getY() <= 275
 							&& mainpanel.getM1().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 1 + ",");
-					//	bul.setVisible(false);
 						shoottimer.stop();
-						//mainpanel.getM1().moleDie();
 					} else if (mainpanel.getM2().getX() == bul.getX() && mainpanel.getM2().getY() <= 275
 							&& mainpanel.getM2().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 2 + ",");
-					//	bul.setVisible(false);
 						shoottimer.stop();
-						//mainpanel.getM2().moleDie();
 						
 					} else if (mainpanel.getM3().getX() == bul.getX() && mainpanel.getM3().getY() <= 275
 							&& mainpanel.getM3().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 3 + ",");
-					//	bul.setVisible(false);
 						shoottimer.stop();
-						//mainpanel.getM3().moleDie();
 						
 					} else if (mainpanel.getM4().getX() == bul.getX() && mainpanel.getM4().getY() <= 275
 							&& mainpanel.getM4().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 4 + ",");
-						//mainpanel.getM4().moleDie();
-					//	bul.setVisible(false);
 						shoottimer.stop();
 						
 					} else if (mainpanel.getM5().getX() == bul.getX() && mainpanel.getM5().getY() <= 275
 							&& mainpanel.getM5().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 5 + ",");
-						//mainpanel.getM5().moleDie();
-					//	bul.setVisible(false);
 						shoottimer.stop();
 						
 					} else if (mainpanel.getM6().getX() == bul.getX() && mainpanel.getM6().getY() <= 275
 							&& mainpanel.getM6().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 6 + ",");
-						//mainpanel.getM6().moleDie();
-					//	bul.setVisible(false);
 						shoottimer.stop();
 						
 					} else if (mainpanel.getM7().getX() == bul.getX() && mainpanel.getM7().getY() <= 275
 							&& mainpanel.getM7().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 7 + ",");
-						//mainpanel.getM7().moleDie();
-					//	bul.setVisible(false);
 						shoottimer.stop();
 						
 					} else if (mainpanel.getM8().getX() == bul.getX() && mainpanel.getM8().getY() <= 275
 							&& mainpanel.getM8().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 8 + ",");
-						//mainpanel.getM8().moleDie();
-					//	bul.setVisible(false);
 						shoottimer.stop();
 						
 					} else if (mainpanel.getM9().getX() == bul.getX() && mainpanel.getM9().getY() <= 275
 							&& mainpanel.getM9().getLife() == true) {
 						ctx.writeAndFlush("[MOLEDIE]," + name + "," + 9 + ",");
-						//mainpanel.getM9().moleDie();
-					//	bul.setVisible(false);
 						shoottimer.stop();
 						
 					} else if (mainpanel.getIsSnake() == true){
 						if (mainpanel.getSnake().getX() == bul.getX() && mainpanel.getSnake().getMoving() == true) {
-							//mainpanel.getSnake().snakeDie();
 							ctx.writeAndFlush("[SNAKEDIE]," + name + ",");
-							//bul.setVisible(false);
 							shoottimer.stop();
 							
 						}

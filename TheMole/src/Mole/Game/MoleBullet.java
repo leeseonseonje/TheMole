@@ -69,6 +69,9 @@ public class MoleBullet extends JLabel {
 				for (int i = 0; i < 5; i++) {
 					bulMoveD(1);
 					setBounds(x,y, 16, 16);
+					
+					// 서버에서 처리되도록 변경
+					
 					/*if (mainpanel.getM1().getMoleButton().getX() >= getX() - 20 && mainpanel.getM1().getMoleButton().getX() <= getX() + 20
 							&& mainpanel.getM1().getMoleButton().getY() == y && mainpanel.getM1().getLife() == true) {
 						mainpanel.getM1().moleDie();

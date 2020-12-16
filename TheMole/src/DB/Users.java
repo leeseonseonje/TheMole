@@ -1,6 +1,6 @@
 package DB;
 
-public class Users {
+public class Users { // 초기 유저 정보 테이블
 
 	private String id;
 	private String password;

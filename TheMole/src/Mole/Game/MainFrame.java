@@ -30,7 +30,8 @@ public class MainFrame extends JFrame{
 		setResizable(false); // 창의 크기를 변경하지 못하게
 		setLocationRelativeTo(null); // 창이 가운데 나오게
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// JFrame이 정상적으로 종료되게 함.
-	//	pack();
+		
+		
 		// 아이콘 이미지 설정
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Image icon = kit.getImage("img/moleicon.png");

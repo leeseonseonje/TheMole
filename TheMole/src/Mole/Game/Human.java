@@ -92,61 +92,33 @@ public class Human extends JLabel{
 				
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
 					ctx.writeAndFlush("[LEFT]," + name + ",");
-					/*moving = true;
-					status = 2;
-					setX(-humanspeed);
-					if(timerstop==false) {
-						humsecond = 0;
-						timerstop=true;
-						timerstart();
-					}
-					setBounds(getX(),y,50,64);		*/
 				}
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
 					ctx.writeAndFlush("[RIGHT]," + name + ",");
-					/*moving = true;
-					status = 1;
-					setX(humanspeed);
-					if(timerstop==false) {
-						humsecond = 0;
-						timerstop=true;
-						timerstart();
-					}
-					setBounds(getX(),y,50,64);*/
 				}
 				if (e.getKeyCode() == KeyEvent.VK_A && shooting == false  && pan.getHumStop() == false && bulletCount != 0 && status == 2) {
 					ctx.writeAndFlush("[BULLET]," + name + "," + 2 + "," + status + ",");
 					setIcon(human[6]);
 					shooting = true;
-					//Bullet a = new Bullet(getX(), 2, status, pan);
-				//	minusBcount();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_D && shooting == false && pan.getHumStop() == false && bulletCount != 0 && status == 1) {
 					ctx.writeAndFlush("[BULLET]," + name + "," + 1 + "," + status + ",");
 					setIcon(human[1]);
 					shooting = true;
-				//	Bullet b =new Bullet(getX(), 1, status, pan);
-				//	minusBcount();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_S && shooting == false  && pan.getHumStop() == false && bulletCount != 0) {
 					ctx.writeAndFlush("[BULLET]," + name + "," + 3 + "," + status + ",");
 					shooting = true;
-				//	Bullet b =new Bullet(getX(), 3, status, pan);
-				//	minusBcount();
 				}
 				
 				if (pan.getI1().getX() > getX() - 10 && pan.getI1().getX() < getX() + 3 && pan.getI1().getTimerstop() == false && humanItem == true) {
 					humanItem = false;
 					ctx.writeAndFlush("[HUMANITEM1EAT]," + name + ",");
-				//	pan.getI1().setTimerstop(true);
-				//	pan.getI1().setVisible(false);
 					humangetitem();
 				}
 				if (pan.getI2().getX() > getX() - 10 && pan.getI2().getX() < getX() + 10 && pan.getI2().getTimerstop() == false && humanItem == true) {
 					humanItem = false;
 					ctx.writeAndFlush("[HUMANITEM2EAT]," + name + ",");
-				//	pan.getI2().setTimerstop(true);
-				//	pan.getI2().setVisible(false);
 					humangetitem();
 				}
 			}
@@ -155,12 +127,8 @@ public class Human extends JLabel{
 				
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 왼쪽 방향키
 					ctx.writeAndFlush("[LEFTSTOP]," + name + ",");
-					//moving = false;
-					//setIcon(human[5]);
 				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 오른쪽 방향키
 					ctx.writeAndFlush("[RIGHTSTOP]," + name + ",");
-					//moving = false;
-					//setIcon(human[0]);
 				} else if (e.getKeyCode() == KeyEvent.VK_A) {
 					setIcon(human[5]);
 					shooting = false;
@@ -377,10 +345,7 @@ public class Human extends JLabel{
 			public void actionPerformed(ActionEvent e) {
 				humsecond++;
 				humsecond = humsecond % 5;
-		//		System.out.println(humsecond);
-		//		System.out.println(moving + "  " + status);
 				if (moving == true && status == 1) { // 오른쪽방향으로 움직일때 -누름
-				//	System.out.println("오른쪽이동중");
 					if (humsecond == 1) 
 						setIcon(human[1]);
 

@@ -44,27 +44,16 @@ public class HumanSnake extends JLabel {
 			setIcon(snake[0]);
 		else
 			setIcon(snake[2]); // 오른쪽 스프라이트
-		//moveStart();
 	}
 	public boolean getMoving () {
 		return moving;
 	}
 	
-	/*public void moveStart() {
-		move();
-		move.start();
-	}*/
 	public void snakeDie() {
 		setVisible(false);
-	//	move.stop();
 		moving = false;
 	}
 	public void move(int moveCount) {
-//		move = new Timer(20, new ActionListener() {
-				//@Override
-				//public void actionPerformed(ActionEvent e) {
-					//snakeTempo++;
-					//snakeTempo = snakeTempo % 2;
 					if (status == 0) { // 왼쪽 방향으로 움직임
 						moveX(-3);
 						if (moveCount % 2 == 0)
@@ -84,19 +73,9 @@ public class HumanSnake extends JLabel {
 	                	ctx.writeAndFlush("[MINUSLIFE]," + name + ",");
 	            }
 			}
-		//});
-	//}
-
-       // });
- //   }
-//	public void collisionCheck(JLabel human) {
-//		if(this.getBounds().intersects(human.getBounds()))
-//			this.setVisible(false);
-//	}
 
 	public void moveX(int x) {
 		this.x = this.x + x;
-		//collisionCheck(human);
 		if (status == 0) {
 			if (this.x < 20)
 				this.setVisible(false);

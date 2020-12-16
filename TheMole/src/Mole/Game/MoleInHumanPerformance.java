@@ -101,10 +101,7 @@ public class MoleInHumanPerformance extends JLabel {
 			public void actionPerformed(ActionEvent e) {
 				humsecond++;
 				humsecond = humsecond % 5;
-		//		System.out.println(humsecond);
-		//		System.out.println(moving + "  " + status);
 				if (moving == true && status == 1) { // 오른쪽방향으로 움직일때 -누름
-				//	System.out.println("오른쪽이동중");
 					if (humsecond == 1) 
 						setIcon(human[1]);
 

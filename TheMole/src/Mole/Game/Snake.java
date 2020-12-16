@@ -15,7 +15,7 @@ public class Snake extends JLabel {
 	private int status; // 생성될때 값을 지니고, 값에 따라 오는 방향이 달라진다.
 
 	private MoleUI molePanel;
-	
+
 	private Timer move;
 	private int snakeTempo = 0;
 	private boolean moving = true;
@@ -29,7 +29,7 @@ public class Snake extends JLabel {
 		this.y = 250;
 		this.molePanel = molePanel;
 		this.status = status;
-		
+
 		if (status == 0) // 왼쪽으로 보고 이동하는 뱀
 			this.x = 760;
 		else // 오른쪽으로 보고 이동하는 뱀
@@ -40,63 +40,46 @@ public class Snake extends JLabel {
 			setIcon(snake[0]);
 		else
 			setIcon(snake[2]); // 오른쪽 스프라이트
-	//	moveStart();
 	}
+
 	public int getStatus() {
 		return status;
 	}
-	public boolean getMoving () {
+
+	public boolean getMoving() {
 		return moving;
 	}
-	
-/*	public void moveStart() {
-		move();
-		move.start();
-	}*/
+
 	public void snakeDie() {
 		setVisible(false);
-		//move.stop();
 		moving = false;
 	}
 
 	public void move(int moveCount) {
-	//	move = new Timer(20, new ActionListener() {
-			//@Override
-			//public void actionPerformed(ActionEvent e) {
-				//snakeTempo++;
-				//snakeTempo = snakeTempo % 2;
-				if (status == 0) { // 왼쪽 방향으로 움직임
-					moveX(-3);
-					if (moveCount % 2 == 0)
-						setIcon(snake[0]);
-					if (moveCount % 2 == 1)
-						setIcon(snake[1]);
-					setBounds(getX(),y,32,32);	
-				} else if (status == 1) { // 왼쪽 방향으로 움직임
-					moveX(3);
-					if (moveCount % 2 == 0)
-						setIcon(snake[2]);
-					if (moveCount % 2 == 1)
-						setIcon(snake[3]);
-					setBounds(getX(),y,32,32);	
-				}
-			}
-		//});
-	//}
-     //   });
-//	public void collisionCheck(JLabel human) {
-//		if(this.getBounds().intersects(human.getBounds()))
-//			this.setVisible(false);
-//	}
+		if (status == 0) { // 왼쪽 방향으로 움직임
+			moveX(-3);
+			if (moveCount % 2 == 0)
+				setIcon(snake[0]);
+			if (moveCount % 2 == 1)
+				setIcon(snake[1]);
+			setBounds(getX(), y, 32, 32);
+		} else if (status == 1) { // 왼쪽 방향으로 움직임
+			moveX(3);
+			if (moveCount % 2 == 0)
+				setIcon(snake[2]);
+			if (moveCount % 2 == 1)
+				setIcon(snake[3]);
+			setBounds(getX(), y, 32, 32);
+		}
+	}
 
 	public void moveX(int x) {
 		this.x = this.x + x;
-		//collisionCheck(human);
 		if (status == 0) {
 			if (this.x < 20)
 				this.setVisible(false);
 		} else {
-			if(this.x > 780)
+			if (this.x > 780)
 				this.setVisible(false);
 		}
 	}
@@ -116,7 +99,7 @@ public class Snake extends JLabel {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	public Rectangle getBounds() {
 		return new Rectangle((int) x, (int) y, 32, 32);
 	}

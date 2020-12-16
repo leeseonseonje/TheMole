@@ -20,21 +20,12 @@ public class CountDown extends JLabel {
 	private DecimalFormat dFormat = new DecimalFormat("00");
 
 	public CountDown() {
-		//setBounds(345, -30, 100, 100);
 		setHorizontalAlignment(JLabel.CENTER);
 		setFont(font1);
 		setText("03:00"); // 시간 설정 : 3:00
-		/*
-		counterLabel = new JLabel("");
-		//counterLabel.setBounds(345, -30, 100, 100);
-		counterLabel.setHorizontalAlignment(JLabel.CENTER);
-		counterLabel.setFont(font1);
-		counterLabel.setText("03:00"); // 시간 설정 : 3:00
-		add(counterLabel);
-		*/
-		
 		second = 0;
 		minute = 1;
+		
 		normalTimer(this);
 		timer.start();
 	}

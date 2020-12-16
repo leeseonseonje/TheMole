@@ -33,7 +33,7 @@ import javazoom.jl.decoder.JavaLayerException;
 
 public class MoleUI extends JPanel {
 	/*
-	 * public static void main(String[] args) throws IOException,
+	 * public static void main(String[] args) throws IOException, // È®ÀÎ¿ë
 	 * InterruptedException { new f(); }
 	 */
 
@@ -75,8 +75,7 @@ public class MoleUI extends JPanel {
 	private itemBoxThread i1;
 	private itemBoxThread i2;
 	Human hum;
-	// itemBoxThread i2;
-	// itemBoxThread i3;
+	
 	public int snakesecond = 15;
 	Snake snake;
 	private Timer snakeTimer;
@@ -511,13 +510,6 @@ public class MoleUI extends JPanel {
 
 			moleInHumanPerformance = new MoleInHumanPerformance(200, 225, this);
 			add(moleInHumanPerformance);
-			// add(new MoleInHumanPerformance(200, 225));
-			// i2 = new itemBoxThread(2);
-			// i3 = new itemBoxThread(3);
-
-			// add(v0);
-			// add(v1);
-			// add(v2);
 
 			counterLabel = new JLabel("");
 			counterLabel.setBounds(345, 0, 100, 50);
@@ -530,9 +522,6 @@ public class MoleUI extends JPanel {
 
 			second = 0;
 			minute = 3;
-
-		//	normalTimer();
-		//	timer.start();
 
 			vegcountLabel = new JLabel(vegcount + "");
 			vegcountLabel.setBounds(758, 90, 20, 20);
@@ -1051,10 +1040,6 @@ public class MoleUI extends JPanel {
 						}
 					} else
 						timer.stop();
-					/*
-					 * if (getBounds().intersects(human.getBounds()))
-					 * this.moleButton.setVisible(false);
-					 */
 				}
 			});
 		}
@@ -1082,43 +1067,7 @@ public class MoleUI extends JPanel {
 				}
 			});
 		}
-
-	/*	public void snakeTimer() {
-			snakeTimer = new Timer(1000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					snakesecond--;
-					System.out.println(snakesecond);
-					if (itembox1.getIcon() == itemsnakepipe) {
-						itembox1.setFont(font1);
-						itembox1.setText(snakesecond + "");
-						itembox1.setVerticalTextPosition(JLabel.CENTER);
-						itembox1.setHorizontalTextPosition(JLabel.CENTER);
-						itembox1.setForeground(Color.cyan);
-					} else {
-						itembox2.setText(snakesecond + "");
-						itembox2.setFont(font1);
-						itembox2.setVerticalTextPosition(JLabel.CENTER);
-						itembox2.setHorizontalTextPosition(JLabel.CENTER);
-						itembox2.setForeground(Color.cyan);
-					}
-					if (snakesecond == 0) {
-						if (itembox1.getIcon() == itemsnakepipe) {
-							itembox1.setIcon(null);
-							itembox1.setText(null);
-							itembox1.setVisible(false);
-						} else {
-							itembox2.setIcon(null);
-							itembox2.setText(null);
-						}
-						snakesecond = 15;
-						itembox1.setVisible(false);
-						snakeTimer.stop();
-					}
-				}
-			});
-		}*/
-
+		
 		private Timer humanTrapTimer;
 		private int trapCount = 3;
 
@@ -1201,7 +1150,6 @@ public class MoleUI extends JPanel {
 				}
 				break;
 			}
-			//eating = false;
 		}
 
 		public void v1EatTimer() {
@@ -1214,10 +1162,6 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-					//	v1.setBounds(0, 0, 0, 0);
-					//	v1.setVisible(false);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 						moleButton.setIcon(mole[13]);
 					}
 				}
@@ -1234,10 +1178,6 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
-						//v2.setBounds(0, 0, 0, 0);
-					//	v2.setVisible(false);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 						moleButton.setIcon(mole[13]);
 					}
 				}
@@ -1254,10 +1194,6 @@ public class MoleUI extends JPanel {
 						eattimer.stop();
 						eating = false;
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-					//	v3.setBounds(0, 0, 0, 0);
-						//v3.setVisible(false);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 						moleButton.setIcon(mole[13]);
 					}
 				}
@@ -1329,17 +1265,11 @@ public class MoleUI extends JPanel {
 			}
 
 			if (i1.getBounds().intersects(champion) && i1.getTimerstop() == false && eating == false) {
-				//eating = true;
 				ctx.writeAndFlush("[MOLEITEM1EAT]," + name + ",");
-				/*i1.setBounds(0, 0, 0, 0);
-				i1.setVisible(false);*/
 				molegetitem();
 
 			} else if (i2.getBounds().intersects(champion) && i2.getTimerstop() == false && eating == false) {
-				//eating = true;
 				ctx.writeAndFlush("[MOLEITEM2EAT]," + name + ",");
-				/*i2.setBounds(0, 0, 0, 0);
-				i2.setVisible(false);*/
 				molegetitem();
 			}
 
@@ -1355,32 +1285,17 @@ public class MoleUI extends JPanel {
 						itembox1.setIcon(null);
 						enhenceteeth = true;
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-						//v1.setVisible(false);
-						//v1.setBounds(0, 0, 0, 0);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-					//	v1.setVisible(false);
-					//	v1.setBounds(0, 0, 0, 0);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v1EAT]," + name + ",");
-					//	v1.setVisible(false);
-					//	v1.setBounds(0, 0, 0, 0);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					}
 				}
 
 				v1.plusvegcount();
 			} else if (v2.getBounds().intersects(champion) && v2.timerstop == false && eating == false) {
-				/*
-				 * v1.setVisible(false); v1.setsecond(0); v1.vegtimer(); v1.vegtimer.start();
-				 */
 				eatsecond = 0;
 				if (enhenceteeth == false) {
 					v2EatTimer();
@@ -1392,32 +1307,18 @@ public class MoleUI extends JPanel {
 						itembox1.setIcon(null);
 						enhenceteeth = true;
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
-					//	v2.setVisible(false);
-					//	v2.setBounds(0, 0, 0, 0);
-					//	vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
-					//	v2.setVisible(false);
-					//	v2.setBounds(0, 0, 0, 0);
-					//	vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v2EAT]," + name + ",");
-					//	v2.setVisible(false);
-					//	v2.setBounds(0, 0, 0, 0);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					}
 				}
 				v2.plusvegcount();
 
 			} else if (v3.getBounds().intersects(champion) && v3.timerstop == false && eating == false) {
-				/*
-				 * v2.setVisible(false); v2.setsecond(0); v2.vegtimer(); v2.vegtimer.start();
-				 */
+
 				eatsecond = 0;
 				if (enhenceteeth == false) {
 					v3EatTimer();
@@ -1429,24 +1330,12 @@ public class MoleUI extends JPanel {
 						itembox1.setIcon(null);
 						enhenceteeth = true;
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-					//	v3.setVisible(false);
-						//v3.setBounds(0, 0, 0, 0);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					} else if (itembox1.getIcon() == itemteeth) {
 						itembox1.setIcon(null);
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-					//	v3.setVisible(false);
-					//	v3.setBounds(0, 0, 0, 0);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					} else {
 						itembox2.setIcon(null);
 						ctx.writeAndFlush("[v3EAT]," + name + ",");
-					//	v3.setVisible(false);
-					//	v3.setBounds(0, 0, 0, 0);
-						//vegcount--;
-						//vegcountLabel.setText(vegcount + "");
 					}
 				}
 				v3.plusvegcount();
@@ -1482,10 +1371,6 @@ public class MoleUI extends JPanel {
 						.sqrt((startX - targetX) * (startX - targetX) + (startY - targetY) * (startY - targetY));
 
 				runTime = distance / (double) speed;
-//				if ((x <= v0.getx() + 10 && x > v0.getx() - 10) || (x <= v1.getx() + 10 && x > v1.getx() - 10)
-//						|| (x <= v2.getx() + 10 && x > v2.getx() - 10) && y < 290) {
-//					eat = true;
-//				}
 			}
 		}
 	}
@@ -1507,7 +1392,6 @@ public class MoleUI extends JPanel {
 		g.drawImage(backImage, 0, 0, null);
 		g.drawImage(humanHud, 0, 70, null);
 		g.drawImage(moleHud, 715, 70, null);
-		// g.drawImage(humanInv, 55, 0, null);
 		g.drawImage(moleInv, 650, 0, null);
 		g.drawImage(intHuman, 0, 0, null);
 		g.drawImage(intMole, 740, 0, null);
